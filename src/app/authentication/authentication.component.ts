@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+interface ISignUpData {
+  username: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
@@ -9,8 +14,14 @@ export class AuthenticationComponent implements OnInit {
   constructor() {}
 
   passwordIsHidden = true;
-  username: string;
-  password: string;
+  signUpData: ISignUpData = {
+    username: '',
+    password: '',
+  };
+
+  switchPasswordHiding(): void {
+    this.passwordIsHidden = !this.passwordIsHidden;
+  }
 
   ngOnInit(): void {}
 }

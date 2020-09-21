@@ -7,24 +7,20 @@
     <mat-card-content>
       <mat-form-field class="field" appearance="outline">
         <mat-label>Username</mat-label>
-        <input matInput name="username" [(ngModel)]="username" />
+        <input matInput name="username" [(ngModel)]="signUpData.username" />
       </mat-form-field>
       <mat-form-field class="field" appearance="outline">
         <mat-label>Password</mat-label>
         <input
           matInput
           name="password"
-          [(ngModel)]="password"
+          [(ngModel)]="signUpData.password"
           [type]="passwordIsHidden ? 'password' : 'text'"
         />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="passwordIsHidden = !passwordIsHidden"
-        >
-          <mat-icon>{{
-            passwordIsHidden ? "visibility_off" : "visibility"
-          }}</mat-icon>
+        <button mat-icon-button matSuffix (click)="switchPasswordHiding()">
+          <mat-icon>
+            {{ passwordIsHidden ? "visibility_off" : "visibility" }}
+          </mat-icon>
         </button>
       </mat-form-field>
     </mat-card-content>
