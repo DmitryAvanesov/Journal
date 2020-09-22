@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
-const user = require("./models/User");
 
 const app = express();
 const port = 3000;
@@ -19,6 +18,9 @@ mongoose.connect(
   "mongodb+srv://admin:7CEWSY9f5y7xUQYR@cluster0.n2gtl.gcp.mongodb.net/Journal?retryWrites=true&w=majority"
 );
 mongoose.set("debug", true);
+
+require("./models/User");
+require("./config/password");
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
