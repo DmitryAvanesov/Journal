@@ -80,6 +80,8 @@ router.get("/current", auth.required, (req, res, _next) => {
     payload: { id },
   } = req;
 
+  console.log(req.payload);
+
   return User.findById(id).then((user) => {
     if (!user) {
       return res.sendStatus(400);

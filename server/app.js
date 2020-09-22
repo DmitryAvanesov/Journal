@@ -29,7 +29,7 @@ app.use(
 // Database connection
 
 const connectionString =
-  "mongodb+srv://Work:hns4kwy58is89LK@cluster0.n2gtl.gcp.mongodb.net/journal-0?retryWrites=true&w=majority";
+  "mongodb+srv://Work:hns4kwy58is89LK@cluster0.n2gtl.gcp.mongodb.net/journal?retryWrites=true&w=majority";
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

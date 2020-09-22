@@ -12,19 +12,17 @@ const UserSchema = new Schema({
 
 UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString("hex");
-  this.hash = hashPassword(password);
-};
-
-UserSchema.methods.passwordIsValid = function (password) {
-  const hash = hashPassword(password);
-  return this.hash === hash;
-};
-
-function hashPassword(password) {
-  return crypto
+  this.hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
     .toString("hex");
-}
+};
+
+UserSchema.methods.validatePassword = function (password) {
+  const hash = crypto
+    .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
+    .toString("hex");
+  return this.hash === hash;
+};
 
 UserSchema.methods.generateJWT = function () {
   const today = new Date();
