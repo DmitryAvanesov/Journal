@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-interface ISignUpData {
-  username: string;
-  password: string;
-}
+import { AuthenticationService } from '../services/authentication.service';
+import { User } from '../types/User';
 
 @Component({
   selector: 'app-authentication',
@@ -11,17 +8,23 @@ interface ISignUpData {
   styleUrls: ['./authentication.component.scss'],
 })
 export class AuthenticationComponent implements OnInit {
-  constructor() {}
+  constructor(public authenticationService: AuthenticationService) {}
 
-  passwordIsHidden = true;
-  signUpData: ISignUpData = {
-    username: '',
-    password: '',
-  };
+  passwordIsHidden: boolean;
+  private a: User;
 
   switchPasswordHiding(): void {
     this.passwordIsHidden = !this.passwordIsHidden;
   }
 
-  ngOnInit(): void {}
+  submitSignUpForm(username: string, password: string): void {
+    this.authenticationService.signUp(username, password).subscribe((user) => {
+      this.a = user;
+      console.log(this.a);
+    });
+  }
+
+  ngOnInit(): void {
+    this.passwordIsHidden = true;
+  }
 }

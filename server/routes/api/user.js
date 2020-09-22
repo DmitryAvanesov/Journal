@@ -75,20 +75,18 @@ router.post("/login", auth.optional, (req, res, next) => {
   )(req, res, next);
 });
 
-router.get("/current", auth.required, (req, res, _next) => {
+router.get("/current", auth.required, async (req, res, _next) => {
   const {
     payload: { id },
   } = req;
 
   console.log(req.payload);
 
-  return User.findById(id).then((user) => {
-    if (!user) {
-      return res.sendStatus(400);
-    }
-
-    return res.json({ user: user.toAuthJSON() });
-  });
+  const user = await User.findById(id);
+  if (!user) {
+    return res.sendStatus(400);
+  }
+  return res.json({ user: user.toAuthJSON() });
 });
 
 module.exports = router;
