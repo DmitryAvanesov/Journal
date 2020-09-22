@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
+const user = require("./models/User");
 
 const app = express();
 const port = 3000;
@@ -19,7 +20,9 @@ mongoose.connect(
 );
 mongoose.set("debug", true);
 
-app.get("/", () => console.log("GOT it"));
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}/`);
