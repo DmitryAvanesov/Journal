@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
+const session = require("express-session");
+
+// Constants and middlewares
 
 const app = express();
 const port = 3000;
@@ -13,18 +16,64 @@ app.use(errorHandler());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-
-mongoose.connect(
-  "mongodb+srv://admin:7CEWSY9f5y7xUQYR@cluster0.n2gtl.gcp.mongodb.net/Journal?retryWrites=true&w=majority"
+app.use(require("morgan")("dev"));
+app.use(
+  session({
+    secret: "journal",
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: false,
+  })
 );
+
+// Database connection
+
+const connectionString =
+  "mongodb+srv://Work:hns4kwy58is89LK@cluster0.n2gtl.gcp.mongodb.net/journal-0?retryWrites=true&w=majority";
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 mongoose.set("debug", true);
+
+// Models and routes
 
 require("./models/User");
 require("./config/password");
+app.use(require("./routes"));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+// Config
+
+mongoose.promise = global.Promise;
+const isProduction = process.env.NODE_ENV === "production";
+
+if (!isProduction) {
+  app.use(errorHandler());
+
+  app.use((err, _req, res, _next) => {
+    res.status(err.status || 500);
+
+    res.json({
+      errors: {
+        message: err.message,
+        error: err,
+      },
+    });
+  });
+}
+
+app.use((err, _req, res, _next) => {
+  res.status(err.status || 500);
+
+  res.json({
+    errors: {
+      message: err.message,
+      error: {},
+    },
+  });
 });
+
+// Listening to the port
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}/`);
