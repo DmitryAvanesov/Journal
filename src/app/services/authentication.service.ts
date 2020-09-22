@@ -14,22 +14,10 @@ export class AuthenticationService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  signUp(username: string, password: string): Observable<User> {
-    console.log({
-      user: {
-        username,
-        password,
-      },
-    });
-
+  signUp(user: User): Observable<User> {
     return this.httpClient.post<User>(
       `${this.url}/user`,
-      {
-        user: {
-          username,
-          password,
-        },
-      },
+      user,
       this.httpOptions
     );
   }

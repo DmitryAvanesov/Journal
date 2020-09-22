@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
-import { User } from '../types/User';
 
 @Component({
   selector: 'app-authentication',
@@ -11,17 +10,20 @@ export class AuthenticationComponent implements OnInit {
   constructor(public authenticationService: AuthenticationService) {}
 
   passwordIsHidden: boolean;
-  private a: User;
 
   switchPasswordHiding(): void {
     this.passwordIsHidden = !this.passwordIsHidden;
   }
 
   submitSignUpForm(username: string, password: string): void {
-    this.authenticationService.signUp(username, password).subscribe((user) => {
-      this.a = user;
-      console.log(this.a);
-    });
+    this.authenticationService
+      .signUp({
+        user: {
+          username,
+          password,
+        },
+      })
+      .subscribe();
   }
 
   ngOnInit(): void {
