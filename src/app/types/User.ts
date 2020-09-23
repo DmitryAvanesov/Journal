@@ -2,5 +2,6 @@ export interface User {
   user: {
     username: string;
     password: string;
+    confirmPassword: string;
   };
 }

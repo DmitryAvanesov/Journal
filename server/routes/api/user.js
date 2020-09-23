@@ -4,7 +4,7 @@ const router = require("express").Router();
 const auth = require("../auth");
 const User = mongoose.model("User");
 
-router.post("/", auth.optional, (req, res, _next) => {
+router.post("/sign-up", auth.optional, (req, res, _next) => {
   const {
     body: { user },
   } = req;
@@ -25,16 +25,32 @@ router.post("/", auth.optional, (req, res, _next) => {
     });
   }
 
+  if (!user.confirmPassword) {
+    return res.status(422).json({
+      errors: {
+        confirmPassword: "is required",
+      },
+    });
+  }
+
+  if (user.password !== user.confirmPassword) {
+    return res.status(422).json({
+      errors: {
+        confirmPassword: "is not equal to password",
+      },
+    });
+  }
+
   const finalUser = new User(user);
 
-  finalUser.setPassword(user.password);
+  finalUser.setPassword(user.password, user.confirmPassword);
 
   return finalUser
     .save()
     .then(() => res.json({ user: finalUser.toAuthJSON() }));
 });
 
-router.post("/login", auth.optional, (req, res, next) => {
+router.post("/log-in", auth.optional, (req, res, next) => {
   const {
     body: { user },
   } = req;
@@ -79,8 +95,6 @@ router.get("/current", auth.required, async (req, res, _next) => {
   const {
     payload: { id },
   } = req;
-
-  console.log(req.payload);
 
   const user = await User.findById(id);
   if (!user) {

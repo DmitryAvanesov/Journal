@@ -5,9 +5,7 @@
 
   <form
     class="form"
-    (ngSubmit)="
-      submitSignUpForm(username.value, password.value, confirmPassword.value)
-    "
+    (ngSubmit)="submitLogInForm(username.value, password.value)"
   >
     <mat-card-content>
       <mat-form-field class="field" appearance="outline">
@@ -27,25 +25,6 @@
           matSuffix
           type="button"
           (click)="switchPasswordHiding()"
-        >
-          <mat-icon>
-            {{ passwordIsHidden ? "visibility_off" : "visibility" }}
-          </mat-icon>
-        </button>
-      </mat-form-field>
-      <mat-form-field class="field" appearance="outline">
-        <mat-label>Confirm Password</mat-label>
-        <input
-          #confirmPassword
-          matInput
-          name="confirmPassword"
-          [type]="confirmPasswordIsHidden ? 'password' : 'text'"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          type="button"
-          (click)="switchConfirmPasswordHiding()"
         >
           <mat-icon>
             {{ passwordIsHidden ? "visibility_off" : "visibility" }}

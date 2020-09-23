@@ -9,14 +9,14 @@ import { User } from '../types/User';
 export class AuthenticationService {
   constructor(private httpClient: HttpClient) {}
 
-  private url = 'http://localhost:3000/api';
+  private url = 'http://localhost:3000/api/user';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
   signUp(user: User): Observable<User> {
     return this.httpClient.post<User>(
-      `${this.url}/user`,
+      `${this.url}/sign-up/`,
       user,
       this.httpOptions
     );

@@ -17,7 +17,11 @@ UserSchema.methods.setPassword = function (password) {
     .toString("hex");
 };
 
-UserSchema.methods.validatePassword = function (password) {
+UserSchema.methods.passportIsValid = function (password, confirmPassword) {
+  if (password !== confirmPassword) {
+    return false;
+  }
+
   const hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
     .toString("hex");

@@ -9,11 +9,12 @@ passport.use(
     {
       usernameField: "user[username]",
       passwordField: "user[password]",
+      confirmPasswordField: "user[confirmPassword]",
     },
-    (username, password, done) => {
+    (username, password, confirmPassword, done) => {
       User.findOne({ username })
         .then((user) => {
-          if (!user || !user.passwordIsValid(password)) {
+          if (!user || !user.passwordIsValid(password, confirmPassword)) {
             return done(null, false, {
               errors: { "username or password": "is invalid" },
             });

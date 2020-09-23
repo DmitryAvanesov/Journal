@@ -79,6 +79,6 @@ app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}/`);
 });
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send("The server is working");
 });
