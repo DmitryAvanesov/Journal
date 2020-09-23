@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { User } from '../types/User';
 
 @Injectable({
@@ -15,10 +16,12 @@ export class AuthenticationService {
   };
 
   signUp(user: User): Observable<User> {
-    return this.httpClient.post<User>(
-      `${this.url}/sign-up/`,
-      user,
-      this.httpOptions
-    );
+    return this.httpClient
+      .post<User>(`${this.url}/sign-up/`, user, this.httpOptions)
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err.error.errors));
+        })
+      );
   }
 }

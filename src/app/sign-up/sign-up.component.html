@@ -5,6 +5,7 @@
 
   <form
     class="form"
+    [formGroup]="formGroup"
     (ngSubmit)="
       submitSignUpForm(username.value, password.value, confirmPassword.value)
     "
@@ -12,47 +13,80 @@
     <mat-card-content>
       <mat-form-field class="field" appearance="outline">
         <mat-label>Username</mat-label>
-        <input #username matInput name="username" />
-      </mat-form-field>
-      <mat-form-field class="field" appearance="outline">
-        <mat-label>Password</mat-label>
         <input
-          #password
+          #username
           matInput
-          name="password"
-          [type]="passwordIsHidden ? 'password' : 'text'"
+          formControlName="usernameControl"
+          name="username"
         />
-        <button
-          mat-icon-button
-          matSuffix
-          type="button"
-          (click)="switchPasswordHiding()"
+        <mat-error
+          *ngIf="formGroup.controls.usernameControl.hasError('required')"
         >
-          <mat-icon>
-            {{ passwordIsHidden ? "visibility_off" : "visibility" }}
-          </mat-icon>
-        </button>
+          Username is required
+        </mat-error>
       </mat-form-field>
-      <mat-form-field class="field" appearance="outline">
-        <mat-label>Confirm Password</mat-label>
-        <input
-          #confirmPassword
-          matInput
-          name="confirmPassword"
-          [type]="confirmPasswordIsHidden ? 'password' : 'text'"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          type="button"
-          (click)="switchConfirmPasswordHiding()"
-        >
-          <mat-icon>
-            {{ passwordIsHidden ? "visibility_off" : "visibility" }}
-          </mat-icon>
-        </button>
-      </mat-form-field>
+
+      <fieldset formGroupName="passwordGroup">
+        <mat-form-field class="field" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            #password
+            matInput
+            formControlName="passwordControl"
+            name="password"
+            [type]="passwordIsHidden ? 'password' : 'text'"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="switchPasswordHiding()"
+          >
+            <mat-icon>
+              {{ passwordIsHidden ? "visibility_off" : "visibility" }}
+            </mat-icon>
+          </button>
+          <mat-error
+            *ngIf="passwordGroup.controls.passwordControl.hasError('required')"
+          >
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field" appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input
+            #confirmPassword
+            matInput
+            formControlName="confirmPasswordControl"
+            name="confirmPassword"
+            [type]="confirmPasswordIsHidden ? 'password' : 'text'"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="switchConfirmPasswordHiding()"
+          >
+            <mat-icon>
+              {{ passwordIsHidden ? "visibility_off" : "visibility" }}
+            </mat-icon>
+          </button>
+          <mat-error
+            *ngIf="
+              passwordGroup.controls.confirmPasswordControl.hasError('required')
+            "
+          >
+            Password confirmation is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-error *ngIf="passwordGroup.hasError('notEqual')">
+          Passwords must be equal
+        </mat-error>
+      </fieldset>
     </mat-card-content>
+
     <button
       mat-stroked-button
       class="sign-up-button"
