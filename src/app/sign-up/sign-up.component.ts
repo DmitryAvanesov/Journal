@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
   FormControl,
   FormGroup,
   ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../types/User';
 
@@ -19,7 +18,7 @@ import { User } from '../types/User';
 export class SignUpComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
-    private fb: FormBuilder
+    private router: Router
   ) {}
 
   passwordIsHidden: boolean;
@@ -66,6 +65,7 @@ export class SignUpComponent implements OnInit {
       .subscribe(
         (res: User) => {
           console.log(res);
+          this.router.navigate(['log-in']);
         },
         (err: Error) => {
           const error = JSON.parse(err.message);

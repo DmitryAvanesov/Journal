@@ -24,4 +24,14 @@ export class AuthenticationService {
         })
       );
   }
+
+  logIn(user: User): Observable<User> {
+    return this.httpClient
+      .post<User>(`${this.url}/log-in/`, user, this.httpOptions)
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err.error.errors));
+        })
+      );
+  }
 }

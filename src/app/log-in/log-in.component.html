@@ -1,22 +1,37 @@
 <mat-card class="container">
   <mat-card-header class="header">
-    <mat-card-title class="title">Sign up</mat-card-title>
+    <mat-card-title class="title">Log in</mat-card-title>
   </mat-card-header>
 
   <form
     class="form"
-    (ngSubmit)="submitLogInForm(username.value, password.value)"
+    [formGroup]="formGroup"
+    (ngSubmit)="
+      formGroup.valid && submitLogInForm(username.value, password.value)
+    "
   >
     <mat-card-content>
       <mat-form-field class="field" appearance="outline">
         <mat-label>Username</mat-label>
-        <input #username matInput name="username" />
+        <input
+          #username
+          matInput
+          formControlName="usernameControl"
+          name="username"
+        />
+        <mat-error
+          *ngIf="formGroup.controls.usernameControl.hasError('required')"
+        >
+          Username is required
+        </mat-error>
       </mat-form-field>
+
       <mat-form-field class="field" appearance="outline">
         <mat-label>Password</mat-label>
         <input
           #password
           matInput
+          formControlName="passwordControl"
           name="password"
           [type]="passwordIsHidden ? 'password' : 'text'"
         />
@@ -30,15 +45,20 @@
             {{ passwordIsHidden ? "visibility_off" : "visibility" }}
           </mat-icon>
         </button>
+        <mat-error
+          *ngIf="formGroup.controls.passwordControl.hasError('required')"
+        >
+          Password is required
+        </mat-error>
       </mat-form-field>
     </mat-card-content>
     <button
       mat-stroked-button
-      class="sign-up-button"
+      class="log-in-button"
       color="primary"
       type="submit"
     >
-      Sign up
+      Log in
     </button>
   </form>
 </mat-card>

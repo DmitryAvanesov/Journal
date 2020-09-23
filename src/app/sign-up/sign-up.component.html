@@ -7,7 +7,8 @@
     class="form"
     [formGroup]="formGroup"
     (ngSubmit)="
-      submitSignUpForm(username.value, password.value, confirmPassword.value)
+      formGroup.valid &&
+        submitSignUpForm(username.value, password.value, confirmPassword.value)
     "
   >
     <mat-card-content>
@@ -26,7 +27,7 @@
         </mat-error>
       </mat-form-field>
 
-      <fieldset formGroupName="passwordGroup">
+      <fieldset class="form-group" formGroupName="passwordGroup">
         <mat-form-field class="field" appearance="outline">
           <mat-label>Password</mat-label>
           <input
