@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../types/User';
@@ -15,11 +21,25 @@ export class LogInComponent implements OnInit {
     private router: Router
   ) {}
 
+  dataIsIncorrect: boolean;
+
   passwordIsHidden: boolean;
   formGroup: FormGroup;
 
   switchPasswordHiding(): void {
     this.passwordIsHidden = !this.passwordIsHidden;
+  }
+
+  dataCorrectnessValidator(): (
+    control: AbstractControl
+  ) => ValidationErrors | null {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (this.dataIsIncorrect) {
+        return { dataIsIncorrect: true };
+      }
+
+      return null;
+    };
   }
 
   submitLogInForm(username: string, password: string): void {
@@ -32,20 +52,23 @@ export class LogInComponent implements OnInit {
       })
       .subscribe(
         (res: User) => {
-          console.log(res);
+          this.dataIsIncorrect = false;
           this.router.navigate(['test']);
         },
         (err: Error) => {
-          console.log(err.message);
+          this.dataIsIncorrect = true;
+          console.log(err);
         }
       );
   }
 
   ngOnInit(): void {
+    this.dataIsIncorrect = false;
     this.passwordIsHidden = true;
     this.formGroup = new FormGroup({
       usernameControl: new FormControl('', [Validators.required]),
       passwordControl: new FormControl('', [Validators.required]),
     });
+    this.formGroup.setValidators(this.dataCorrectnessValidator());
   }
 }
