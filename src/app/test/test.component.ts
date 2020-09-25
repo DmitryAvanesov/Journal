@@ -17,8 +17,7 @@ export class TestComponent implements OnInit {
   label: string;
 
   signOut(): void {
-    localStorage.removeItem('journal-token');
-    this.router.navigate(['/log-in']);
+    this.authenticationService.signOut();
   }
 
   ngOnInit(): void {}

@@ -5,7 +5,6 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { User } from '../types/User';
 import { AuthenticationService } from './authentication.service';
 
@@ -22,12 +21,18 @@ export class AuthGuardService implements CanActivate {
     _next: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot
   ): Promise<boolean> {
+    if (this.authenticationService.isAuthorized) {
+      return new Promise((resolve, _reject) => {
+        return resolve(true);
+      });
+    }
+
     return new Promise((resolve, _reject) => {
       this.authenticationService.getCurrent().subscribe(
-        (res: User) => {
+        (_res: User) => {
           return resolve(true);
         },
-        (err: Error) => {
+        (_err: Error) => {
           this.router.navigate(['log-in']);
           return resolve(false);
         }

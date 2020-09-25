@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../types/User';
@@ -8,12 +9,27 @@ import { User } from '../types/User';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private router: Router) {
+    this.onInit();
+  }
 
   private url = 'http://localhost:3000/api/user';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
+
+  isAuthorized: boolean;
+
+  onInit(): void {
+    this.getCurrent().subscribe(
+      (_res: User) => {
+        this.isAuthorized = true;
+      },
+      (_err: Error) => {
+        this.isAuthorized = false;
+      }
+    );
+  }
 
   signUp(user: User): Observable<User> {
     return this.httpClient
@@ -53,5 +69,11 @@ export class AuthenticationService {
           throw new Error(JSON.stringify(err.error.errors));
         })
       );
+  }
+
+  signOut(): void {
+    this.isAuthorized = false;
+    localStorage.removeItem('journal-token');
+    this.router.navigate(['/log-in']);
   }
 }
