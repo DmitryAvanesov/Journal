@@ -1,100 +1,115 @@
-<mat-card class="sign-up">
-  <mat-card-header class="sign-up__header">
-    <mat-card-title class="sign-up__title">Sign up</mat-card-title>
-  </mat-card-header>
+<div class="sign-up">
+  <mat-card class="sign-up__container">
+    <mat-card-header class="sign-up__header">
+      <mat-card-title class="sign-up__title">Sign up</mat-card-title>
+    </mat-card-header>
 
-  <form
-    class="sign-up__form"
-    [formGroup]="formGroup"
-    (ngSubmit)="
-      formGroup.valid &&
-        submitSignUpForm(username.value, password.value, confirmPassword.value)
-    "
-  >
-    <mat-card-content>
-      <mat-form-field class="sign-up__form-field" appearance="outline">
-        <mat-label>Username</mat-label>
-        <input
-          #username
-          matInput
-          formControlName="usernameControl"
-          name="username"
-        />
-        <mat-error
-          *ngIf="formGroup.controls.usernameControl.hasError('required')"
-        >
-          Username is required
-        </mat-error>
-      </mat-form-field>
-
-      <fieldset class="sign-up__form-group" formGroupName="passwordGroup">
-        <mat-form-field class="sign-up__form-field" appearance="outline">
-          <mat-label>Password</mat-label>
-          <input
-            #password
-            matInput
-            formControlName="passwordControl"
-            name="password"
-            [type]="passwordIsHidden ? 'password' : 'text'"
-          />
-          <button
-            mat-icon-button
-            matSuffix
-            type="button"
-            (click)="switchPasswordHiding()"
-          >
-            <mat-icon>
-              {{ passwordIsHidden ? "visibility_off" : "visibility" }}
-            </mat-icon>
-          </button>
-          <mat-error
-            *ngIf="passwordGroup.controls.passwordControl.hasError('required')"
-          >
-            Password is required
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="sign-up__form-field" appearance="outline">
-          <mat-label>Confirm Password</mat-label>
-          <input
-            #confirmPassword
-            matInput
-            formControlName="confirmPasswordControl"
-            name="confirmPassword"
-            [type]="confirmPasswordIsHidden ? 'password' : 'text'"
-          />
-          <button
-            mat-icon-button
-            matSuffix
-            type="button"
-            (click)="switchConfirmPasswordHiding()"
-          >
-            <mat-icon>
-              {{ passwordIsHidden ? "visibility_off" : "visibility" }}
-            </mat-icon>
-          </button>
-          <mat-error
-            *ngIf="
-              passwordGroup.controls.confirmPasswordControl.hasError('required')
-            "
-          >
-            Password confirmation is required
-          </mat-error>
-        </mat-form-field>
-
-        <mat-error *ngIf="passwordGroup.hasError('notEqual')">
-          Passwords must be equal
-        </mat-error>
-      </fieldset>
-    </mat-card-content>
-
-    <button
-      mat-stroked-button
-      class="sign-up__submit-button"
-      color="primary"
-      type="submit"
+    <form
+      class="sign-up__form"
+      [formGroup]="formGroup"
+      (ngSubmit)="
+        formGroup.valid &&
+          submitSignUpForm(
+            username.value,
+            password.value,
+            confirmPassword.value
+          )
+      "
     >
-      Sign up
-    </button>
-  </form>
-</mat-card>
+      <mat-card-content>
+        <mat-form-field class="sign-up__form-field" appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            #username
+            matInput
+            formControlName="usernameControl"
+            name="username"
+          />
+          <mat-error
+            *ngIf="formGroup.controls.usernameControl.hasError('required')"
+          >
+            Username is required
+          </mat-error>
+        </mat-form-field>
+
+        <fieldset class="sign-up__form-group" formGroupName="passwordGroup">
+          <mat-form-field class="sign-up__form-field" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              #password
+              matInput
+              formControlName="passwordControl"
+              name="password"
+              [type]="passwordIsHidden ? 'password' : 'text'"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="switchPasswordHiding()"
+            >
+              <mat-icon>
+                {{ passwordIsHidden ? "visibility_off" : "visibility" }}
+              </mat-icon>
+            </button>
+            <mat-error
+              *ngIf="
+                passwordGroup.controls.passwordControl.hasError('required')
+              "
+            >
+              Password is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="sign-up__form-field" appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              #confirmPassword
+              matInput
+              formControlName="confirmPasswordControl"
+              name="confirmPassword"
+              [type]="confirmPasswordIsHidden ? 'password' : 'text'"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="switchConfirmPasswordHiding()"
+            >
+              <mat-icon>
+                {{ passwordIsHidden ? "visibility_off" : "visibility" }}
+              </mat-icon>
+            </button>
+            <mat-error
+              *ngIf="
+                passwordGroup.controls.confirmPasswordControl.hasError(
+                  'required'
+                )
+              "
+            >
+              Password confirmation is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-error *ngIf="passwordGroup.hasError('notEqual')">
+            Passwords must be equal
+          </mat-error>
+        </fieldset>
+      </mat-card-content>
+
+      <button
+        mat-stroked-button
+        class="sign-up__submit-button"
+        color="primary"
+        type="submit"
+      >
+        Sign up
+      </button>
+    </form>
+  </mat-card>
+
+  <div class="sign-up__log-in-container">
+    <span class="sign-up__log-in-message">Already have an account?</span>
+    <a class="sign-up__log-in-link" routerLink="/log-in">Log in</a>
+  </div>
+</div>
