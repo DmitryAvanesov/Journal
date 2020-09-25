@@ -25,11 +25,9 @@ export class AuthGuardService implements CanActivate {
     return new Promise((resolve, _reject) => {
       this.authenticationService.getCurrent().subscribe(
         (res: User) => {
-          console.log(res);
           return resolve(true);
         },
         (err: Error) => {
-          console.log(err.message);
           this.router.navigate(['log-in']);
           return resolve(false);
         }

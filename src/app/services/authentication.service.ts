@@ -14,7 +14,6 @@ export class AuthenticationService {
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  private token: string;
 
   signUp(user: User): Observable<User> {
     return this.httpClient
@@ -34,7 +33,7 @@ export class AuthenticationService {
           throw new Error(JSON.stringify(err.error.errors));
         }),
         tap((res: User) => {
-          this.token = res.user.token;
+          localStorage.setItem('journal-token', res.user.token);
         })
       );
   }
@@ -43,7 +42,7 @@ export class AuthenticationService {
     const httpOptionsWithToken = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `Token ${this.token}`,
+        Authorization: `Token ${localStorage.getItem('journal-token')}`,
       }),
     };
 
