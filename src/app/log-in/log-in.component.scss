@@ -1,23 +1,5 @@
-.container {
-  width: fit-content;
-  margin: 0 auto;
-
-  .header {
-    justify-content: center;
-    margin: 15px 0 25px;
-
-    .title {
-      font-size: 2em;
-    }
-  }
-
-  .field {
-    width: 100%;
-    margin: 5px 0;
-  }
-
-  .log-in-button {
-    display: block;
-    margin: 0 auto;
-  }
-}
+@import "./styles/log-in.scss";
+@import "./styles/log-in__form-field.scss";
+@import "./styles/log-in__header.scss";
+@import "./styles/log-in__submit-button.scss";
+@import "./styles/log-in__title.scss";

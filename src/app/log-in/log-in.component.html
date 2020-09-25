@@ -1,17 +1,17 @@
-<mat-card class="container">
-  <mat-card-header class="header">
-    <mat-card-title class="title">Log in</mat-card-title>
+<mat-card class="log-in">
+  <mat-card-header class="log-in__header">
+    <mat-card-title class="log-in__title">Log in</mat-card-title>
   </mat-card-header>
 
   <form
-    class="form"
+    class="log-in__form"
     [formGroup]="formGroup"
     (ngSubmit)="
       formGroup.valid && submitLogInForm(username.value, password.value)
     "
   >
     <mat-card-content>
-      <mat-form-field class="field" appearance="outline">
+      <mat-form-field class="log-in__form-field" appearance="outline">
         <mat-label>Username</mat-label>
         <input
           #username
@@ -26,7 +26,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="field" appearance="outline">
+      <mat-form-field class="log-in__form-field" appearance="outline">
         <mat-label>Password</mat-label>
         <input
           #password
@@ -54,7 +54,7 @@
     </mat-card-content>
     <button
       mat-stroked-button
-      class="log-in-button"
+      class="log-in__submit-button"
       color="primary"
       type="submit"
     >
