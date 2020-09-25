@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../types/User';
 
@@ -9,7 +10,10 @@ import { User } from '../types/User';
   styleUrls: ['./log-in.component.scss'],
 })
 export class LogInComponent implements OnInit {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {}
 
   passwordIsHidden: boolean;
   formGroup: FormGroup;
@@ -19,21 +23,12 @@ export class LogInComponent implements OnInit {
   }
 
   submitLogInForm(username: string, password: string): void {
-    this.authenticationService
-      .logIn({
-        user: {
-          username,
-          password,
-        },
-      })
-      .subscribe(
-        (res: User) => {
-          console.log(res);
-        },
-        (err: Error) => {
-          console.log(err);
-        }
-      );
+    this.authenticationService.logIn({
+      user: {
+        username,
+        password,
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -41,6 +36,13 @@ export class LogInComponent implements OnInit {
     this.formGroup = new FormGroup({
       usernameControl: new FormControl('', [Validators.required]),
       passwordControl: new FormControl('', [Validators.required]),
+    });
+
+    this.authenticationService.getUser().subscribe((res: User | undefined) => {
+      console.log(res);
+      if (res) {
+        this.router.navigate(['test']);
+      }
     });
   }
 }

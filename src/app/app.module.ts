@@ -8,9 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LogInComponent } from './log-in/log-in.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, LogInComponent],
+  declarations: [AppComponent, SignUpComponent, LogInComponent, TestComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

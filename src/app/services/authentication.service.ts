@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../types/User';
 
@@ -14,6 +14,13 @@ export class AuthenticationService {
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
+  private user: BehaviorSubject<User | undefined> = new BehaviorSubject(
+    undefined
+  );
+
+  getUser(): BehaviorSubject<User> {
+    return this.user;
+  }
 
   signUp(user: User): Observable<User> {
     return this.httpClient
@@ -25,13 +32,21 @@ export class AuthenticationService {
       );
   }
 
-  logIn(user: User): Observable<User> {
-    return this.httpClient
+  logIn(user: User): void {
+    this.httpClient
       .post<User>(`${this.url}/log-in/`, user, this.httpOptions)
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));
         })
+      )
+      .subscribe(
+        (res: User) => {
+          this.user.next(res);
+        },
+        (err: Error) => {
+          console.log(err);
+        }
       );
   }
 }
