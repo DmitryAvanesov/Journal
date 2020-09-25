@@ -1,28 +1,6 @@
-.container {
-  width: fit-content;
-  margin: 0 auto;
-
-  .header {
-    justify-content: center;
-    margin: 15px 0 25px;
-
-    .title {
-      font-size: 2em;
-    }
-  }
-
-  .field {
-    width: 100%;
-    margin: 5px 0;
-  }
-
-  .form-group {
-    border: none;
-    padding: 0;
-  }
-
-  .sign-up-button {
-    display: block;
-    margin: 0 auto;
-  }
-}
+@import "./styles/sign-up.scss";
+@import "./styles/sign-up__form-field.scss";
+@import "./styles/sign-up__form-group.scss";
+@import "./styles/sign-up__header.scss";
+@import "./styles/sign-up__submit-button.scss";
+@import "./styles/sign-up__title.scss";

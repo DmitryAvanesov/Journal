@@ -1,10 +1,10 @@
-<mat-card class="container">
-  <mat-card-header class="header">
-    <mat-card-title class="title">Sign up</mat-card-title>
+<mat-card class="sign-up">
+  <mat-card-header class="sign-up__header">
+    <mat-card-title class="sign-up__title">Sign up</mat-card-title>
   </mat-card-header>
 
   <form
-    class="form"
+    class="sign-up__form"
     [formGroup]="formGroup"
     (ngSubmit)="
       formGroup.valid &&
@@ -12,7 +12,7 @@
     "
   >
     <mat-card-content>
-      <mat-form-field class="field" appearance="outline">
+      <mat-form-field class="sign-up__form-field" appearance="outline">
         <mat-label>Username</mat-label>
         <input
           #username
@@ -27,8 +27,8 @@
         </mat-error>
       </mat-form-field>
 
-      <fieldset class="form-group" formGroupName="passwordGroup">
-        <mat-form-field class="field" appearance="outline">
+      <fieldset class="sign-up__form-group" formGroupName="passwordGroup">
+        <mat-form-field class="sign-up__form-field" appearance="outline">
           <mat-label>Password</mat-label>
           <input
             #password
@@ -54,7 +54,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="field" appearance="outline">
+        <mat-form-field class="sign-up__form-field" appearance="outline">
           <mat-label>Confirm Password</mat-label>
           <input
             #confirmPassword
@@ -90,7 +90,7 @@
 
     <button
       mat-stroked-button
-      class="sign-up-button"
+      class="sign-up__submit-button"
       color="primary"
       type="submit"
     >
