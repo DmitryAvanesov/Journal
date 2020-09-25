@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { User } from '../types/User';
 
 @Injectable({
@@ -14,13 +14,7 @@ export class AuthenticationService {
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  private user: BehaviorSubject<User | undefined> = new BehaviorSubject(
-    undefined
-  );
-
-  getUser(): BehaviorSubject<User> {
-    return this.user;
-  }
+  private token: string;
 
   signUp(user: User): Observable<User> {
     return this.httpClient
@@ -32,21 +26,33 @@ export class AuthenticationService {
       );
   }
 
-  logIn(user: User): void {
-    this.httpClient
+  logIn(user: User): Observable<User> {
+    return this.httpClient
       .post<User>(`${this.url}/log-in/`, user, this.httpOptions)
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));
+        }),
+        tap((res: User) => {
+          this.token = res.user.token;
         })
-      )
-      .subscribe(
-        (res: User) => {
-          this.user.next(res);
-        },
-        (err: Error) => {
-          console.log(err);
-        }
+      );
+  }
+
+  getCurrent(): Observable<User> {
+    const httpOptionsWithToken = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Token ${this.token}`,
+      }),
+    };
+
+    return this.httpClient
+      .get<User>(`${this.url}/current/`, httpOptionsWithToken)
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err.error.errors));
+        })
       );
   }
 }

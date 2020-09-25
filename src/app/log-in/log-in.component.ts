@@ -23,12 +23,22 @@ export class LogInComponent implements OnInit {
   }
 
   submitLogInForm(username: string, password: string): void {
-    this.authenticationService.logIn({
-      user: {
-        username,
-        password,
-      },
-    });
+    this.authenticationService
+      .logIn({
+        user: {
+          username,
+          password,
+        },
+      })
+      .subscribe(
+        (res: User) => {
+          console.log(res);
+          this.router.navigate(['test']);
+        },
+        (err: Error) => {
+          console.log(err.message);
+        }
+      );
   }
 
   ngOnInit(): void {
@@ -36,13 +46,6 @@ export class LogInComponent implements OnInit {
     this.formGroup = new FormGroup({
       usernameControl: new FormControl('', [Validators.required]),
       passwordControl: new FormControl('', [Validators.required]),
-    });
-
-    this.authenticationService.getUser().subscribe((res: User | undefined) => {
-      console.log(res);
-      if (res) {
-        this.router.navigate(['test']);
-      }
     });
   }
 }
