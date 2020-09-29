@@ -12,13 +12,10 @@ export class AuthenticationService {
   constructor(private httpClient: HttpClient, private router: Router) {}
 
   private url = 'http://localhost:3000/api/user';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
 
   signUp(user: User): Observable<UserReqRes> {
     return this.httpClient
-      .post<UserReqRes>(`${this.url}/sign-up/`, { user }, this.httpOptions)
+      .post<UserReqRes>(`${this.url}/sign-up/`, { user })
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));
@@ -28,7 +25,7 @@ export class AuthenticationService {
 
   logIn(user: User): Observable<UserReqRes> {
     return this.httpClient
-      .post<UserReqRes>(`${this.url}/log-in/`, { user }, this.httpOptions)
+      .post<UserReqRes>(`${this.url}/log-in/`, { user })
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));
@@ -40,20 +37,11 @@ export class AuthenticationService {
   }
 
   getCurrent(): Observable<UserReqRes> {
-    const httpOptionsWithToken = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Token ${localStorage.getItem('journal-token')}`,
-      }),
-    };
-
-    return this.httpClient
-      .get<UserReqRes>(`${this.url}/current/`, httpOptionsWithToken)
-      .pipe(
-        catchError((err) => {
-          throw new Error(JSON.stringify(err.error.errors));
-        })
-      );
+    return this.httpClient.get<UserReqRes>(`${this.url}/current/`).pipe(
+      catchError((err) => {
+        throw new Error(JSON.stringify(err.error.errors));
+      })
+    );
   }
 
   signOut(): void {

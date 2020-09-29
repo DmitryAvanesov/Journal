@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LogInComponent } from './log-in/log-in.component';
-import { AuthGuardService } from './services/auth-guard.service';
-import { RepeatAuthGuardService } from './services/repeat-auth-guard.service';
+import { AuthGuardService } from './guards/auth-guard.service';
+import { RepeatAuthGuardService } from './guards/repeat-auth-guard.service';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { TestComponent } from './test/test.component';
 
