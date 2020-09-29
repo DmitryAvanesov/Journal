@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { User } from '../types/User';
+import { User, UserReqRes } from '../types/User';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,6 +25,7 @@ export class SignUpComponent implements OnInit {
   confirmPasswordIsHidden: boolean;
   formGroup: FormGroup;
   passwordGroup: FormGroup;
+  usernameIsUsed: boolean;
 
   switchPasswordHiding(): void {
     this.passwordIsHidden = !this.passwordIsHidden;
@@ -41,7 +42,6 @@ export class SignUpComponent implements OnInit {
       if (
         control.value.passwordControl !== control.value.confirmPasswordControl
       ) {
-        console.log(control);
         return { notEqual: true };
       }
 
@@ -56,20 +56,19 @@ export class SignUpComponent implements OnInit {
   ): void {
     this.authenticationService
       .signUp({
-        user: {
-          username,
-          password,
-          confirmPassword,
-        },
+        username,
+        password,
+        confirmPassword,
       })
       .subscribe(
-        (res: User) => {
-          console.log(res);
+        (res: UserReqRes) => {
+          this.usernameIsUsed = false;
           this.router.navigate(['log-in']);
         },
         (err: Error) => {
-          const error = JSON.parse(err.message);
-          console.log(error);
+          if (JSON.parse(err.message).username === 'is already used') {
+            this.usernameIsUsed = true;
+          }
         }
       );
   }
@@ -86,5 +85,6 @@ export class SignUpComponent implements OnInit {
     });
     this.passwordGroup = this.formGroup.get('passwordGroup') as FormGroup;
     this.passwordGroup.setValidators(this.passwordsEqualityValidator());
+    this.usernameIsUsed = false;
   }
 }

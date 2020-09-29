@@ -1,23 +1,24 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { User } from '../types/User';
+import { User, UserReqRes } from '../types/User';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   private url = 'http://localhost:3000/api/user';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  signUp(user: User): Observable<User> {
+  signUp(user: User): Observable<UserReqRes> {
     return this.httpClient
-      .post<User>(`${this.url}/sign-up/`, user, this.httpOptions)
+      .post<UserReqRes>(`${this.url}/sign-up/`, { user }, this.httpOptions)
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));
@@ -25,20 +26,20 @@ export class AuthenticationService {
       );
   }
 
-  logIn(user: User): Observable<User> {
+  logIn(user: User): Observable<UserReqRes> {
     return this.httpClient
-      .post<User>(`${this.url}/log-in/`, user, this.httpOptions)
+      .post<UserReqRes>(`${this.url}/log-in/`, { user }, this.httpOptions)
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));
         }),
-        tap((res: User) => {
+        tap((res: UserReqRes) => {
           localStorage.setItem('journal-token', res.user.token);
         })
       );
   }
 
-  getCurrent(): Observable<User> {
+  getCurrent(): Observable<UserReqRes> {
     const httpOptionsWithToken = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -47,11 +48,16 @@ export class AuthenticationService {
     };
 
     return this.httpClient
-      .get<User>(`${this.url}/current/`, httpOptionsWithToken)
+      .get<UserReqRes>(`${this.url}/current/`, httpOptionsWithToken)
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));
         })
       );
+  }
+
+  signOut(): void {
+    localStorage.removeItem('journal-token');
+    this.router.navigate(['/log-in']);
   }
 }

@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { User } from '../types/User';
+import { User, UserReqRes } from '../types/User';
 
 @Component({
   selector: 'app-log-in',
@@ -15,6 +21,7 @@ export class LogInComponent implements OnInit {
     private router: Router
   ) {}
 
+  dataIsIncorrect: boolean;
   passwordIsHidden: boolean;
   formGroup: FormGroup;
 
@@ -25,23 +32,23 @@ export class LogInComponent implements OnInit {
   submitLogInForm(username: string, password: string): void {
     this.authenticationService
       .logIn({
-        user: {
-          username,
-          password,
-        },
+        username,
+        password,
       })
       .subscribe(
-        (res: User) => {
-          console.log(res);
+        (res: UserReqRes) => {
+          this.dataIsIncorrect = false;
           this.router.navigate(['test']);
         },
         (err: Error) => {
-          console.log(err.message);
+          this.dataIsIncorrect = true;
+          console.log(err);
         }
       );
   }
 
   ngOnInit(): void {
+    this.dataIsIncorrect = false;
     this.passwordIsHidden = true;
     this.formGroup = new FormGroup({
       usernameControl: new FormControl('', [Validators.required]),

@@ -1,9 +1,11 @@
 export interface User {
-  user: {
-    username: string;
-    password: string;
-    confirmPassword?: string;
-    id?: string;
-    token?: string;
-  };
+  username: string;
+  password: string;
+  confirmPassword?: string;
+  id?: string;
+  token?: string;
+}
+
+export interface UserReqRes {
+  user: User;
 }

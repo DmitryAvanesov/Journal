@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { User } from '../types/User';
+import { User, UserReqRes } from '../types/User';
 
 @Component({
   selector: 'app-test',
@@ -10,7 +11,15 @@ import { User } from '../types/User';
 export class TestComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService) {}
 
-  label: string;
+  user: User;
 
-  ngOnInit(): void {}
+  signOut(): void {
+    this.authenticationService.signOut();
+  }
+
+  ngOnInit(): void {
+    this.authenticationService.getCurrent().subscribe((newUser: UserReqRes) => {
+      this.user = newUser.user;
+    });
+  }
 }
