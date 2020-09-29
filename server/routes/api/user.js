@@ -80,14 +80,6 @@ router.post("/log-in", auth.optional, (req, res, next) => {
     });
   }
 
-  if (user.password !== user.confirmPassword) {
-    return res.status(422).json({
-      errors: {
-        confirmPassword: "should be equal to password",
-      },
-    });
-  }
-
   return passport.authenticate(
     "local",
     { session: false },
