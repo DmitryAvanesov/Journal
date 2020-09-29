@@ -56,11 +56,9 @@ export class SignUpComponent implements OnInit {
   ): void {
     this.authenticationService
       .signUp({
-        user: {
-          username,
-          password,
-          confirmPassword,
-        },
+        username,
+        password,
+        confirmPassword,
       })
       .subscribe(
         (res: User) => {

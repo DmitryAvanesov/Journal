@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { User } from '../types/User';
+import { User, UserReqRes } from '../types/User';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class RepeatAuthGuardService implements CanActivate {
   canActivate(): Promise<boolean> {
     return new Promise((resolve, _reject) => {
       this.authenticationService.getCurrent().subscribe(
-        (_res: User) => {
+        (_res: UserReqRes) => {
           this.router.navigate(['test']);
           return resolve(false);
         },

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { User } from '../types/User';
+import { User, UserReqRes } from '../types/User';
 
 @Injectable({
   providedIn: 'root',
@@ -26,20 +26,20 @@ export class AuthenticationService {
       );
   }
 
-  logIn(user: User): Observable<User> {
+  logIn(user: User): Observable<UserReqRes> {
     return this.httpClient
-      .post<User>(`${this.url}/log-in/`, user, this.httpOptions)
+      .post<UserReqRes>(`${this.url}/log-in/`, { user }, this.httpOptions)
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));
         }),
-        tap((res: User) => {
+        tap((res: UserReqRes) => {
           localStorage.setItem('journal-token', res.user.token);
         })
       );
   }
 
-  getCurrent(): Observable<User> {
+  getCurrent(): Observable<UserReqRes> {
     const httpOptionsWithToken = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export class AuthenticationService {
     };
 
     return this.httpClient
-      .get<User>(`${this.url}/current/`, httpOptionsWithToken)
+      .get<UserReqRes>(`${this.url}/current/`, httpOptionsWithToken)
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));

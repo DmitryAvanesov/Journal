@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { User } from '../types/User';
+import { User, UserReqRes } from '../types/User';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class AuthGuardService implements CanActivate {
   ): Promise<boolean> {
     return new Promise((resolve, _reject) => {
       this.authenticationService.getCurrent().subscribe(
-        (_res: User) => {
+        (_res: UserReqRes) => {
           return resolve(true);
         },
         (_err: Error) => {

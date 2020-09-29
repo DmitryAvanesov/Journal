@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { User } from '../types/User';
+import { User, UserReqRes } from '../types/User';
 
 @Component({
   selector: 'app-test',
@@ -9,20 +9,17 @@ import { User } from '../types/User';
   styleUrls: ['./test.component.scss'],
 })
 export class TestComponent implements OnInit {
-  constructor(
-    private authenticationService: AuthenticationService,
-    private router: Router
-  ) {}
+  constructor(private authenticationService: AuthenticationService) {}
 
-  userData: User;
+  user: User;
 
   signOut(): void {
     this.authenticationService.signOut();
   }
 
   ngOnInit(): void {
-    this.authenticationService.getCurrent().subscribe((newUser: User) => {
-      this.userData = newUser;
+    this.authenticationService.getCurrent().subscribe((newUser: UserReqRes) => {
+      this.user = newUser.user;
     });
   }
 }

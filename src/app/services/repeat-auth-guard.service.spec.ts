@@ -9,8 +9,4 @@ describe('RepeatAuthGuardService', () => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(RepeatAuthGuardService);
   });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
 });

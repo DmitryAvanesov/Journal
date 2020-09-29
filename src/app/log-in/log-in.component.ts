@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { User } from '../types/User';
+import { User, UserReqRes } from '../types/User';
 
 @Component({
   selector: 'app-log-in',
@@ -32,13 +32,11 @@ export class LogInComponent implements OnInit {
   submitLogInForm(username: string, password: string): void {
     this.authenticationService
       .logIn({
-        user: {
-          username,
-          password,
-        },
+        username,
+        password,
       })
       .subscribe(
-        (res: User) => {
+        (res: UserReqRes) => {
           this.dataIsIncorrect = false;
           this.router.navigate(['test']);
         },
