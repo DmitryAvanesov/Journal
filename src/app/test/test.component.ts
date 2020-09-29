@@ -14,11 +14,15 @@ export class TestComponent implements OnInit {
     private router: Router
   ) {}
 
-  label: string;
+  userData: User;
 
   signOut(): void {
     this.authenticationService.signOut();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authenticationService.getCurrent().subscribe((newUser: User) => {
+      this.userData = newUser;
+    });
+  }
 }

@@ -22,24 +22,11 @@ export class LogInComponent implements OnInit {
   ) {}
 
   dataIsIncorrect: boolean;
-
   passwordIsHidden: boolean;
   formGroup: FormGroup;
 
   switchPasswordHiding(): void {
     this.passwordIsHidden = !this.passwordIsHidden;
-  }
-
-  dataCorrectnessValidator(): (
-    control: AbstractControl
-  ) => ValidationErrors | null {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (this.dataIsIncorrect) {
-        return { dataIsIncorrect: true };
-      }
-
-      return null;
-    };
   }
 
   submitLogInForm(username: string, password: string): void {
@@ -69,6 +56,5 @@ export class LogInComponent implements OnInit {
       usernameControl: new FormControl('', [Validators.required]),
       passwordControl: new FormControl('', [Validators.required]),
     });
-    this.formGroup.setValidators(this.dataCorrectnessValidator());
   }
 }
