@@ -16,9 +16,9 @@ export class AuthenticationService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  signUp(user: User): Observable<User> {
+  signUp(user: User): Observable<UserReqRes> {
     return this.httpClient
-      .post<User>(`${this.url}/sign-up/`, user, this.httpOptions)
+      .post<UserReqRes>(`${this.url}/sign-up/`, { user }, this.httpOptions)
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err.error.errors));

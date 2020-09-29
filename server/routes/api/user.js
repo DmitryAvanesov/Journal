@@ -4,7 +4,7 @@ const router = require("express").Router();
 const auth = require("../auth");
 const User = mongoose.model("User");
 
-router.post("/sign-up", auth.optional, (req, res, _next) => {
+router.post("/sign-up", auth.optional, async (req, res, _next) => {
   const {
     body: { user },
   } = req;
@@ -41,8 +41,17 @@ router.post("/sign-up", auth.optional, (req, res, _next) => {
     });
   }
 
-  const finalUser = new User(user);
+  const existingUser = await User.findOne({ username: user.username });
+  console.log(existingUser);
+  if (existingUser) {
+    return res.status(422).json({
+      errors: {
+        username: "is already used",
+      },
+    });
+  }
 
+  const finalUser = new User(user);
   finalUser.setPassword(user.password, user.confirmPassword);
 
   return finalUser
@@ -67,6 +76,14 @@ router.post("/log-in", auth.optional, (req, res, next) => {
     return res.status(422).json({
       errors: {
         password: "is required",
+      },
+    });
+  }
+
+  if (user.password !== user.confirmPassword) {
+    return res.status(422).json({
+      errors: {
+        confirmPassword: "should be equal to password",
       },
     });
   }
