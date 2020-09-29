@@ -9,27 +9,12 @@ import { User } from '../types/User';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private httpClient: HttpClient, private router: Router) {
-    this.onInit();
-  }
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   private url = 'http://localhost:3000/api/user';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-
-  isAuthorized: boolean;
-
-  onInit(): void {
-    this.getCurrent().subscribe(
-      (_res: User) => {
-        this.isAuthorized = true;
-      },
-      (_err: Error) => {
-        this.isAuthorized = false;
-      }
-    );
-  }
 
   signUp(user: User): Observable<User> {
     return this.httpClient
@@ -72,7 +57,6 @@ export class AuthenticationService {
   }
 
   signOut(): void {
-    this.isAuthorized = false;
     localStorage.removeItem('journal-token');
     this.router.navigate(['/log-in']);
   }
