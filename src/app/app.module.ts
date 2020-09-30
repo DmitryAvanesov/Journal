@@ -8,11 +8,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LogInComponent } from './log-in/log-in.component';
-import { TestComponent } from './test/test.component';
 import { HttpConfigInterceptor } from './interceptors/http-config.interceptor';
+import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, LogInComponent, TestComponent],
+  declarations: [
+    AppComponent,
+    SignUpComponent,
+    LogInComponent,
+    HeaderComponent,
+    HomeComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

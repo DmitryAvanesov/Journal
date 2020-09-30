@@ -16,7 +16,7 @@ export class RepeatAuthGuardService implements CanActivate {
     return new Promise((resolve, _reject) => {
       this.authenticationService.getCurrent().subscribe(
         (_res: UserReqRes) => {
-          this.router.navigate(['test']);
+          this.router.navigate(['home']);
           return resolve(false);
         },
         (_err: Error) => {

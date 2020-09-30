@@ -1,25 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { User, UserReqRes } from '../types/User';
 
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class TestComponent implements OnInit {
+export class HeaderComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService) {}
 
-  user: User;
+  user: User | undefined;
 
   signOut(): void {
     this.authenticationService.signOut();
   }
 
   ngOnInit(): void {
-    this.authenticationService.getCurrent().subscribe((newUser: UserReqRes) => {
-      this.user = newUser.user;
+    this.authenticationService.user.subscribe((user: User | undefined) => {
+      this.user = user;
     });
   }
 }
