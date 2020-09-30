@@ -18,7 +18,7 @@ const routes: Routes = [
     component: LogInComponent,
     canActivate: [RepeatAuthGuardService],
   },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: 'home', component: HomeComponent },
 ];
 
 @NgModule({

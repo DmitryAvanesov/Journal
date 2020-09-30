@@ -1,22 +1,29 @@
-<mat-toolbar class="header">
-  <mat-toolbar-row class="header__row">
-    <nav class="header__nav">
-      <a class="header__link" routerLink="/home">Home</a>
-      <a class="header__link" routerLink="#">Issues</a>
-      <a class="header__link" routerLink="#">News</a>
-    </nav>
+<div class="header">
+  <div class="header__title">
+    <img class="header__title-text" src="../../assets/title-eng.png" alt="Journal of Visual Theology title text">
+    <img class="header__title-logo" src="../../assets/logo.png" alt="Journal of Visual Theology title logo">
+  </div>
 
-    <a class="header__auth-link" routerLink="/sign-up" *ngIf="!user">Sign up</a>
-    <a class="header__auth-link" routerLink="/log-in" *ngIf="!user">Log in</a>
+  <mat-toolbar class="header__toolbar">
+    <mat-toolbar-row class="header__row">
+      <nav class="header__nav">
+        <button class="header__link" mat-button routerLink="/home">Home</button>
+        <button class="header__link" mat-button routerLink="/issues">Issues</button>
+        <button class="header__link" mat-button routerLink="/news">News</button>
+      </nav>
 
-    <button class="header__menu-button" mat-button [matMenuTriggerFor]="menu" *ngIf="user">
-      <span>{{user.username}}</span>
-      <mat-icon class="header__dropdown-arrow" svgIcon="profile" aria-hidden="false"
-        aria-label="Example thumbs up SVG icon"></mat-icon>
-    </button>
-    <mat-menu class="header__menu-block" #menu="matMenu">
-      <button mat-menu-item>Profile</button>
-      <button mat-menu-item (click)="signOut()">Sign out</button>
-    </mat-menu>
-  </mat-toolbar-row>
-</mat-toolbar>
+      <button class="header__auth-link" mat-button routerLink="/sign-up" *ngIf="!user">Sign up</button>
+      <button class="header__auth-link" mat-button routerLink="/log-in" *ngIf="!user">Log in</button>
+
+      <button class="header__menu-button" mat-button [matMenuTriggerFor]="menu" *ngIf="user">
+        <span>{{user.username}}</span>
+        <mat-icon class="header__dropdown-arrow" svgIcon="profile" aria-hidden="false"
+          aria-label="Example thumbs up SVG icon"></mat-icon>
+      </button>
+      <mat-menu class="header__menu-block" #menu="matMenu" xPosition="before">
+        <button mat-menu-item>Profile</button>
+        <button mat-menu-item (click)="signOut()">Sign out</button>
+      </mat-menu>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>

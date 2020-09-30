@@ -1,17 +1,14 @@
 @import "../../constants.scss";
 
 .header__row {
-  padding: 0 64px;
+  padding: 0 50px;
 
-  a {
+  .header__link,
+  .header__auth-link {
     text-decoration: none;
     color: white;
     font-size: 0.8em;
     padding: 0 25px;
     line-height: $height-header;
-  }
-
-  a:hover {
-    background-color: rgba($color: white, $alpha: 0.1);
   }
 }
