@@ -1,6 +1,8 @@
+@import "../../constants.scss";
+
 .header {
-  min-height: 50px;
-  height: 50px;
-  background-color: #8b7a7e;
+  min-height: $height-header;
+  height: $height-header;
+  background-color: $color-brand;
   margin-bottom: 50px;
 }

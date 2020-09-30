@@ -6,6 +6,9 @@
       <a class="header__link" routerLink="#">News</a>
     </nav>
 
+    <a class="header__auth-link" routerLink="/sign-up" *ngIf="!user">Sign up</a>
+    <a class="header__auth-link" routerLink="/log-in" *ngIf="!user">Log in</a>
+
     <button class="header__menu-button" mat-button [matMenuTriggerFor]="menu" *ngIf="user">
       <span>{{user.username}}</span>
       <mat-icon class="header__dropdown-arrow" svgIcon="profile" aria-hidden="false"
