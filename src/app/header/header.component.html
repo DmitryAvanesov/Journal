@@ -7,10 +7,12 @@
     </nav>
 
     <button class="header__menu-button" mat-button [matMenuTriggerFor]="menu" *ngIf="user">
-      {{user.username}}
+      <span>{{user.username}}</span>
+      <mat-icon class="header__dropdown-arrow" svgIcon="profile" aria-hidden="false"
+        aria-label="Example thumbs up SVG icon"></mat-icon>
     </button>
     <mat-menu class="header__menu-block" #menu="matMenu">
-      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Profile</button>
       <button mat-menu-item (click)="signOut()">Sign out</button>
     </mat-menu>
   </mat-toolbar-row>

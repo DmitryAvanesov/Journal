@@ -1,5 +1,6 @@
 .header__nav {
   display: flex;
+  flex-grow: 1;
   width: 50%;
   justify-content: flex-start;
 }
