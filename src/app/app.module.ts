@@ -11,6 +11,9 @@ import { LogInComponent } from './log-in/log-in.component';
 import { HttpConfigInterceptor } from './interceptors/http-config.interceptor';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { IssuesComponent } from './issues/issues.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,8 @@ import { HomeComponent } from './home/home.component';
     LogInComponent,
     HeaderComponent,
     HomeComponent,
+    SidebarComponent,
+    IssuesComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +33,7 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FlexLayoutModule,
   ],
   providers: [
     {
