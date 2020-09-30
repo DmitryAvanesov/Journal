@@ -22,9 +22,14 @@ export class AuthGuardService implements CanActivate {
     _state: RouterStateSnapshot
   ): Promise<boolean> {
     return new Promise((resolve, _reject) => {
-      this.authenticationService.getCurrent().subscribe(
-        (_res: UserReqRes) => {
-          return resolve(true);
+      this.authenticationService.user.subscribe(
+        (res: User | undefined) => {
+          if (res) {
+            return resolve(true);
+          }
+
+          this.router.navigate(['log-in']);
+          return resolve(false);
         },
         (_err: Error) => {
           this.router.navigate(['log-in']);

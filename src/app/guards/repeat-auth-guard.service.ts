@@ -14,10 +14,14 @@ export class RepeatAuthGuardService implements CanActivate {
 
   canActivate(): Promise<boolean> {
     return new Promise((resolve, _reject) => {
-      this.authenticationService.getCurrent().subscribe(
-        (_res: UserReqRes) => {
-          this.router.navigate(['home']);
-          return resolve(false);
+      this.authenticationService.user.subscribe(
+        (res: User | undefined) => {
+          if (res) {
+            this.router.navigate(['home']);
+            return resolve(false);
+          }
+
+          return resolve(true);
         },
         (_err: Error) => {
           return resolve(true);
