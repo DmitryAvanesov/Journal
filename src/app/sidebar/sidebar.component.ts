@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../types/User';
 
@@ -8,13 +9,19 @@ import { User } from '../types/User';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private router: Router) {}
 
-  user: User | undefined;
+  isShown: boolean;
 
   ngOnInit(): void {
-    this.authenticationService.user.subscribe((user: User | undefined) => {
-      this.user = user;
+    this.router.events.subscribe((route) => {
+      if (route instanceof NavigationEnd) {
+        if (route.url === '/sign-up' || route.url === '/log-in') {
+          this.isShown = false;
+        } else {
+          this.isShown = true;
+        }
+      }
     });
   }
 }
