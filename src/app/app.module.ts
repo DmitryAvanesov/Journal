@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { IssuesComponent } from './issues/issues.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     HomeComponent,
     SidebarComponent,
     IssuesComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
