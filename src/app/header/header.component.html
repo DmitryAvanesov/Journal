@@ -12,6 +12,8 @@
         <button class="header__link" mat-button routerLink="/home">Home</button>
         <button class="header__link" mat-button routerLink="/issues">Issues</button>
         <button class="header__link" mat-button routerLink="/news">News</button>
+        <button class="header__submission-link header__link" mat-button routerLink="/news" *ngIf="user">Make a
+          submission</button>
       </nav>
 
       <button class="header__auth-link" mat-button routerLink="/sign-up" *ngIf="!user">Sign up</button>
