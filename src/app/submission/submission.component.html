@@ -1,0 +1,35 @@
+<div class="submission">
+  <mat-card class="submission__container">
+    <mat-card-header class="submission__header">
+      <mat-card-title class="submission__title">Make a submission</mat-card-title>
+    </mat-card-header>
+
+    <form class="submission__form" [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitSubmissionForm()">
+      <mat-card-content>
+        <mat-form-field class="submission__form-field" appearance="fill">
+          <mat-label>Manuscript</mat-label>
+          <ngx-mat-file-input formControlName="manuscriptControl"></ngx-mat-file-input>
+        </mat-form-field>
+
+        <mat-form-field class="submission__form-field" appearance="fill">
+          <mat-label>Information about the author(-s)</mat-label>
+          <ngx-mat-file-input formControlName="aboutControl"></ngx-mat-file-input>
+        </mat-form-field>
+
+        <mat-form-field class="submission__form-field" appearance="fill">
+          <mat-label>Publication agreement</mat-label>
+          <ngx-mat-file-input formControlName="agreementControl"></ngx-mat-file-input>
+        </mat-form-field>
+
+        <mat-form-field class="submission__form-field" appearance="fill">
+          <mat-label>Anonymous file for double-blind peer review</mat-label>
+          <ngx-mat-file-input formControlName="anonymousControl"></ngx-mat-file-input>
+        </mat-form-field>
+      </mat-card-content>
+
+      <button mat-stroked-button class="submission__submit-button" color="primary" type="submit">
+        Make a submission
+      </button>
+    </form>
+  </mat-card>
+</div>
