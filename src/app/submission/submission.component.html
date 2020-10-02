@@ -50,26 +50,39 @@
       <mat-card-title class="submission__title">Make a submission</mat-card-title>
     </mat-card-header>
 
-    <form class="submission__form" [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitSubmissionForm()">
+    <form class="submission__form" [formGroup]="formGroup"
+      (ngSubmit)="formGroup.valid && submitSubmissionForm(manuscript?.ngControl.viewModel, about?.ngControl.viewModel, agreement?.ngControl.viewModel, anonymous?.ngControl.viewModel)">
       <mat-card-content>
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Manuscript</mat-label>
-          <ngx-mat-file-input formControlName="manuscriptControl"></ngx-mat-file-input>
+          <ngx-mat-file-input #manuscript type="file" formControlName="manuscriptControl"></ngx-mat-file-input>
+          <mat-error *ngIf="formGroup.controls.manuscriptControl.hasError('required')">
+            Manuscript is required
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Information about the author(-s)</mat-label>
-          <ngx-mat-file-input formControlName="aboutControl"></ngx-mat-file-input>
+          <ngx-mat-file-input #about formControlName="aboutControl"></ngx-mat-file-input>
+          <mat-error *ngIf="formGroup.controls.aboutControl.hasError('required')">
+            Information about the author(-s) is required
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Publication agreement</mat-label>
-          <ngx-mat-file-input formControlName="agreementControl"></ngx-mat-file-input>
+          <ngx-mat-file-input #agreement formControlName="agreementControl"></ngx-mat-file-input>
+          <mat-error *ngIf="formGroup.controls.agreementControl.hasError('required')">
+            Publication agreement is required
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Anonymous file for double-blind peer review</mat-label>
-          <ngx-mat-file-input formControlName="anonymousControl"></ngx-mat-file-input>
+          <ngx-mat-file-input #anonymous formControlName="anonymousControl"></ngx-mat-file-input>
+          <mat-error *ngIf="formGroup.controls.anonymousControl.hasError('required')">
+            Anonymous file for double-blind peer review is required
+          </mat-error>
         </mat-form-field>
       </mat-card-content>
 
