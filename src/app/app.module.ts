@@ -8,11 +8,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LogInComponent } from './log-in/log-in.component';
-import { TestComponent } from './test/test.component';
 import { HttpConfigInterceptor } from './interceptors/http-config.interceptor';
+import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { IssuesComponent } from './issues/issues.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, LogInComponent, TestComponent],
+  declarations: [
+    AppComponent,
+    SignUpComponent,
+    LogInComponent,
+    HeaderComponent,
+    HomeComponent,
+    SidebarComponent,
+    IssuesComponent,
+    FooterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,6 +35,7 @@ import { HttpConfigInterceptor } from './interceptors/http-config.interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FlexLayoutModule,
   ],
   providers: [
     {

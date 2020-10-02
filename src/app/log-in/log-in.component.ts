@@ -38,7 +38,7 @@ export class LogInComponent implements OnInit {
       .subscribe(
         (res: UserReqRes) => {
           this.dataIsIncorrect = false;
-          this.router.navigate(['test']);
+          this.router.navigate(['home']);
         },
         (err: Error) => {
           this.dataIsIncorrect = true;

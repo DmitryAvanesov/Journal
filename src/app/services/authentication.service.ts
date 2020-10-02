@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User, UserReqRes } from '../types/User';
 
@@ -9,9 +9,21 @@ import { User, UserReqRes } from '../types/User';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router) {
+    this.onInit();
+  }
 
   private url = 'http://localhost:3000/api/user';
+  user = new BehaviorSubject<User | undefined>(undefined);
+
+  onInit(): void {
+    this.getCurrent().subscribe(
+      (res: UserReqRes) => {
+        this.user.next(res.user);
+      },
+      (_err: Error) => {}
+    );
+  }
 
   signUp(user: User): Observable<UserReqRes> {
     return this.httpClient
@@ -32,6 +44,7 @@ export class AuthenticationService {
         }),
         tap((res: UserReqRes) => {
           localStorage.setItem('journal-token', res.user.token);
+          this.user.next(res.user);
         })
       );
   }
@@ -47,5 +60,6 @@ export class AuthenticationService {
   signOut(): void {
     localStorage.removeItem('journal-token');
     this.router.navigate(['/log-in']);
+    this.user.next(undefined);
   }
 }
