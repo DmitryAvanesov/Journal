@@ -19,6 +19,7 @@ import { SubmissionComponent } from './submission/submission.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatInputModule } from '@angular/material/input';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     IssuesComponent,
     FooterComponent,
     SubmissionComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

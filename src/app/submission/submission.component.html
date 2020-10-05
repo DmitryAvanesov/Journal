@@ -55,7 +55,7 @@
       <mat-card-content>
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Manuscript</mat-label>
-          <ngx-mat-file-input #manuscript formControlName="manuscriptControl"></ngx-mat-file-input>
+          <ngx-mat-file-input #manuscript [accept]="'.doc'" formControlName="manuscriptControl"></ngx-mat-file-input>
           <mat-icon class="submission__attach-icon" matSuffix svgIcon="attach" aria-hidden="false"></mat-icon>
           <mat-error *ngIf="formGroup.controls.manuscriptControl.hasError('required')">
             Manuscript is required
@@ -64,7 +64,7 @@
 
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Information about the author(-s)</mat-label>
-          <ngx-mat-file-input #about formControlName="aboutControl"></ngx-mat-file-input>
+          <ngx-mat-file-input #about [accept]="'.doc'" formControlName="aboutControl"></ngx-mat-file-input>
           <mat-icon class="submission__attach-icon" matSuffix svgIcon="attach" aria-hidden="false"></mat-icon>
           <mat-error *ngIf="formGroup.controls.aboutControl.hasError('required')">
             Information about the author(-s) is required
@@ -73,7 +73,7 @@
 
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Publication agreement</mat-label>
-          <ngx-mat-file-input #agreement formControlName="agreementControl"></ngx-mat-file-input>
+          <ngx-mat-file-input #agreement [accept]="'.doc'" formControlName="agreementControl"></ngx-mat-file-input>
           <mat-icon class="submission__attach-icon" matSuffix svgIcon="attach" aria-hidden="false"></mat-icon>
           <mat-error *ngIf="formGroup.controls.agreementControl.hasError('required')">
             Publication agreement is required
@@ -82,7 +82,7 @@
 
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Anonymous file for double-blind peer review</mat-label>
-          <ngx-mat-file-input #anonymous formControlName="anonymousControl"></ngx-mat-file-input>
+          <ngx-mat-file-input #anonymous [accept]="'.doc'" formControlName="anonymousControl"></ngx-mat-file-input>
           <mat-icon class="submission__attach-icon" matSuffix svgIcon="attach" aria-hidden="false"></mat-icon>
           <mat-error *ngIf="formGroup.controls.anonymousControl.hasError('required')">
             Anonymous file for double-blind peer review is required

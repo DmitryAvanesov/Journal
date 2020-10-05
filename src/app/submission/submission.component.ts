@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload/file-upload/file-uploader.class';
 import { SubmissionService } from '../services/submission.service';
 
@@ -20,7 +21,8 @@ export class SubmissionComponent implements OnInit {
   constructor(
     public submissionService: SubmissionService,
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   formGroup: FormGroup;
@@ -34,8 +36,8 @@ export class SubmissionComponent implements OnInit {
     this.submissionService
       .makeSubmission(manuscript, about, agreement, anonymous)
       .subscribe(
-        (res) => {
-          console.log(res);
+        (_res) => {
+          this.router.navigate(['/profile']);
         },
         (err: Error) => {
           console.log(err);
