@@ -5,6 +5,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
 const session = require("express-session");
+const fileUpload = require("express-fileupload");
 
 // Constants and middlewares
 
@@ -23,6 +24,11 @@ app.use(
     cookie: { maxAge: 60000 },
     resave: false,
     saveUninitialized: false,
+  })
+);
+app.use(
+  fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 },
   })
 );
 

@@ -15,11 +15,13 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    request = request.clone({
-      headers: request.headers.set('Content-Type', 'application/json'),
-    });
+    if (request.url !== 'http://localhost:3000/api/file/submission') {
+      request = request.clone({
+        headers: request.headers.set('Content-Type', 'application/json'),
+      });
+    }
 
-    if (request.url === 'http://localhost:3000/api/user/current/') {
+    if (request.url === 'http://localhost:3000/api/user/current') {
       request = request.clone({
         headers: request.headers.set(
           'Authorization',

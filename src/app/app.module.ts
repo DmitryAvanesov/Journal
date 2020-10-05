@@ -15,6 +15,11 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { IssuesComponent } from './issues/issues.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterComponent } from './footer/footer.component';
+import { SubmissionComponent } from './submission/submission.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { MatInputModule } from '@angular/material/input';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,8 @@ import { FooterComponent } from './footer/footer.component';
     SidebarComponent,
     IssuesComponent,
     FooterComponent,
+    SubmissionComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +43,9 @@ import { FooterComponent } from './footer/footer.component';
     ReactiveFormsModule,
     HttpClientModule,
     FlexLayoutModule,
+    FileUploadModule,
+    MatInputModule,
+    MaterialFileInputModule,
   ],
   providers: [
     {
