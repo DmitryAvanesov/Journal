@@ -2,27 +2,17 @@ const mongoose = require("mongoose");
 const router = require("express").Router();
 const multer = require("multer");
 
-let storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, PATH);
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
+const uploadPath = "./uploads/";
 
-let upload = multer({
-  storage: storage,
-});
-
-router.post("/submission", upload.single("image"), (req, res, _next) => {
-  if (!req.file) {
+router.post("/submission", (req, res, _next) => {
+  if (!req.files) {
     console.log("No file is available!");
     return res.send({
       success: false,
     });
   } else {
-    console.log("File is available!");
+    req.files.fileKey.mv(`${uploadPath}/${req.files.fileKey.name}`);
+
     return res.send({
       success: true,
     });

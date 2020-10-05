@@ -9,31 +9,20 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class SubmissionService {
-  constructor(private httpClient: HttpClient, private router: Router) {
-    this.onInit();
-  }
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   private url = 'http://localhost:3000/api/file';
-  uploader: FileUploader = new FileUploader({
-    url: this.url,
-    itemAlias: 'image',
-  });
 
-  onInit(): void {
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-    };
+  makeSubmission(file: File): Observable<FormData> {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', file);
 
-    this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log('Uploaded File Details:', item);
-    };
-  }
-
-  makeSubmission(file: File): Observable<File> {
-    return this.httpClient.post<any>(`${this.url}/submission`, file).pipe(
-      catchError((err) => {
-        throw new Error(JSON.stringify(err));
-      })
-    );
+    return this.httpClient
+      .post<FormData>(`${this.url}/submission`, formData)
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
   }
 }

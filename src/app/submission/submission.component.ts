@@ -20,21 +20,21 @@ export class SubmissionComponent implements OnInit {
   formGroup: FormGroup;
 
   submitSubmissionForm(
-    manuscript: File,
-    about: File,
-    agreement: File,
-    anonymous: File
+    manuscript,
+    about
+    // agreement: File,
+    // anonymous: File
   ): void {
     console.log(manuscript);
 
-    // this.submissionService.makeSubmission(manuscript).subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //   },
-    //   (err: Error) => {
-    //     console.log(err);
-    //   }
-    // );
+    this.submissionService.makeSubmission(manuscript).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
   }
 
   ngOnInit(): void {

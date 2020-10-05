@@ -51,11 +51,12 @@
     </mat-card-header>
 
     <form class="submission__form" [formGroup]="formGroup"
-      (ngSubmit)="formGroup.valid && submitSubmissionForm(manuscript?.ngControl.viewModel, about?.ngControl.viewModel, agreement?.ngControl.viewModel, anonymous?.ngControl.viewModel)">
+      (ngSubmit)="formGroup.valid && submitSubmissionForm(manuscript.value.files[0], about.value.files[0])">
       <mat-card-content>
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Manuscript</mat-label>
-          <ngx-mat-file-input #manuscript type="file" formControlName="manuscriptControl"></ngx-mat-file-input>
+          <ngx-mat-file-input #manuscript formControlName="manuscriptControl"></ngx-mat-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
           <mat-error *ngIf="formGroup.controls.manuscriptControl.hasError('required')">
             Manuscript is required
           </mat-error>
@@ -64,6 +65,7 @@
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Information about the author(-s)</mat-label>
           <ngx-mat-file-input #about formControlName="aboutControl"></ngx-mat-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
           <mat-error *ngIf="formGroup.controls.aboutControl.hasError('required')">
             Information about the author(-s) is required
           </mat-error>

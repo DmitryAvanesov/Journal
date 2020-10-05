@@ -16,9 +16,9 @@ import { IssuesComponent } from './issues/issues.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterComponent } from './footer/footer.component';
 import { SubmissionComponent } from './submission/submission.component';
-import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatInputModule } from '@angular/material/input';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [
@@ -41,9 +41,9 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     HttpClientModule,
     FlexLayoutModule,
-    NgxMatFileInputModule,
     FileUploadModule,
     MatInputModule,
+    MaterialFileInputModule,
   ],
   providers: [
     {
