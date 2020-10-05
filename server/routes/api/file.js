@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
 const router = require("express").Router();
-const multer = require("multer");
+const fs = require("fs");
 
 const uploadPath = "./uploads/";
 
@@ -11,7 +10,25 @@ router.post("/submission", (req, res, _next) => {
       success: false,
     });
   } else {
-    req.files.fileKey.mv(`${uploadPath}/${req.files.fileKey.name}`);
+    fs.readdir(uploadPath, (_err, folders) => {
+      const numberOfFolders = folders.length;
+      console.log(req);
+
+      fs.mkdir(`${uploadPath}/${numberOfFolders}`, (_err) => {
+        req.files.manuscript.mv(
+          `${uploadPath}/${numberOfFolders}/${req.files.manuscript.name}`
+        );
+        req.files.about.mv(
+          `${uploadPath}/${numberOfFolders}/${req.files.about.name}`
+        );
+        req.files.agreement.mv(
+          `${uploadPath}/${numberOfFolders}/${req.files.agreement.name}`
+        );
+        req.files.anonymous.mv(
+          `${uploadPath}/${numberOfFolders}/${req.files.anonymous.name}`
+        );
+      });
+    });
 
     return res.send({
       success: true,

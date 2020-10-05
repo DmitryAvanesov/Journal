@@ -21,8 +21,7 @@
 
       <button class="header__menu-button" mat-button [matMenuTriggerFor]="menu" *ngIf="user">
         <span>{{user.username}}</span>
-        <mat-icon class="header__dropdown-arrow" svgIcon="profile" aria-hidden="false"
-          aria-label="Example thumbs up SVG icon"></mat-icon>
+        <mat-icon class="header__dropdown-arrow" svgIcon="dropdown" aria-hidden="false"></mat-icon>
       </button>
       <mat-menu class="header__menu-block" #menu="matMenu" xPosition="before">
         <button mat-menu-item>Profile</button>

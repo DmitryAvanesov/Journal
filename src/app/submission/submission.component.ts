@@ -6,6 +6,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { FileUploader } from 'ng2-file-upload/file-upload/file-uploader.class';
 import { SubmissionService } from '../services/submission.service';
 
@@ -15,34 +17,43 @@ import { SubmissionService } from '../services/submission.service';
   styleUrls: ['./submission.component.scss'],
 })
 export class SubmissionComponent implements OnInit {
-  constructor(public submissionService: SubmissionService) {}
+  constructor(
+    public submissionService: SubmissionService,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {}
 
   formGroup: FormGroup;
 
   submitSubmissionForm(
-    manuscript,
-    about
-    // agreement: File,
-    // anonymous: File
+    manuscript: File,
+    about: File,
+    agreement: File,
+    anonymous: File
   ): void {
-    console.log(manuscript);
-
-    this.submissionService.makeSubmission(manuscript).subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (err: Error) => {
-        console.log(err);
-      }
-    );
+    this.submissionService
+      .makeSubmission(manuscript, about, agreement, anonymous)
+      .subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err: Error) => {
+          console.log(err);
+        }
+      );
   }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
       manuscriptControl: new FormControl('', [Validators.required]),
-      aboutControl: new FormControl(''),
-      agreementControl: new FormControl(''),
-      anonymousControl: new FormControl(''),
+      aboutControl: new FormControl('', [Validators.required]),
+      agreementControl: new FormControl('', [Validators.required]),
+      anonymousControl: new FormControl('', [Validators.required]),
     });
+
+    this.iconRegistry.addSvgIcon(
+      'attach',
+      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/attach.svg')
+    );
   }
 }

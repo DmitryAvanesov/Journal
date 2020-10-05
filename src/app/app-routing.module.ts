@@ -22,7 +22,11 @@ const routes: Routes = [
   },
   { path: 'home', component: HomeComponent },
   { path: 'issues', component: IssuesComponent },
-  { path: 'submission', component: SubmissionComponent },
+  {
+    path: 'submission',
+    component: SubmissionComponent,
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({

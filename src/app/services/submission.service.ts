@@ -13,9 +13,17 @@ export class SubmissionService {
 
   private url = 'http://localhost:3000/api/file';
 
-  makeSubmission(file: File): Observable<FormData> {
+  makeSubmission(
+    manuscript: File,
+    about: File,
+    agreement: File,
+    anonymous: File
+  ): Observable<FormData> {
     const formData: FormData = new FormData();
-    formData.append('fileKey', file);
+    formData.append('manuscript', manuscript);
+    formData.append('about', about);
+    formData.append('agreement', agreement);
+    formData.append('anonymous', anonymous);
 
     return this.httpClient
       .post<FormData>(`${this.url}/submission`, formData)

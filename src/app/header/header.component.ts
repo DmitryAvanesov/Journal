@@ -31,8 +31,8 @@ export class HeaderComponent implements OnInit {
     });
 
     this.iconRegistry.addSvgIcon(
-      'profile',
-      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/profile.svg')
+      'dropdown',
+      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/dropdown.svg')
     );
   }
 }
