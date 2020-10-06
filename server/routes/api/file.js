@@ -1,7 +1,11 @@
 const router = require("express").Router();
 const fs = require("fs");
+const mongoose = require("mongoose");
+const Grid = require("gridfs-stream");
 
 const uploadPath = "./uploads/";
+Grid.mongo = mongoose.mongo;
+mongoose.set("useCreateIndex", true);
 
 router.post("/submission", (req, res, _next) => {
   if (!req.files) {
@@ -10,30 +14,22 @@ router.post("/submission", (req, res, _next) => {
       success: false,
     });
   } else {
-    fs.readdir(uploadPath, (_err, folders) => {
-      const numberOfFolders = folders.length;
-      console.log(req);
-
-      fs.mkdir(`${uploadPath}/${numberOfFolders}`, (_err) => {
-        req.files.manuscript.mv(
-          `${uploadPath}/${numberOfFolders}/${req.files.manuscript.name}`
-        );
-        req.files.about.mv(
-          `${uploadPath}/${numberOfFolders}/${req.files.about.name}`
-        );
-        req.files.agreement.mv(
-          `${uploadPath}/${numberOfFolders}/${req.files.agreement.name}`
-        );
-        req.files.anonymous.mv(
-          `${uploadPath}/${numberOfFolders}/${req.files.anonymous.name}`
-        );
-      });
-    });
+    saveFile(req.files.manuscript);
+    saveFile(req.files.about);
+    saveFile(req.files.agreement);
+    saveFile(req.files.anonymous);
 
     return res.send({
       success: true,
     });
   }
 });
+
+const saveFile = (file) => {
+  const writeStream = Grid(mongoose.connection.db).createWriteStream({
+    filename: file.name,
+  });
+  fs.createReadStream(file.tempFilePath).pipe(writeStream);
+};
 
 module.exports = router;
