@@ -2,8 +2,8 @@ const router = require("express").Router();
 const fs = require("fs");
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
+const { v4: uuidv4 } = require("uuid");
 const auth = require("../auth");
-const { resolve } = require("path");
 
 const UserSubmission = mongoose.model("UserSubmission");
 const File = mongoose.model("File");
@@ -35,31 +35,28 @@ router.post("/submission", auth.required, async (req, res, _next) => {
 });
 
 const saveFile = (file, userId) => {
+  const filename = `${file.name} ${uuidv4()}`;
+
   const writeStream = Grid(mongoose.connection.db).createWriteStream({
-    filename: file.name,
+    filename,
   });
 
   fs.createReadStream(file.tempFilePath).pipe(writeStream);
 
   writeStream.on("finish", () => {
-    File.findOne(
-      {
-        filename: file.name,
-      },
-      (_err, res) => {
-        submissionIds.push(mongoose.Types.ObjectId(res.id));
+    File.findOne({ filename }, (_err, res) => {
+      submissionIds.push(mongoose.Types.ObjectId(res.id));
 
-        if (submissionIds.length === 4) {
-          const userSubmission = {
-            user: mongoose.Types.ObjectId(userId),
-            submission: submissionIds,
-          };
+      if (submissionIds.length === 4) {
+        const userSubmission = {
+          user: mongoose.Types.ObjectId(userId),
+          submission: submissionIds,
+        };
 
-          const finalUserSubmission = new UserSubmission(userSubmission);
-          finalUserSubmission.save();
-        }
+        const finalUserSubmission = new UserSubmission(userSubmission);
+        finalUserSubmission.save();
       }
-    );
+    });
   });
 };
 
