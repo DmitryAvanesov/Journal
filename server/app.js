@@ -47,6 +47,8 @@ mongoose.set("debug", true);
 // Models and routes
 
 require("./models/User");
+require("./models/UserSubmission");
+require("./models/File");
 require("./config/password");
 app.use(require("./routes"));
 
