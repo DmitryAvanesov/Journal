@@ -3,7 +3,6 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
 
-const uploadPath = "./uploads/";
 Grid.mongo = mongoose.mongo;
 mongoose.set("useCreateIndex", true);
 
