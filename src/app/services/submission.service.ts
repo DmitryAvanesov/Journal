@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Submission } from '../types/Submission';
 
 @Injectable({
   providedIn: 'root',
@@ -32,11 +33,13 @@ export class SubmissionService {
     );
   }
 
-  getSubmissions(): Observable<any> {
-    return this.httpClient.get<any>(`${this.url}/user-submissions`).pipe(
-      catchError((err) => {
-        throw new Error(JSON.stringify(err));
-      })
-    );
+  getSubmissions(): Observable<Submission[][]> {
+    return this.httpClient
+      .get<Submission[][]>(`${this.url}/user-submissions`)
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
   }
 }

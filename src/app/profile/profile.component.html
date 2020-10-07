@@ -1,2 +1,7 @@
 <h1>{{user.username}}</h1>
 <h2>Submissions</h2>
+<div *ngFor="let submission of submissions">
+  <div *ngFor="let file of submission">
+    {{file.name}}
+  </div>
+</div>

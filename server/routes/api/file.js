@@ -6,7 +6,8 @@ const { v4: uuidv4 } = require("uuid");
 const auth = require("../auth");
 
 const UserSubmission = mongoose.model("UserSubmission");
-const uploadPath = "./uploads/";
+const uploadPath = "./uploads";
+const numberOfSubmissionFiles = 4;
 mongoose.set("useCreateIndex", true);
 Grid.mongo = mongoose.mongo;
 
@@ -57,10 +58,35 @@ router.get("/user-submissions", auth.required, (req, res, _next) => {
     payload: { id },
   } = req;
 
-  UserSubmission.find(
-    { user: mongoose.Types.ObjectId(id) },
-    (_err, userSubmissions) => {}
-  );
+  const buffers = [];
+
+  UserSubmission.find({ user: id }, (_err, userSubmissions) => {
+    for (const userSubmission of userSubmissions) {
+      const curBuffers = [];
+
+      fs.readdir(`${uploadPath}/${userSubmission.number}`, (_err, files) => {
+        for (const file of files) {
+          fs.readFile(
+            `${uploadPath}/${userSubmission.number}/${file}`,
+            (_err, data) => {
+              curBuffers.push({
+                name: file,
+                content: data,
+              });
+
+              if (curBuffers.length === numberOfSubmissionFiles) {
+                buffers.push(curBuffers);
+              }
+
+              if (buffers.length === userSubmissions.length) {
+                return res.json(buffers);
+              }
+            }
+          );
+        }
+      });
+    }
+  });
 });
 
 module.exports = router;
