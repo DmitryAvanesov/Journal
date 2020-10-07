@@ -18,19 +18,25 @@ export class SubmissionService {
     about: File,
     agreement: File,
     anonymous: File
-  ): Observable<FormData> {
+  ): Observable<void> {
     const formData: FormData = new FormData();
     formData.append('manuscript', manuscript);
     formData.append('about', about);
     formData.append('agreement', agreement);
     formData.append('anonymous', anonymous);
 
-    return this.httpClient
-      .post<FormData>(`${this.url}/submission`, formData)
-      .pipe(
-        catchError((err) => {
-          throw new Error(JSON.stringify(err));
-        })
-      );
+    return this.httpClient.post<void>(`${this.url}/submission`, formData).pipe(
+      catchError((err) => {
+        throw new Error(JSON.stringify(err));
+      })
+    );
+  }
+
+  getSubmissions(): Observable<any> {
+    return this.httpClient.get<any>(`${this.url}/user-submissions`).pipe(
+      catchError((err) => {
+        throw new Error(JSON.stringify(err));
+      })
+    );
   }
 }

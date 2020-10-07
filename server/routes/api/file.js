@@ -6,11 +6,9 @@ const { v4: uuidv4 } = require("uuid");
 const auth = require("../auth");
 
 const UserSubmission = mongoose.model("UserSubmission");
-const File = mongoose.model("File");
+const uploadPath = "./uploads/";
 mongoose.set("useCreateIndex", true);
 Grid.mongo = mongoose.mongo;
-
-const submissionIds = [];
 
 router.post("/submission", auth.required, async (req, res, _next) => {
   const {
@@ -23,41 +21,46 @@ router.post("/submission", auth.required, async (req, res, _next) => {
       success: false,
     });
   } else {
-    saveFile(req.files.manuscript, id);
-    saveFile(req.files.about, id);
-    saveFile(req.files.agreement, id);
-    saveFile(req.files.anonymous, id);
+    fs.readdir(uploadPath, (_err, folders) => {
+      const numberOfFolders = folders.length;
 
-    return res.send({
-      success: true,
+      fs.mkdir(`${uploadPath}/${numberOfFolders}`, (_err) => {
+        req.files.manuscript.mv(
+          `${uploadPath}/${numberOfFolders}/${req.files.manuscript.name}`
+        );
+        req.files.about.mv(
+          `${uploadPath}/${numberOfFolders}/${req.files.about.name}`
+        );
+        req.files.agreement.mv(
+          `${uploadPath}/${numberOfFolders}/${req.files.agreement.name}`
+        );
+        req.files.anonymous.mv(
+          `${uploadPath}/${numberOfFolders}/${req.files.anonymous.name}`
+        );
+      });
+
+      const userSubmission = {
+        user: mongoose.Types.ObjectId(id),
+        number: numberOfFolders,
+      };
+
+      const finalUserSubmission = new UserSubmission(userSubmission);
+      finalUserSubmission.save();
+
+      return;
     });
   }
 });
 
-const saveFile = (file, userId) => {
-  const filename = `${file.name} ${uuidv4()}`;
+router.get("/user-submissions", auth.required, (req, res, _next) => {
+  const {
+    payload: { id },
+  } = req;
 
-  const writeStream = Grid(mongoose.connection.db).createWriteStream({
-    filename,
-  });
-
-  fs.createReadStream(file.tempFilePath).pipe(writeStream);
-
-  writeStream.on("finish", () => {
-    File.findOne({ filename }, (_err, res) => {
-      submissionIds.push(mongoose.Types.ObjectId(res.id));
-
-      if (submissionIds.length === 4) {
-        const userSubmission = {
-          user: mongoose.Types.ObjectId(userId),
-          submission: submissionIds,
-        };
-
-        const finalUserSubmission = new UserSubmission(userSubmission);
-        finalUserSubmission.save();
-      }
-    });
-  });
-};
+  UserSubmission.find(
+    { user: mongoose.Types.ObjectId(id) },
+    (_err, userSubmissions) => {}
+  );
+});
 
 module.exports = router;
