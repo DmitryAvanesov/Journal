@@ -1,5 +1,5 @@
 <div class="profile">
-  <h1>{{user.username}}</h1>
+  <h1>{{user?.username}}</h1>
   <h2>Submissions</h2>
   <mat-card class="profile__submission-container" *ngFor="let submission of submissions; let i = index">
     <mat-card-header class="profile__submission-header">

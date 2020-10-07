@@ -23,8 +23,8 @@ export class AuthGuardService implements CanActivate {
     _state: RouterStateSnapshot
   ): Promise<boolean> {
     return new Promise((resolve, _reject) => {
-      this.authenticationService.getCurrent().subscribe(
-        (res: UserReqRes) => {
+      this.authenticationService.user.subscribe(
+        (res: User | undefined) => {
           return resolve(true);
         },
         (err: Error) => {
