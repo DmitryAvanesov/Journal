@@ -29,6 +29,8 @@ app.use(
 app.use(
   fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
+    useTempFiles: true,
+    tempFileDir: "./tmp/",
   })
 );
 
@@ -45,6 +47,8 @@ mongoose.set("debug", true);
 // Models and routes
 
 require("./models/User");
+require("./models/UserSubmission");
+require("./models/File");
 require("./config/password");
 app.use(require("./routes"));
 

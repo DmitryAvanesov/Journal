@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { User, UserReqRes } from '../types/User';
 import { AuthenticationService } from '../services/authentication.service';
+import { last, skip } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -24,14 +25,9 @@ export class AuthGuardService implements CanActivate {
     return new Promise((resolve, _reject) => {
       this.authenticationService.user.subscribe(
         (res: User | undefined) => {
-          if (res) {
-            return resolve(true);
-          }
-
-          this.router.navigate(['log-in']);
-          return resolve(false);
+          return resolve(true);
         },
-        (_err: Error) => {
+        (err: Error) => {
           this.router.navigate(['log-in']);
           return resolve(false);
         }

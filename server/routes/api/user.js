@@ -42,7 +42,7 @@ router.post("/sign-up", auth.optional, async (req, res, _next) => {
   }
 
   const existingUser = await User.findOne({ username: user.username });
-  console.log(existingUser);
+
   if (existingUser) {
     return res.status(422).json({
       errors: {

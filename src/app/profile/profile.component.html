@@ -1,1 +1,14 @@
-<p>profile works!</p>
+<div class="profile">
+  <h1>{{user?.username}}</h1>
+  <h2>Submissions</h2>
+  <mat-card class="profile__submission-container" *ngFor="let submission of submissions; let i = index">
+    <mat-card-header class="profile__submission-header">
+      <mat-card-title class="profile__submission-title">{{i}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="profile__submission-content">
+      <p *ngFor="let file of submission">
+        {{file.name}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
