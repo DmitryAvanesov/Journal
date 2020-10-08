@@ -6,8 +6,11 @@
       <mat-card-title class="profile__submission-title">{{i}}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="profile__submission-content">
-      <p *ngFor="let file of submission">
-        {{file.name}}
+      <p *ngFor="let file of submission.files">
+        {{file}}
+        <mat-icon class="profile__submission-download" aria-hidden="false"
+          (click)="download({ submission: submission.number, name: file})">
+          home</mat-icon>
       </p>
     </mat-card-content>
   </mat-card>

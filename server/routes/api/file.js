@@ -2,7 +2,7 @@ const router = require("express").Router();
 const fs = require("fs");
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
-const { v4: uuidv4 } = require("uuid");
+const fileDownload = require("js-file-download");
 const auth = require("../auth");
 
 const UserSubmission = mongoose.model("UserSubmission");
@@ -48,7 +48,7 @@ router.post("/submission", auth.required, async (req, res, _next) => {
       const finalUserSubmission = new UserSubmission(userSubmission);
       finalUserSubmission.save();
 
-      return;
+      return res.json();
     });
   }
 });
@@ -58,35 +58,40 @@ router.get("/user-submissions", auth.required, (req, res, _next) => {
     payload: { id },
   } = req;
 
-  const buffers = [];
+  const submissions = [];
 
   UserSubmission.find({ user: id }, (_err, userSubmissions) => {
     for (const userSubmission of userSubmissions) {
-      const curBuffers = [];
+      const curSubmission = {
+        number: userSubmission.number,
+        files: [],
+      };
 
       fs.readdir(`${uploadPath}/${userSubmission.number}`, (_err, files) => {
         for (const file of files) {
-          fs.readFile(
-            `${uploadPath}/${userSubmission.number}/${file}`,
-            (_err, data) => {
-              curBuffers.push({
-                name: file,
-                content: data,
-              });
+          curSubmission.files.push(file);
 
-              if (curBuffers.length === numberOfSubmissionFiles) {
-                buffers.push(curBuffers);
-              }
+          if (curSubmission.files.length === numberOfSubmissionFiles) {
+            submissions.push(curSubmission);
+          }
 
-              if (buffers.length === userSubmissions.length) {
-                return res.json(buffers);
-              }
-            }
-          );
+          if (submissions.length === userSubmissions.length) {
+            return res.json(submissions);
+          }
         }
       });
     }
   });
+});
+
+router.get("/download", (req, res, _next) => {
+  const { submission, name } = req.query;
+  const path = `${uploadPath}/${submission}/${name}`;
+
+  fs.readFile(path, (err, data) => {
+    fileDownload(data);
+  });
+  return res.json();
 });
 
 module.exports = router;

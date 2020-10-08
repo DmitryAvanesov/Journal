@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { SubmissionService } from '../services/submission.service';
-import { Submission } from '../types/Submission';
+import { SubFile, Submission } from '../types/Submission';
 import { User } from '../types/User';
 
 @Component({
@@ -16,7 +16,16 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   user: User | undefined;
-  submissions: Submission[][];
+  submissions: Submission[];
+
+  download(subFile: SubFile): void {
+    this.submissionService.downloadFile(subFile).subscribe(
+      (_res) => {},
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.authenticationService.user.subscribe((user: User | undefined) => {
@@ -25,7 +34,6 @@ export class ProfileComponent implements OnInit {
 
     this.submissionService.getSubmissions().subscribe((res) => {
       this.submissions = res;
-      console.log(this.submissions);
     });
   }
 }
