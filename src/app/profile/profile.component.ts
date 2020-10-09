@@ -4,6 +4,8 @@ import { SubmissionService } from '../services/submission.service';
 import { SubFile, Submission } from '../types/Submission';
 import { User } from '../types/User';
 import * as FileSaver from 'file-saver';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +15,9 @@ import * as FileSaver from 'file-saver';
 export class ProfileComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
-    private submissionService: SubmissionService
+    private submissionService: SubmissionService,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
   ) {}
 
   user: User | undefined;
@@ -39,5 +43,10 @@ export class ProfileComponent implements OnInit {
     this.submissionService.getSubmissions().subscribe((res) => {
       this.submissions = res;
     });
+
+    this.iconRegistry.addSvgIcon(
+      'download',
+      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/download.svg')
+    );
   }
 }
