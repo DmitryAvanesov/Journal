@@ -1,4 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Text } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -42,12 +43,12 @@ export class SubmissionService {
       );
   }
 
-  downloadFile(subFile: SubFile): Observable<void> {
+  downloadFile(subFile: SubFile): Observable<ArrayBuffer> {
     const params = new HttpParams()
       .set('submission', subFile.submission.toString())
       .set('name', subFile.name);
     return this.httpClient
-      .get<void>(`${this.url}/download`, {
+      .get<ArrayBuffer>(`${this.url}/download`, {
         params,
       })
       .pipe(

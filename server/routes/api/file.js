@@ -2,7 +2,7 @@ const router = require("express").Router();
 const fs = require("fs");
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
-const fileDownload = require("js-file-download");
+const textract = require("textract");
 const auth = require("../auth");
 
 const UserSubmission = mongoose.model("UserSubmission");
@@ -87,11 +87,7 @@ router.get("/user-submissions", auth.required, (req, res, _next) => {
 router.get("/download", (req, res, _next) => {
   const { submission, name } = req.query;
   const path = `${uploadPath}/${submission}/${name}`;
-
-  fs.readFile(path, (err, data) => {
-    fileDownload(data);
-  });
-  return res.json();
+  return res.download(path, name);
 });
 
 module.exports = router;

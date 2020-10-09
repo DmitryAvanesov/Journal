@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 
 # Other
-server/tmp/
+server/uploads/*
