@@ -2,8 +2,7 @@
 
   <h1>{{user?.username}}</h1>
 
-  <img [src]="image" alt="" [style.width]="'200px'" [style.height]="'200px'">
-  <div class="profile__image">
+  <div class="profile__image" [style.background-image]="'url(' + image + ')'">
     <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" (change)="uploadImage($event.target.files[0])" />
     <label for="edit">
       <mat-icon class="profile__image-button" aria-hidden="false">

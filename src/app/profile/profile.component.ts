@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { SubmissionService } from '../services/submission.service';
 import { SubFile, Submission } from '../types/Submission';
@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   user: User | undefined;
-  image: SafeUrl | undefined;
+  image: string | undefined;
   submissions: Submission[];
 
   downloadSubmissionFile(subFile: SubFile): void {
@@ -63,8 +63,11 @@ export class ProfileComponent implements OnInit {
           ''
         )
       );
-      this.image = this.sanitizer.bypassSecurityTrustUrl(
-        `data:image/jpeg;base64,${base64String}`
+      this.image = this.sanitizer.sanitize(
+        SecurityContext.RESOURCE_URL,
+        this.sanitizer.bypassSecurityTrustResourceUrl(
+          `data:image/jpeg;base64,${base64String}`
+        )
       );
     });
 
