@@ -20,7 +20,14 @@ router.post("/submission", auth.required, (req, res, _next) => {
     });
   } else {
     fs.readdir(uploadPath, (_err, folders) => {
-      const numberOfFolders = folders.length;
+      const numberOfFolders =
+        folders.reduce(
+          (previousValue, currentValue) =>
+            parseInt(currentValue) > previousValue
+              ? parseInt(currentValue)
+              : previousValue,
+          0
+        ) + 1;
 
       fs.mkdir(`${uploadPath}/${numberOfFolders}`, (_err) => {
         req.files.manuscript.mv(

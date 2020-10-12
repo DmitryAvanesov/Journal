@@ -18,9 +18,14 @@ router.post("/upload", auth.required, (req, res, _next) => {
     });
   } else {
     fs.readdir(uploadPath, (_err, images) => {
-      const numberOfImages = images.length;
-
-      console.log(req.files.image);
+      const numberOfImages =
+        images.reduce(
+          (previousValue, currentValue) =>
+            parseInt(currentValue) > previousValue
+              ? parseInt(currentValue)
+              : previousValue,
+          0
+        ) + 1;
 
       req.files.image.mv(
         `${uploadPath}/${numberOfImages}.${req.files.image.name
