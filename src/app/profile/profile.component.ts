@@ -5,8 +5,9 @@ import { SubFile, Submission } from '../types/Submission';
 import { User } from '../types/User';
 import * as FileSaver from 'file-saver';
 import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ImageService } from '../services/image.service';
+import { Res } from '../types/Res';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +24,7 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   user: User | undefined;
-  image;
+  image: SafeUrl | undefined;
   submissions: Submission[];
 
   downloadSubmissionFile(subFile: SubFile): void {
@@ -54,7 +55,20 @@ export class ProfileComponent implements OnInit {
       this.user = user;
     });
 
-    this.submissionService.getSubmissions().subscribe((res) => {
+    this.imageService.downloadImage().subscribe((image: Res) => {
+      console.log(image);
+      const base64String = btoa(
+        new Uint8Array(image.data).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ''
+        )
+      );
+      this.image = this.sanitizer.bypassSecurityTrustUrl(
+        `data:image/jpeg;base64,${base64String}`
+      );
+    });
+
+    this.submissionService.getSubmissions().subscribe((res: Submission[]) => {
       this.submissions = res;
     });
 

@@ -1,5 +1,8 @@
 <div class="profile">
+
   <h1>{{user?.username}}</h1>
+
+  <img [src]="image" alt="" [style.width]="'200px'" [style.height]="'200px'">
   <div class="profile__image">
     <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" (change)="uploadImage($event.target.files[0])" />
     <label for="edit">
@@ -15,7 +18,9 @@
       </mat-icon>
     </label>
   </div>
+
   <h2>Submissions</h2>
+
   <div class="profile__submission-block">
     <mat-card class="profile__submission-container" *ngFor="let submission of submissions">
       <mat-card-header class="profile__submission-header">
@@ -31,7 +36,9 @@
       </mat-card-content>
     </mat-card>
   </div>
+
   <p *ngIf="!submissions">
     You have no submissions
   </p>
+
 </div>

@@ -26,16 +26,13 @@ router.post("/upload", auth.required, (req, res, _next) => {
               : previousValue,
           0
         ) + 1;
+      const extension = `${req.files.image.name.split(".").pop()}`;
 
-      req.files.image.mv(
-        `${uploadPath}/${numberOfImages}.${req.files.image.name
-          .split(".")
-          .pop()}`
-      );
+      req.files.image.mv(`${uploadPath}/${numberOfImages}.${extension}`);
 
       const userImage = {
         user: mongoose.Types.ObjectId(id),
-        number: numberOfImages,
+        name: `${numberOfImages}.${extension}`,
       };
 
       const finalUserImage = new UserImage(userImage);
@@ -51,8 +48,8 @@ router.get("/download", auth.required, (req, res, _next) => {
     payload: { id },
   } = req;
 
-  UserImage.find({ user: id }, (_err, image) => {
-    fs.readFile(`${uploadPath}/${image.number}.png`, (err, data) => {
+  UserImage.findOne({ user: id }, (_err, image) => {
+    fs.readFile(`${uploadPath}/${image.name}`, (_err, data) => {
       return res.json(data);
     });
   });

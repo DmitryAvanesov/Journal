@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { Res } from '../types/Res';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,14 @@ export class ImageService {
     formData.append('image', image);
 
     return this.httpClient.post<void>(`${this.url}/upload`, formData).pipe(
+      catchError((err) => {
+        throw new Error(JSON.stringify(err));
+      })
+    );
+  }
+
+  downloadImage(): Observable<Res> {
+    return this.httpClient.get<Res>(`${this.url}/download`).pipe(
       catchError((err) => {
         throw new Error(JSON.stringify(err));
       })

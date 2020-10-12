@@ -28,7 +28,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
       request.url === 'http://localhost:3000/api/user/current/' ||
       request.url === 'http://localhost:3000/api/file/submission' ||
       request.url === 'http://localhost:3000/api/file/user-submissions' ||
-      request.url === 'http://localhost:3000/api/image/upload'
+      request.url === 'http://localhost:3000/api/image/upload' ||
+      request.url === 'http://localhost:3000/api/image/download'
     ) {
       request = request.clone({
         headers: request.headers.set(
@@ -43,6 +44,12 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         responseType: 'arraybuffer',
       });
     }
+
+    // if (request.url === 'http://localhost:3000/api/image/download') {
+    //   request = request.clone({
+    //     responseType: 'arraybuffer',
+    //   });
+    // }
 
     return next.handle(request);
   }
