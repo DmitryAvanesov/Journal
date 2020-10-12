@@ -41,12 +41,12 @@ export class ProfileComponent implements OnInit {
   uploadImage(image: File): void {
     console.log(image);
 
-    // this.imageService.uploadImage(image).subscribe(
-    //   (res) => {},
-    //   (err: Error) => {
-    //     console.log(err);
-    //   }
-    // );
+    this.imageService.uploadImage(image).subscribe(
+      (res) => {},
+      (err: Error) => {
+        console.log(err);
+      }
+    );
   }
 
   ngOnInit(): void {

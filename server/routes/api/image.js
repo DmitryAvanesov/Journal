@@ -20,7 +20,13 @@ router.post("/upload", auth.required, (req, res, _next) => {
     fs.readdir(uploadPath, (_err, images) => {
       const numberOfImages = images.length;
 
-      req.files.image.mv(`${uploadPath}/${numberOfImages}.png`);
+      console.log(req.files.image);
+
+      req.files.image.mv(
+        `${uploadPath}/${numberOfImages}.${req.files.image.name
+          .split(".")
+          .pop()}`
+      );
 
       const userImage = {
         user: mongoose.Types.ObjectId(id),
