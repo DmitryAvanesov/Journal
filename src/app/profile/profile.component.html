@@ -1,5 +1,20 @@
 <div class="profile">
   <h1>{{user?.username}}</h1>
+  <div class="profile__image">
+    <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" (change)="uploadImage($event.target.files[0])" />
+    <label for="edit">
+      <mat-icon class="profile__image-button" aria-hidden="false">
+        home
+      </mat-icon>
+    </label>
+
+    <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" />
+    <label for="delete">
+      <mat-icon class="profile__image-button" svgIcon="download" aria-hidden="false">
+
+      </mat-icon>
+    </label>
+  </div>
   <h2>Submissions</h2>
   <div class="profile__submission-block">
     <mat-card class="profile__submission-container" *ngFor="let submission of submissions; let i = index">
@@ -10,10 +25,13 @@
         <p *ngFor="let file of submission.files">
           {{file}}
           <mat-icon class="profile__submission-download" svgIcon="download" aria-hidden="false"
-            (click)="download({ submission: submission.number, name: file})">
+            (click)="downloadSubmissionFile({ submission: submission.number, name: file})">
           </mat-icon>
         </p>
       </mat-card-content>
     </mat-card>
   </div>
+  <p *ngIf="!submissions">
+    You have no submissions
+  </p>
 </div>

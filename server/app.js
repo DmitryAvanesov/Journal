@@ -46,7 +46,7 @@ mongoose.set("debug", true);
 
 require("./models/User");
 require("./models/UserSubmission");
-require("./models/File");
+require("./models/UserImage");
 require("./config/password");
 app.use(require("./routes"));
 

@@ -1,0 +1,9 @@
+.profile__image-button {
+  cursor: pointer;
+  color: white;
+  opacity: 0;
+
+  &:hover {
+    opacity: 1;
+  }
+}

@@ -1,17 +1,14 @@
 const router = require("express").Router();
 const fs = require("fs");
 const mongoose = require("mongoose");
-const Grid = require("gridfs-stream");
-const textract = require("textract");
 const auth = require("../auth");
 
 const UserSubmission = mongoose.model("UserSubmission");
 const uploadPath = "./uploads";
 const numberOfSubmissionFiles = 4;
 mongoose.set("useCreateIndex", true);
-Grid.mongo = mongoose.mongo;
 
-router.post("/submission", auth.required, async (req, res, _next) => {
+router.post("/submission", auth.required, (req, res, _next) => {
   const {
     payload: { id },
   } = req;
