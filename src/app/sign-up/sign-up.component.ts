@@ -21,6 +21,7 @@ export class SignUpComponent implements OnInit {
     private router: Router
   ) {}
 
+  user: User | undefined;
   passwordIsHidden: boolean;
   confirmPasswordIsHidden: boolean;
   formGroup: FormGroup;
@@ -49,19 +50,24 @@ export class SignUpComponent implements OnInit {
     };
   }
 
-  submitSignUpForm(
-    username: string,
-    password: string,
-    confirmPassword: string
-  ): void {
+  submitSignUpForm(): void {
+    const username = this.formGroup.get('usernameControl').value;
+    const password = this.formGroup.get('passwordGroup').get('passwordControl')
+      .value;
+    const confirmPassword = this.formGroup
+      .get('passwordGroup')
+      .get('confirmPasswordControl').value;
+    const role = this.formGroup.get('roleControl').value;
+
     this.authenticationService
       .signUp({
         username,
         password,
         confirmPassword,
+        role,
       })
       .subscribe(
-        (res: UserReqRes) => {
+        (_res: UserReqRes) => {
           this.usernameIsUsed = false;
           this.router.navigate(['log-in']);
         },
@@ -74,6 +80,10 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authenticationService.user.subscribe((user: User | undefined) => {
+      this.user = user;
+    });
+
     this.passwordIsHidden = true;
     this.confirmPasswordIsHidden = true;
     this.formGroup = new FormGroup({
@@ -82,6 +92,7 @@ export class SignUpComponent implements OnInit {
         passwordControl: new FormControl('', [Validators.required]),
         confirmPasswordControl: new FormControl('', [Validators.required]),
       }),
+      roleControl: new FormControl('user', [Validators.required]),
     });
     this.passwordGroup = this.formGroup.get('passwordGroup') as FormGroup;
     this.passwordGroup.setValidators(this.passwordsEqualityValidator());

@@ -1,37 +1,38 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LogInComponent } from './log-in/log-in.component';
-import { AuthGuardService } from './guards/auth-guard.service';
-import { RepeatAuthGuardService } from './guards/repeat-auth-guard.service';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
 import { IssuesComponent } from './issues/issues.component';
 import { SubmissionComponent } from './submission/submission.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RepeatAuthGuard } from './guards/repeat-auth.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { SignUpGuard } from './guards/sign-up.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'sign-up',
     component: SignUpComponent,
-    canActivate: [RepeatAuthGuardService],
+    canActivate: [SignUpGuard],
   },
   {
     path: 'log-in',
     component: LogInComponent,
-    canActivate: [RepeatAuthGuardService],
+    canActivate: [RepeatAuthGuard],
   },
   { path: 'home', component: HomeComponent },
   { path: 'issues', component: IssuesComponent },
   {
     path: 'submission',
     component: SubmissionComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [AuthGuard],
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [AuthGuard],
   },
 ];
 
