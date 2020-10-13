@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RepeatAuthGuard } from './guards/repeat-auth.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { SignUpGuard } from './guards/sign-up.guard';
+import { NewsComponent } from './news/news.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,6 +25,7 @@ const routes: Routes = [
   },
   { path: 'home', component: HomeComponent },
   { path: 'issues', component: IssuesComponent },
+  { path: 'news', component: NewsComponent },
   {
     path: 'submission',
     component: SubmissionComponent,

@@ -25,6 +25,7 @@
       </button>
       <mat-menu class="header__menu-block" #menu="matMenu" xPosition="before">
         <button mat-menu-item routerLink="/profile">Profile</button>
+        <button mat-menu-item routerLink="/sign-up" *ngIf="user && user.role === 'admin'">Add user</button>
         <button mat-menu-item (click)="signOut()">Sign out</button>
       </mat-menu>
     </mat-toolbar-row>

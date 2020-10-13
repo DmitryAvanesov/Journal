@@ -19,6 +19,7 @@ import { SubmissionComponent } from './submission/submission.component';
 import { MatInputModule } from '@angular/material/input';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { ProfileComponent } from './profile/profile.component';
+import { NewsComponent } from './news/news.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ProfileComponent } from './profile/profile.component';
     FooterComponent,
     SubmissionComponent,
     ProfileComponent,
+    NewsComponent,
   ],
   imports: [
     BrowserModule,
