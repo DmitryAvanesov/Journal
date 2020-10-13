@@ -4,10 +4,13 @@ import { LogInComponent } from './log-in/log-in.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { RepeatAuthGuardService } from './guards/repeat-auth-guard.service';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { TestComponent } from './test/test.component';
+import { HomeComponent } from './home/home.component';
+import { IssuesComponent } from './issues/issues.component';
+import { SubmissionComponent } from './submission/submission.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/sign-up', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'sign-up',
     component: SignUpComponent,
@@ -18,7 +21,18 @@ const routes: Routes = [
     component: LogInComponent,
     canActivate: [RepeatAuthGuardService],
   },
-  { path: 'test', component: TestComponent, canActivate: [AuthGuardService] },
+  { path: 'home', component: HomeComponent },
+  { path: 'issues', component: IssuesComponent },
+  {
+    path: 'submission',
+    component: SubmissionComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({
