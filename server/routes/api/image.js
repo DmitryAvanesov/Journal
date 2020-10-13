@@ -49,9 +49,15 @@ router.get("/download", auth.required, (req, res, _next) => {
   } = req;
 
   UserImage.findOne({ user: id }, (_err, image) => {
-    fs.readFile(`${uploadPath}/${image.name}`, (_err, data) => {
-      return res.json(data);
-    });
+    if (_err || !image) {
+      fs.readFile(`${uploadPath}/default.png`, (_err, data) => {
+        return res.json(data);
+      });
+    } else {
+      fs.readFile(`${uploadPath}/${image.name}`, (_err, data) => {
+        return res.json(data);
+      });
+    }
   });
 });
 
