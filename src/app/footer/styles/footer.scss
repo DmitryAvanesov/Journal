@@ -1,0 +1,13 @@
+@import "../../constants.scss";
+
+.footer {
+  display: flex;
+  position: relative;
+  background-color: $color-gray;
+  padding: 25px $padding-side;
+  margin-top: 50px;
+
+  * {
+    margin-right: 25px;
+  }
+}

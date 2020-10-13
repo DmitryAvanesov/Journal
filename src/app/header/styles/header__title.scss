@@ -1,0 +1,8 @@
+@import "../../constants.scss";
+
+.header__title {
+  display: flex;
+  position: relative;
+  padding: 25px $padding-side;
+  overflow: hidden;
+}

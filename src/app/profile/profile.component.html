@@ -1,0 +1,39 @@
+<div class="profile">
+
+  <div class="profile__title">
+
+    <div class="profile__image" [style.background-image]="'url(' + image + ')'">
+      <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" (change)="uploadImage($event.target.files[0])" />
+      <label for="edit">
+        <mat-icon class="profile__image-button" svgIcon="edit"></mat-icon>
+      </label>
+      <mat-icon class="profile__image-button" svgIcon="delete" (click)="deleteImage()"></mat-icon>
+    </div>
+
+    <h1 class="profile__title-name">{{user?.username}}</h1>
+
+  </div>
+
+  <h2>Submissions</h2>
+
+  <div class="profile__submission-block">
+    <mat-card class="profile__submission-container" *ngFor="let submission of submissions">
+      <mat-card-header class="profile__submission-header">
+        <mat-card-title class="profile__submission-title">Submission #{{submission.number}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="profile__submission-content">
+        <p *ngFor="let file of submission.files">
+          {{file}}
+          <mat-icon class="profile__submission-download" svgIcon="download"
+            (click)="downloadSubmissionFile({ submission: submission.number, name: file})">
+          </mat-icon>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <p *ngIf="!submissions">
+    You have no submissions
+  </p>
+
+</div>
