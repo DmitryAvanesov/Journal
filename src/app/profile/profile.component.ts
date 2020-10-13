@@ -72,6 +72,17 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  deleteImage(): void {
+    this.imageService.deleteImage().subscribe(
+      (_res) => {
+        this.downloadImage();
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
+
   ngOnInit(): void {
     this.authenticationService.user.subscribe((user: User | undefined) => {
       this.user = user;

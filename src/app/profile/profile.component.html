@@ -10,12 +10,9 @@
         </mat-icon>
       </label>
 
-      <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" />
-      <label for="delete">
-        <mat-icon class="profile__image-button" svgIcon="download" aria-hidden="false">
-
-        </mat-icon>
-      </label>
+      <button mat-icon-button (click)="deleteImage()">
+        <mat-icon class="profile__image-button" aria-hidden="false">favorite</mat-icon>
+      </button>
     </div>
 
     <h1 class="profile__title-name">{{user?.username}}</h1>

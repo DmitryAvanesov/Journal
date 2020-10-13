@@ -19,7 +19,7 @@ router.post("/upload", auth.required, (req, res, _next) => {
   } else {
     UserImage.findOne({ user: id }, async (_err, image) => {
       if (image) {
-        await UserImage.deleteOne(image, (_err) => {
+        await UserImage.deleteOne({ user: id }, (_err) => {
           fs.unlink(`${uploadPath}/${image.name}`, (_err) => {});
         });
       }
@@ -64,6 +64,22 @@ router.get("/download", auth.required, (req, res, _next) => {
     } else {
       fs.readFile(`${uploadPath}/${image.name}`, (_err, data) => {
         return res.json(data);
+      });
+    }
+  });
+});
+
+router.delete("/delete", auth.required, (req, res, _next) => {
+  const {
+    payload: { id },
+  } = req;
+
+  UserImage.findOne({ user: id }, (_err, image) => {
+    if (image) {
+      UserImage.deleteOne({ user: id }, (_err) => {
+        fs.unlink(`${uploadPath}/${image.name}`, (_err) => {
+          return res.json();
+        });
       });
     }
   });

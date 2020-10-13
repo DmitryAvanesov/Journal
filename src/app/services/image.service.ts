@@ -31,4 +31,12 @@ export class ImageService {
       })
     );
   }
+
+  deleteImage(): Observable<void> {
+    return this.httpClient.delete<void>(`${this.url}/delete`).pipe(
+      catchError((err) => {
+        throw new Error(JSON.stringify(err));
+      })
+    );
+  }
 }
