@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   user: User | undefined;
-  image: string | undefined;
+  image: string;
   submissions: Submission[];
 
   downloadSubmissionFile(subFile: SubFile): void {
@@ -97,6 +97,14 @@ export class ProfileComponent implements OnInit {
     this.iconRegistry.addSvgIcon(
       'download',
       this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/download.svg')
+    );
+    this.iconRegistry.addSvgIcon(
+      'edit',
+      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/edit.svg')
+    );
+    this.iconRegistry.addSvgIcon(
+      'delete',
+      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/delete.svg')
     );
   }
 }
