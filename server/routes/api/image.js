@@ -3,7 +3,7 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const auth = require("../auth");
 
-const UserImage = mongoose.model("UserImage");
+const UserImage = mongoose.model("Image");
 const uploadPath = "./images";
 
 router.post("/upload", auth.required, (req, res, _next) => {

@@ -22,12 +22,14 @@
         <mat-card-title class="profile__submission-title">Submission #{{submission.number}}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="profile__submission-content">
-        <p *ngFor="let file of submission.files">
-          {{file}}
-          <mat-icon class="profile__submission-download" svgIcon="download"
-            (click)="downloadSubmissionFile({ submission: submission.number, name: file})">
-          </mat-icon>
-        </p>
+        <ng-container *ngFor="let file of submission | keyvalue">
+          <p *ngIf="file.key !== 'number'">
+            {{file.value}}
+            <mat-icon class="profile__submission-download" svgIcon="download"
+              (click)="downloadSubmissionFile({ submission: submission.number, name: file.value})">
+            </mat-icon>
+          </p>
+        </ng-container>
       </mat-card-content>
     </mat-card>
   </div>
