@@ -28,8 +28,11 @@ app.use(
 
 // Database connection
 
-const connectionString =
-  "mongodb+srv://Work:hns4kwy58is89LK@cluster0.n2gtl.gcp.mongodb.net/journal?retryWrites=true&w=majority";
+const username = "Work";
+const password = "hns4kwy58is89LK";
+const dbname = "journal";
+
+const connectionString = `mongodb+srv://${username}:${password}@cluster0.n2gtl.gcp.mongodb.net/${dbname}?retryWrites=true&w=majority`;
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
