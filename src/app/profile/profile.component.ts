@@ -40,10 +40,32 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadImage(image: File): void {
-    console.log(image);
-
     this.imageService.uploadImage(image).subscribe(
-      (res) => {},
+      (_res) => {
+        this.downloadImage();
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
+
+  downloadImage(): void {
+    this.imageService.downloadImage().subscribe(
+      (res: Res) => {
+        const base64String = btoa(
+          new Uint8Array(res.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ''
+          )
+        );
+        this.image = this.sanitizer.sanitize(
+          SecurityContext.RESOURCE_URL,
+          this.sanitizer.bypassSecurityTrustResourceUrl(
+            `data:image/jpeg;base64,${base64String}`
+          )
+        );
+      },
       (err: Error) => {
         console.log(err);
       }
@@ -55,21 +77,7 @@ export class ProfileComponent implements OnInit {
       this.user = user;
     });
 
-    this.imageService.downloadImage().subscribe((image: Res) => {
-      console.log(image);
-      const base64String = btoa(
-        new Uint8Array(image.data).reduce(
-          (data, byte) => data + String.fromCharCode(byte),
-          ''
-        )
-      );
-      this.image = this.sanitizer.sanitize(
-        SecurityContext.RESOURCE_URL,
-        this.sanitizer.bypassSecurityTrustResourceUrl(
-          `data:image/jpeg;base64,${base64String}`
-        )
-      );
-    });
+    this.downloadImage();
 
     this.submissionService.getSubmissions().subscribe((res: Submission[]) => {
       this.submissions = res;

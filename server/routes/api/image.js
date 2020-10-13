@@ -17,28 +17,36 @@ router.post("/upload", auth.required, (req, res, _next) => {
       success: false,
     });
   } else {
-    fs.readdir(uploadPath, (_err, images) => {
-      const numberOfImages =
-        images.reduce(
-          (previousValue, currentValue) =>
-            parseInt(currentValue) > previousValue
-              ? parseInt(currentValue)
-              : previousValue,
-          0
-        ) + 1;
-      const extension = `${req.files.image.name.split(".").pop()}`;
+    UserImage.findOne({ user: id }, async (_err, image) => {
+      if (image) {
+        await UserImage.deleteOne(image, (_err) => {
+          fs.unlink(`${uploadPath}/${image.name}`, (_err) => {});
+        });
+      }
 
-      req.files.image.mv(`${uploadPath}/${numberOfImages}.${extension}`);
+      fs.readdir(uploadPath, (_err, images) => {
+        const numberOfImages =
+          images.reduce(
+            (previousValue, currentValue) =>
+              parseInt(currentValue) > previousValue
+                ? parseInt(currentValue)
+                : previousValue,
+            0
+          ) + 1;
+        const extension = `${req.files.image.name.split(".").pop()}`;
 
-      const userImage = {
-        user: mongoose.Types.ObjectId(id),
-        name: `${numberOfImages}.${extension}`,
-      };
+        req.files.image.mv(`${uploadPath}/${numberOfImages}.${extension}`);
 
-      const finalUserImage = new UserImage(userImage);
-      finalUserImage.save();
+        const userImage = {
+          user: mongoose.Types.ObjectId(id),
+          name: `${numberOfImages}.${extension}`,
+        };
 
-      return res.json();
+        const finalUserImage = new UserImage(userImage);
+        finalUserImage.save();
+
+        return res.json();
+      });
     });
   }
 });
@@ -50,7 +58,7 @@ router.get("/download", auth.required, (req, res, _next) => {
 
   UserImage.findOne({ user: id }, (_err, image) => {
     if (_err || !image) {
-      fs.readFile(`${uploadPath}/default.png`, (_err, data) => {
+      fs.readFile(`${uploadPath}/0.png`, (_err, data) => {
         return res.json(data);
       });
     } else {

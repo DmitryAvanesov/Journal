@@ -1,21 +1,25 @@
 <div class="profile">
 
-  <h1>{{user?.username}}</h1>
+  <div class="profile__title">
 
-  <div class="profile__image" [style.background-image]="'url(' + image + ')'">
-    <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" (change)="uploadImage($event.target.files[0])" />
-    <label for="edit">
-      <mat-icon class="profile__image-button" aria-hidden="false">
-        home
-      </mat-icon>
-    </label>
+    <div class="profile__image" [style.background-image]="'url(' + image + ')'">
+      <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" (change)="uploadImage($event.target.files[0])" />
+      <label for="edit">
+        <mat-icon class="profile__image-button" aria-hidden="false">
+          home
+        </mat-icon>
+      </label>
 
-    <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" />
-    <label for="delete">
-      <mat-icon class="profile__image-button" svgIcon="download" aria-hidden="false">
+      <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" />
+      <label for="delete">
+        <mat-icon class="profile__image-button" svgIcon="download" aria-hidden="false">
 
-      </mat-icon>
-    </label>
+        </mat-icon>
+      </label>
+    </div>
+
+    <h1 class="profile__title-name">{{user?.username}}</h1>
+
   </div>
 
   <h2>Submissions</h2>
