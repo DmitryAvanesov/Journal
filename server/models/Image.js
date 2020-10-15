@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const UserImageSchema = new Schema({
+const ImageSchema = new Schema({
   user: mongoose.Schema.Types.ObjectId,
   name: String,
 });
 
-mongoose.model("UserImage", UserImageSchema);
+mongoose.model("Image", ImageSchema);

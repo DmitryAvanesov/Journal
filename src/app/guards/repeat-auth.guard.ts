@@ -1,18 +1,28 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { User, UserReqRes } from '../types/User';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+  Router,
+} from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
+import { User } from '../types/User';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RepeatAuthGuardService implements CanActivate {
+export class RepeatAuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
   ) {}
 
-  canActivate(): Promise<boolean> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<boolean> {
     return new Promise((resolve, _reject) => {
       this.authenticationService.user.subscribe(
         (res: User | undefined) => {

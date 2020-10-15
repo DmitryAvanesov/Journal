@@ -3,7 +3,8 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const auth = require("../auth");
 
-const UserSubmission = mongoose.model("UserSubmission");
+const UserSubmission = mongoose.model("Submission");
+const User = mongoose.model("User");
 const uploadPath = "./uploads";
 const numberOfSubmissionFiles = 4;
 mongoose.set("useCreateIndex", true);
@@ -29,30 +30,43 @@ router.post("/submission", auth.required, (req, res, _next) => {
           0
         ) + 1;
 
+      const manuscriptName = req.files.manuscript.name;
+      const aboutName = req.files.about.name;
+      const agreementName = req.files.agreement.name;
+      const anonymousName = req.files.anonymous.name;
+
       fs.mkdir(`${uploadPath}/${numberOfFolders}`, (_err) => {
         req.files.manuscript.mv(
-          `${uploadPath}/${numberOfFolders}/${req.files.manuscript.name}`
+          `${uploadPath}/${numberOfFolders}/${manuscriptName}`
         );
-        req.files.about.mv(
-          `${uploadPath}/${numberOfFolders}/${req.files.about.name}`
-        );
+        req.files.about.mv(`${uploadPath}/${numberOfFolders}/${aboutName}`);
         req.files.agreement.mv(
-          `${uploadPath}/${numberOfFolders}/${req.files.agreement.name}`
+          `${uploadPath}/${numberOfFolders}/${agreementName}`
         );
         req.files.anonymous.mv(
-          `${uploadPath}/${numberOfFolders}/${req.files.anonymous.name}`
+          `${uploadPath}/${numberOfFolders}/${anonymousName}`
         );
       });
 
-      const userSubmission = {
-        user: mongoose.Types.ObjectId(id),
-        number: numberOfFolders,
-      };
+      User.find({ role: "reviewer" }, (_err, users) => {
+        const userSubmission = {
+          user: mongoose.Types.ObjectId(id),
+          number: numberOfFolders,
+          manuscript: manuscriptName,
+          about: aboutName,
+          agreement: agreementName,
+          anonymous: anonymousName,
+          reviewer: mongoose.Types.ObjectId(
+            users[Math.floor(Math.random(users.length))].id
+          ),
+          status: "under consideration",
+        };
 
-      const finalUserSubmission = new UserSubmission(userSubmission);
-      finalUserSubmission.save();
+        const finalUserSubmission = new UserSubmission(userSubmission);
+        finalUserSubmission.save();
 
-      return res.json();
+        return res.json();
+      });
     });
   }
 });
@@ -66,24 +80,17 @@ router.get("/user-submissions", auth.required, (req, res, _next) => {
 
   UserSubmission.find({ user: id }, (_err, userSubmissions) => {
     for (const userSubmission of userSubmissions) {
-      const curSubmission = {
+      submissions.push({
         number: userSubmission.number,
-        files: [],
-      };
-
-      fs.readdir(`${uploadPath}/${userSubmission.number}`, (_err, files) => {
-        for (const file of files) {
-          curSubmission.files.push(file);
-
-          if (curSubmission.files.length === numberOfSubmissionFiles) {
-            submissions.push(curSubmission);
-          }
-
-          if (submissions.length === userSubmissions.length) {
-            return res.json(submissions);
-          }
-        }
+        manuscript: userSubmission.manuscript,
+        about: userSubmission.about,
+        agreement: userSubmission.agreement,
+        anonymous: userSubmission.anonymous,
       });
+
+      if (submissions.length === userSubmissions.length) {
+        return res.json(submissions);
+      }
     }
   });
 });
