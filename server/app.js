@@ -35,9 +35,8 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // Database connection
 
-const { username, password, dbname } = environment;
+const { connectionString } = environment;
 
-const connectionString = `mongodb+srv://${username}:${password}@cluster0.n2gtl.gcp.mongodb.net/${dbname}?retryWrites=true&w=majority`;
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
