@@ -28,20 +28,20 @@ export class AuthenticationService {
   signUp(user: User): Observable<UserReqRes> {
     console.log(user);
     return this.httpClient
-      .post<UserReqRes>(`${this.url}/sign-up/`, { user })
+      .post<UserReqRes>(`${this.url}/sign-up`, { user })
       .pipe(
         catchError((err) => {
-          throw new Error(JSON.stringify(err.error.errors));
+          throw new Error(JSON.stringify(err));
         })
       );
   }
 
   logIn(user: User): Observable<UserReqRes> {
     return this.httpClient
-      .post<UserReqRes>(`${this.url}/log-in/`, { user })
+      .post<UserReqRes>(`${this.url}/log-in`, { user })
       .pipe(
         catchError((err) => {
-          throw new Error(JSON.stringify(err.error.errors));
+          throw new Error(JSON.stringify(err));
         }),
         tap((res: UserReqRes) => {
           localStorage.setItem('journal-token', res.user.token);
@@ -51,9 +51,17 @@ export class AuthenticationService {
   }
 
   getCurrent(): Observable<UserReqRes> {
-    return this.httpClient.get<UserReqRes>(`${this.url}/current/`).pipe(
+    return this.httpClient.get<UserReqRes>(`${this.url}/current`).pipe(
       catchError((err) => {
-        throw new Error(JSON.stringify(err.error.errors));
+        throw new Error(JSON.stringify(err));
+      })
+    );
+  }
+
+  deleteCurrent(): Observable<void> {
+    return this.httpClient.delete<void>(`${this.url}/delete`).pipe(
+      catchError((err) => {
+        throw new Error(JSON.stringify(err));
       })
     );
   }

@@ -3,10 +3,9 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const auth = require("../auth");
 
-const UserSubmission = mongoose.model("Submission");
+const Submission = mongoose.model("Submission");
 const User = mongoose.model("User");
 const uploadPath = "./uploads";
-const numberOfSubmissionFiles = 4;
 mongoose.set("useCreateIndex", true);
 
 router.post("/submission", auth.required, (req, res, _next) => {
@@ -62,7 +61,7 @@ router.post("/submission", auth.required, (req, res, _next) => {
           status: "under consideration",
         };
 
-        const finalUserSubmission = new UserSubmission(userSubmission);
+        const finalUserSubmission = new Submission(userSubmission);
         finalUserSubmission.save();
 
         return res.json();
@@ -78,7 +77,7 @@ router.get("/user-submissions", auth.required, (req, res, _next) => {
 
   const submissions = [];
 
-  UserSubmission.find({ user: id }, (_err, userSubmissions) => {
+  Submission.find({ user: id }, (_err, userSubmissions) => {
     for (const userSubmission of userSubmissions) {
       submissions.push({
         number: userSubmission.number,

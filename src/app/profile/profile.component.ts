@@ -8,6 +8,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ImageService } from '../services/image.service';
 import { Res } from '../types/Res';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +21,8 @@ export class ProfileComponent implements OnInit {
     private submissionService: SubmissionService,
     private imageService: ImageService,
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   user: User | undefined;
@@ -76,6 +78,17 @@ export class ProfileComponent implements OnInit {
     this.imageService.deleteImage().subscribe(
       (_res) => {
         this.downloadImage();
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
+
+  deleteUser(): void {
+    this.authenticationService.deleteCurrent().subscribe(
+      (_res) => {
+        this.authenticationService.signOut();
       },
       (err: Error) => {
         console.log(err);
