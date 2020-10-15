@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   user: User | undefined;
   image: string;
   submissions: Submission[];
+  submissionsForReview: Submission[];
 
   downloadSubmissionFile(subFile: SubFile): void {
     this.submissionService.downloadFile(subFile).subscribe(
@@ -106,6 +107,12 @@ export class ProfileComponent implements OnInit {
     this.submissionService.getSubmissions().subscribe((res: Submission[]) => {
       this.submissions = res;
     });
+
+    this.submissionService
+      .getSubmissionsForReview()
+      .subscribe((res: Submission[]) => {
+        this.submissionsForReview = res;
+      });
 
     this.iconRegistry.addSvgIcon(
       'download',

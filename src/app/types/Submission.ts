@@ -4,6 +4,7 @@ export interface Submission {
   about: string;
   agreement: string;
   anonymous: string;
+  status: string;
 }
 
 export interface SubFile {

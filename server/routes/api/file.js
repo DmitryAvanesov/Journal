@@ -85,9 +85,35 @@ router.get("/user-submissions", auth.required, (req, res, _next) => {
         about: userSubmission.about,
         agreement: userSubmission.agreement,
         anonymous: userSubmission.anonymous,
+        status: userSubmission.status,
       });
 
       if (submissions.length === userSubmissions.length) {
+        return res.json(submissions);
+      }
+    }
+  });
+});
+
+router.get("/reviewer-submissions", auth.required, (req, res, _next) => {
+  const {
+    payload: { id },
+  } = req;
+
+  const submissions = [];
+
+  Submission.find({ reviewer: id }, (_err, reviewerSubmissions) => {
+    for (const reviewerSubmission of reviewerSubmissions) {
+      submissions.push({
+        number: reviewerSubmission.number,
+        manuscript: reviewerSubmission.manuscript,
+        about: reviewerSubmission.about,
+        agreement: reviewerSubmission.agreement,
+        anonymous: reviewerSubmission.anonymous,
+        status: reviewerSubmission.status,
+      });
+
+      if (submissions.length === reviewerSubmissions.length) {
         return res.json(submissions);
       }
     }

@@ -29,6 +29,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
       request.url === 'http://localhost:3000/api/user/delete' ||
       request.url === 'http://localhost:3000/api/file/submission' ||
       request.url === 'http://localhost:3000/api/file/user-submissions' ||
+      request.url === 'http://localhost:3000/api/file/reviewer-submissions' ||
       request.url.startsWith('http://localhost:3000/api/image')
     ) {
       request = request.clone({
