@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
 const session = require("express-session");
 const fileUpload = require("express-fileupload");
+const { environment } = require("../src/environments/environment");
 
 // Constants and middlewares
 
@@ -34,9 +35,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // Database connection
 
-const username = "Work";
-const password = "hns4kwy58is89LK";
-const dbname = "journal";
+const { username, password, dbname } = environment;
 
 const connectionString = `mongodb+srv://${username}:${password}@cluster0.n2gtl.gcp.mongodb.net/${dbname}?retryWrites=true&w=majority`;
 mongoose.connect(connectionString, {
