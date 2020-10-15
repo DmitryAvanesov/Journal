@@ -15,13 +15,21 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (request.url !== 'http://localhost:3000/api/file/submission') {
+    if (
+      request.url !== 'http://localhost:3000/api/file/submission' &&
+      request.url !== 'http://localhost:3000/api/image/upload'
+    ) {
       request = request.clone({
         headers: request.headers.set('Content-Type', 'application/json'),
       });
     }
 
-    if (request.url === 'http://localhost:3000/api/user/current') {
+    if (
+      request.url === 'http://localhost:3000/api/user/current/' ||
+      request.url === 'http://localhost:3000/api/file/submission' ||
+      request.url === 'http://localhost:3000/api/file/user-submissions' ||
+      request.url.startsWith('http://localhost:3000/api/image')
+    ) {
       request = request.clone({
         headers: request.headers.set(
           'Authorization',
@@ -29,6 +37,18 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         ),
       });
     }
+
+    if (request.url.startsWith('http://localhost:3000/api/file/download')) {
+      request = request.clone({
+        responseType: 'arraybuffer',
+      });
+    }
+
+    // if (request.url === 'http://localhost:3000/api/image/download') {
+    //   request = request.clone({
+    //     responseType: 'arraybuffer',
+    //   });
+    // }
 
     return next.handle(request);
   }

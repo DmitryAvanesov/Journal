@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
 const session = require("express-session");
 const fileUpload = require("express-fileupload");
+const { environment } = require("../src/environments/environment");
 
 // Constants and middlewares
 
@@ -14,8 +15,6 @@ const port = 3000;
 
 app.use(cors());
 app.use(errorHandler());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(require("morgan")("dev"));
 app.use(
@@ -31,11 +30,14 @@ app.use(
     limits: { fileSize: 50 * 1024 * 1024 },
   })
 );
+app.use(bodyParser.json({ limit: "50mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // Database connection
 
-const connectionString =
-  "mongodb+srv://Work:hns4kwy58is89LK@cluster0.n2gtl.gcp.mongodb.net/journal?retryWrites=true&w=majority";
+const { username, password, dbname } = environment;
+
+const connectionString = `mongodb+srv://${username}:${password}@cluster0.n2gtl.gcp.mongodb.net/${dbname}?retryWrites=true&w=majority`;
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -45,6 +47,8 @@ mongoose.set("debug", true);
 // Models and routes
 
 require("./models/User");
+require("./models/Submission");
+require("./models/Image");
 require("./config/password");
 app.use(require("./routes"));
 

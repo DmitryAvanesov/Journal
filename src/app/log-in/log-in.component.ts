@@ -29,7 +29,10 @@ export class LogInComponent implements OnInit {
     this.passwordIsHidden = !this.passwordIsHidden;
   }
 
-  submitLogInForm(username: string, password: string): void {
+  submitLogInForm(): void {
+    const username = this.formGroup.get('usernameControl').value;
+    const password = this.formGroup.get('passwordControl').value;
+
     this.authenticationService
       .logIn({
         username,
