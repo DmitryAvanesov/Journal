@@ -141,6 +141,36 @@ router.get("/reviewer-submissions", auth.required, (req, res, _next) => {
   });
 });
 
+router.get("/editor-submissions", auth.required, (req, res, _next) => {
+  const {
+    payload: { id },
+  } = req;
+
+  const submissions = [];
+
+  Submission.find({ status: "accepted" }, (err, editorSubmissions) => {
+    if (err) {
+      return res.status(404).json();
+    }
+
+    for (const editorSubmission of editorSubmissions) {
+      submissions.push({
+        id: editorSubmission._id,
+        number: editorSubmission.number,
+        manuscript: editorSubmission.manuscript,
+        about: editorSubmission.about,
+        agreement: editorSubmission.agreement,
+        anonymous: editorSubmission.anonymous,
+        status: editorSubmission.status,
+      });
+
+      if (submissions.length === editorSubmissions.length) {
+        return res.json(submissions);
+      }
+    }
+  });
+});
+
 router.get("/download", auth.required, (req, res, _next) => {
   const { submission, name } = req.query;
   const path = `${uploadPath}/${submission}/${name}`;

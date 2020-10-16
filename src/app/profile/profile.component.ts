@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
   image: string;
   submissions: Submission[];
   submissionsForReview: Submission[];
+  submissionsForEditing: Submission[];
 
   downloadSubmissionFile(subFile: SubFile): void {
     this.submissionService.downloadFile(subFile).subscribe(
@@ -122,6 +123,12 @@ export class ProfileComponent implements OnInit {
       .getSubmissionsForReview()
       .subscribe((res: Submission[]) => {
         this.submissionsForReview = res.reverse();
+      });
+
+    this.submissionService
+      .getSubmissionsForEditing()
+      .subscribe((res: Submission[]) => {
+        this.submissionsForEditing = res;
       });
 
     this.iconRegistry.addSvgIcon(
