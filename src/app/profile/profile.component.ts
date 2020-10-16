@@ -9,6 +9,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ImageService } from '../services/image.service';
 import { Res } from '../types/Res';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-user.component';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +24,8 @@ export class ProfileComponent implements OnInit {
     private imageService: ImageService,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   user: User | undefined;
@@ -86,15 +89,8 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  deleteUser(): void {
-    this.authenticationService.deleteCurrent().subscribe(
-      (_res) => {
-        this.authenticationService.signOut();
-      },
-      (err: Error) => {
-        console.log(err);
-      }
-    );
+  openDialog(): void {
+    this.dialog.open(DialogDeleteUserComponent);
   }
 
   ngOnInit(): void {

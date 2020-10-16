@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { ProfileComponent } from './profile/profile.component';
 import { NewsComponent } from './news/news.component';
+import { DialogDeleteUserComponent } from './dialog-delete-user/dialog-delete-user.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { NewsComponent } from './news/news.component';
     SubmissionComponent,
     ProfileComponent,
     NewsComponent,
+    DialogDeleteUserComponent,
   ],
   imports: [
     BrowserModule,

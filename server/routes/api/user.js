@@ -133,16 +133,20 @@ router.delete("/delete", auth.required, (req, res, _next) => {
         return res.status(404).json();
       }
 
-      fs.unlink(`${imagePath}/${image.name}`, (err) => {
+      if (image) {
+        fs.unlink(`${imagePath}/${image.name}`, (err) => {
+          if (err) {
+            return res.status(404).json();
+          }
+        });
+      }
+
+      Submission.find({ user: id }, (err, submissions) => {
         if (err) {
           return res.status(404).json();
         }
 
-        Submission.find({ user: id }, (err, submissions) => {
-          if (err) {
-            return res.status(404).json();
-          }
-
+        if (submissions.length) {
           for (const [index, value] of submissions.entries()) {
             Submission.findOneAndDelete({ user: value.user }, (err) => {
               if (err) {
@@ -164,7 +168,9 @@ router.delete("/delete", auth.required, (req, res, _next) => {
               );
             });
           }
-        });
+        } else {
+          return res.json();
+        }
       });
     });
   });

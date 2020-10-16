@@ -26,7 +26,6 @@ export class AuthenticationService {
   }
 
   signUp(user: User): Observable<UserReqRes> {
-    console.log(user);
     return this.httpClient
       .post<UserReqRes>(`${this.url}/sign-up`, { user })
       .pipe(

@@ -72,12 +72,49 @@
       </mat-card-content>
 
     </mat-card>
+
+    <p *ngIf="!submissions">
+      There's no submissions for now
+    </p>
   </div>
 
-  <p *ngIf="!submissions">
-    There's no submissions for now
-  </p>
+  <h2 *ngIf="user.role === 'reviewer'">Submissions for review</h2>
 
-  <button class="profile__delete" mat-flat-button color="warn" (click)="deleteUser()">Delete my account</button>
+  <div class="profile__submission-block" *ngIf="user.role === 'reviewer'">
+    <mat-card class="profile__submission-container" *ngFor="let submission of submissionsForReview">
+
+      <mat-card-header class="profile__submission-header">
+        <mat-card-title class="profile__submission-title">Submission #{{submission.number}}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="profile__submission-content">
+
+        <p>
+          <span class="profile__submission-name bold-text">Anonymous file for double-blind peer review</span>
+          <span>
+            {{submission.anonymous}}
+            <mat-icon class="profile__submission-download" svgIcon="download"
+              (click)="downloadSubmissionFile({ submission: submission.number, name: submission.anonymous})">
+            </mat-icon>
+          </span>
+        </p>
+
+        <hr class="profile__submission-divider">
+
+        <p>
+          <span class="profile__submission-name bold-text">Status</span>
+          <span>{{submission.status}}</span>
+        </p>
+
+      </mat-card-content>
+
+    </mat-card>
+
+    <p *ngIf="!submissionsForReview">
+      There's no submissions for now
+    </p>
+  </div>
+
+  <button class="profile__delete" mat-flat-button color="warn" (click)="openDialog()">Delete my account</button>
 
 </div>
