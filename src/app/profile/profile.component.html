@@ -120,6 +120,10 @@
     </p>
   </div>
 
-  <button class="profile__delete" mat-flat-button color="warn" (click)="openDialog()">Delete my account</button>
+  <button class="profile__action-button" mat-flat-button color="primary" routerLink="/submission">Make a
+    submission</button>
+  <button class="profile__action-button" mat-flat-button color="primary" routerLink="/sign-up"
+    *ngIf="user && user.role === 'admin'">Add user</button>
+  <button class="profile__action-button" mat-flat-button color="warn" (click)="openDialog()">Delete my account</button>
 
 </div>

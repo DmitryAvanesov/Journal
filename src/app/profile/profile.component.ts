@@ -115,13 +115,13 @@ export class ProfileComponent implements OnInit {
     this.downloadImage();
 
     this.submissionService.getSubmissions().subscribe((res: Submission[]) => {
-      this.submissions = res;
+      this.submissions = res.reverse();
     });
 
     this.submissionService
       .getSubmissionsForReview()
       .subscribe((res: Submission[]) => {
-        this.submissionsForReview = res;
+        this.submissionsForReview = res.reverse();
       });
 
     this.iconRegistry.addSvgIcon(
