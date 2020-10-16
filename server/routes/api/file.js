@@ -68,7 +68,9 @@ router.post("/submission", auth.required, (req, res, _next) => {
           agreement: agreementName,
           anonymous: anonymousName,
           reviewer: mongoose.Types.ObjectId(
-            users[Math.floor(Math.random(users.length))].id
+            users.filter((value) => value._id !== id)[
+              Math.floor(Math.random(users.length - 1))
+            ].id
           ),
           status: "under consideration",
         };
