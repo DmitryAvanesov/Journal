@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  username: 'Work',
+  password: 'hns4kwy58is89LK',
+  dbname: 'journal',
 };
 
 /*

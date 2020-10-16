@@ -4,6 +4,7 @@ export interface User {
   confirmPassword?: string;
   id?: string;
   token?: string;
+  role?: string;
 }
 
 export interface UserReqRes {

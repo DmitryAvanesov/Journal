@@ -1,7 +1,7 @@
 @import "../../constants.scss";
 
 .header__row {
-  padding: 0 50px;
+  padding: 0 $padding-side;
 
   .header__link,
   .header__auth-link {

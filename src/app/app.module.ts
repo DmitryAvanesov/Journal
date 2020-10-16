@@ -11,6 +11,16 @@ import { LogInComponent } from './log-in/log-in.component';
 import { HttpConfigInterceptor } from './interceptors/http-config.interceptor';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { IssuesComponent } from './issues/issues.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FooterComponent } from './footer/footer.component';
+import { SubmissionComponent } from './submission/submission.component';
+import { MatInputModule } from '@angular/material/input';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { ProfileComponent } from './profile/profile.component';
+import { NewsComponent } from './news/news.component';
+import { DialogDeleteUserComponent } from './dialog-delete-user/dialog-delete-user.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +29,13 @@ import { HomeComponent } from './home/home.component';
     LogInComponent,
     HeaderComponent,
     HomeComponent,
+    SidebarComponent,
+    IssuesComponent,
+    FooterComponent,
+    SubmissionComponent,
+    ProfileComponent,
+    NewsComponent,
+    DialogDeleteUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +45,9 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FlexLayoutModule,
+    MatInputModule,
+    MaterialFileInputModule,
   ],
   providers: [
     {
