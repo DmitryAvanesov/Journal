@@ -3,7 +3,7 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const auth = require("../auth");
 
-const UserImage = mongoose.model("Image");
+const Image = mongoose.model("Image");
 const uploadPath = "./images";
 
 router.post("/upload", auth.required, (req, res, _next) => {
@@ -17,9 +17,9 @@ router.post("/upload", auth.required, (req, res, _next) => {
       success: false,
     });
   } else {
-    UserImage.findOne({ user: id }, async (_err, image) => {
+    Image.findOne({ user: id }, async (_err, image) => {
       if (image) {
-        await UserImage.deleteOne({ user: id }, (_err) => {
+        await Image.deleteOne({ user: id }, (_err) => {
           fs.unlink(`${uploadPath}/${image.name}`, (_err) => {});
         });
       }
@@ -42,7 +42,7 @@ router.post("/upload", auth.required, (req, res, _next) => {
           name: `${numberOfImages}.${extension}`,
         };
 
-        const finalUserImage = new UserImage(userImage);
+        const finalUserImage = new Image(userImage);
         finalUserImage.save();
 
         return res.json();
@@ -56,7 +56,7 @@ router.get("/download", auth.required, (req, res, _next) => {
     payload: { id },
   } = req;
 
-  UserImage.findOne({ user: id }, (_err, image) => {
+  Image.findOne({ user: id }, (_err, image) => {
     if (_err || !image) {
       fs.readFile(`${uploadPath}/0.png`, (_err, data) => {
         return res.json(data);
@@ -74,9 +74,9 @@ router.delete("/delete", auth.required, (req, res, _next) => {
     payload: { id },
   } = req;
 
-  UserImage.findOne({ user: id }, (_err, image) => {
+  Image.findOne({ user: id }, (_err, image) => {
     if (image) {
-      UserImage.deleteOne({ user: id }, (_err) => {
+      Image.deleteOne({ user: id }, (_err) => {
         fs.unlink(`${uploadPath}/${image.name}`, (_err) => {
           return res.json();
         });

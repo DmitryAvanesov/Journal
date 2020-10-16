@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
 const session = require("express-session");
 const fileUpload = require("express-fileupload");
-const { environment } = require("../src/environments/environment");
+require("dotenv").config();
 
 // Constants and middlewares
 
@@ -35,9 +35,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // Database connection
 
-const { username, password, dbname } = environment;
-
-const connectionString = `mongodb+srv://${username}:${password}@cluster0.n2gtl.gcp.mongodb.net/${dbname}?retryWrites=true&w=majority`;
+const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.n2gtl.gcp.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

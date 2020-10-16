@@ -1,8 +1,11 @@
+const fs = require("fs");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const router = require("express").Router();
 const auth = require("../auth");
 const User = mongoose.model("User");
+const Submission = mongoose.model("Submission");
+const Image = mongoose.model("Image");
 
 router.post("/sign-up", auth.optional, async (req, res, _next) => {
   const {
@@ -110,6 +113,67 @@ router.get("/current", auth.required, async (req, res, _next) => {
     return res.sendStatus(400);
   }
   return res.json({ user: user.toAuthJSON() });
+});
+
+router.delete("/delete", auth.required, (req, res, _next) => {
+  const {
+    payload: { id },
+  } = req;
+
+  const submissionPath = "./uploads";
+  const imagePath = "./images";
+
+  User.findByIdAndDelete(id, (err) => {
+    if (err) {
+      return res.status(404).json();
+    }
+
+    Image.findOneAndDelete({ user: id }, (err, image) => {
+      if (err) {
+        return res.status(404).json();
+      }
+
+      if (image) {
+        fs.unlink(`${imagePath}/${image.name}`, (err) => {
+          if (err) {
+            return res.status(404).json();
+          }
+        });
+      }
+
+      Submission.find({ user: id }, (err, submissions) => {
+        if (err) {
+          return res.status(404).json();
+        }
+
+        if (submissions.length) {
+          for (const [index, value] of submissions.entries()) {
+            Submission.findOneAndDelete({ user: value.user }, (err) => {
+              if (err) {
+                return res.status(404).json();
+              }
+
+              fs.rmdir(
+                `${submissionPath}/${value.number}`,
+                { recursive: true },
+                (err) => {
+                  if (err) {
+                    return res.status(404).json();
+                  }
+
+                  if (index === submissions.length - 1) {
+                    return res.json();
+                  }
+                }
+              );
+            });
+          }
+        } else {
+          return res.json();
+        }
+      });
+    });
+  });
 });
 
 module.exports = router;

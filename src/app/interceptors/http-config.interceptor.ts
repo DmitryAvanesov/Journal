@@ -25,10 +25,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     }
 
     if (
-      request.url === 'http://localhost:3000/api/user/current/' ||
-      request.url === 'http://localhost:3000/api/file/submission' ||
-      request.url === 'http://localhost:3000/api/file/user-submissions' ||
-      request.url.startsWith('http://localhost:3000/api/image')
+      request.url !== 'http://localhost:3000/api/user/sign-up' &&
+      request.url !== 'http://localhost:3000/api/user/log-in'
     ) {
       request = request.clone({
         headers: request.headers.set(
