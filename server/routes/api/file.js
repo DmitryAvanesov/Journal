@@ -19,7 +19,11 @@ router.post("/submission", auth.required, (req, res, _next) => {
       success: false,
     });
   } else {
-    fs.readdir(uploadPath, (_err, folders) => {
+    fs.readdir(uploadPath, (err, folders) => {
+      if (err) {
+        return res.status(404).json();
+      }
+
       const numberOfFolders =
         folders.reduce(
           (previousValue, currentValue) =>
@@ -34,7 +38,11 @@ router.post("/submission", auth.required, (req, res, _next) => {
       const agreementName = req.files.agreement.name;
       const anonymousName = req.files.anonymous.name;
 
-      fs.mkdir(`${uploadPath}/${numberOfFolders}`, (_err) => {
+      fs.mkdir(`${uploadPath}/${numberOfFolders}`, (err) => {
+        if (err) {
+          return res.status(404).json();
+        }
+
         req.files.manuscript.mv(
           `${uploadPath}/${numberOfFolders}/${manuscriptName}`
         );
@@ -47,7 +55,11 @@ router.post("/submission", auth.required, (req, res, _next) => {
         );
       });
 
-      User.find({ role: "reviewer" }, (_err, users) => {
+      User.find({ role: "reviewer" }, (err, users) => {
+        if (err) {
+          return res.status(404).json();
+        }
+
         const userSubmission = {
           user: mongoose.Types.ObjectId(id),
           number: numberOfFolders,
@@ -77,9 +89,14 @@ router.get("/user-submissions", auth.required, (req, res, _next) => {
 
   const submissions = [];
 
-  Submission.find({ user: id }, (_err, userSubmissions) => {
+  Submission.find({ user: id }, (err, userSubmissions) => {
+    if (err) {
+      return res.status(404).json();
+    }
+
     for (const userSubmission of userSubmissions) {
       submissions.push({
+        id: userSubmission._id,
         number: userSubmission.number,
         manuscript: userSubmission.manuscript,
         about: userSubmission.about,
@@ -102,13 +119,15 @@ router.get("/reviewer-submissions", auth.required, (req, res, _next) => {
 
   const submissions = [];
 
-  Submission.find({ reviewer: id }, (_err, reviewerSubmissions) => {
+  Submission.find({ reviewer: id }, (err, reviewerSubmissions) => {
+    if (err) {
+      return res.status(404).json();
+    }
+
     for (const reviewerSubmission of reviewerSubmissions) {
       submissions.push({
+        id: reviewerSubmission._id,
         number: reviewerSubmission.number,
-        manuscript: reviewerSubmission.manuscript,
-        about: reviewerSubmission.about,
-        agreement: reviewerSubmission.agreement,
         anonymous: reviewerSubmission.anonymous,
         status: reviewerSubmission.status,
       });
@@ -120,10 +139,34 @@ router.get("/reviewer-submissions", auth.required, (req, res, _next) => {
   });
 });
 
-router.get("/download", (req, res, _next) => {
+router.get("/download", auth.required, (req, res, _next) => {
   const { submission, name } = req.query;
   const path = `${uploadPath}/${submission}/${name}`;
   return res.download(path, name);
+});
+
+router.patch("/review", (req, res, _next) => {
+  const {
+    body: { id, status },
+  } = req;
+
+  Submission.findByIdAndUpdate(
+    id,
+    { status },
+    { new: true },
+    (err, submission) => {
+      if (err) {
+        return res.status(404).json();
+      }
+
+      return res.json({
+        id: submission._id,
+        number: submission.number,
+        anonymous: submission.anonymous,
+        status: submission.status,
+      });
+    }
+  );
 });
 
 module.exports = router;

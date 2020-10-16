@@ -45,6 +45,20 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  reviewSubmission(id: string, status: string): void {
+    this.submissionService.reviewSubmission({ id, status }).subscribe(
+      (res: Submission) => {
+        this.submissionsForReview = [
+          res,
+          ...this.submissionsForReview.filter((value) => value.id !== id),
+        ];
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
+
   uploadImage(image: File): void {
     this.imageService.uploadImage(image).subscribe(
       (_res) => {
