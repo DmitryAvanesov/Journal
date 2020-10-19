@@ -10,6 +10,8 @@ import { RepeatAuthGuard } from './guards/repeat-auth.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { SignUpGuard } from './guards/sign-up.guard';
 import { NewsComponent } from './news/news.component';
+import { PublishComponent } from './publish/publish.component';
+import { PublishGuard } from './guards/publish.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -35,6 +37,11 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'publish',
+    component: PublishComponent,
+    canActivate: [PublishGuard],
   },
 ];
 

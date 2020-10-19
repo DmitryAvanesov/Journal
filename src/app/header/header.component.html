@@ -8,12 +8,23 @@
 
   <mat-toolbar class="header__toolbar">
     <mat-toolbar-row class="header__row">
+
       <nav class="header__nav">
         <button class="header__link" mat-button routerLink="/home">Home</button>
+        <button class="header__link" mat-button [mat-menu-trigger-for]="aboutMenu">
+          <span>About</span>
+          <mat-icon class="header__dropdown-arrow" svgIcon="dropdown"></mat-icon>
+        </button>
+        <button class="header__link" mat-button [mat-menu-trigger-for]="editorialTeamMenu">
+          <span>Editorial Team</span>
+          <mat-icon class="header__dropdown-arrow" svgIcon="dropdown"></mat-icon>
+        </button>
         <button class="header__link" mat-button routerLink="/issues">Issues</button>
+        <button class="header__link" mat-button [mat-menu-trigger-for]="forAuthorsMenu">
+          <span>For Authors</span>
+          <mat-icon class="header__dropdown-arrow" svgIcon="dropdown"></mat-icon>
+        </button>
         <button class="header__link" mat-button routerLink="/news">News</button>
-        <button class="header__submission-link header__link" mat-button routerLink="/submission" *ngIf="user">Make a
-          submission</button>
       </nav>
 
       <button class="header__auth-link" mat-button routerLink="/sign-up" *ngIf="!user">Sign up</button>
@@ -21,14 +32,37 @@
 
       <button class="header__menu-button" mat-button [matMenuTriggerFor]="userMenu" *ngIf="user">
         <span>{{user.username}}</span>
-        <mat-icon class="header__dropdown-arrow" svgIcon="dropdown" aria-hidden="false"></mat-icon>
+        <mat-icon class="header__dropdown-arrow" svgIcon="dropdown"></mat-icon>
       </button>
+
     </mat-toolbar-row>
   </mat-toolbar>
 </header>
 
+<mat-menu class="header__menu-block" #aboutMenu="matMenu">
+  <button mat-menu-item>Aims and Scope</button>
+  <button mat-menu-item>Editorial Policy</button>
+  <button mat-menu-item>Publication Ethics</button>
+  <button mat-menu-item>Peer Review Process</button>
+  <button mat-menu-item>Open Access Policy</button>
+  <button mat-menu-item>Privacy Statement</button>
+  <button mat-menu-item>Plagiarism Policy</button>
+  <button mat-menu-item>Documents</button>
+</mat-menu>
+
+<mat-menu class="header__menu-block" #editorialTeamMenu="matMenu">
+  <button mat-menu-item>Editorial Board</button>
+  <button mat-menu-item>Editorial Council</button>
+  <button mat-menu-item>Contacts</button>
+</mat-menu>
+
+<mat-menu class="header__menu-block" #forAuthorsMenu="matMenu">
+  <button mat-menu-item>Submissions</button>
+  <button mat-menu-item>Author Guidelines</button>
+  <button mat-menu-item>Copyright and Licensing</button>
+</mat-menu>
+
 <mat-menu class="header__menu-block" #userMenu="matMenu" xPosition="before">
   <button mat-menu-item routerLink="/profile">Profile</button>
-  <button mat-menu-item routerLink="/sign-up" *ngIf="user && user.role === 'admin'">Add user</button>
   <button mat-menu-item (click)="signOut()">Sign out</button>
 </mat-menu>

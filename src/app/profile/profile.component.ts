@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
     private imageService: ImageService,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private router: Router,
     private dialog: MatDialog
   ) {}
 
@@ -32,6 +31,7 @@ export class ProfileComponent implements OnInit {
   image: string;
   submissions: Submission[];
   submissionsForReview: Submission[];
+  submissionsForEditing: Submission[];
 
   downloadSubmissionFile(subFile: SubFile): void {
     this.submissionService.downloadFile(subFile).subscribe(
@@ -52,6 +52,25 @@ export class ProfileComponent implements OnInit {
           res,
           ...this.submissionsForReview.filter((value) => value.id !== id),
         ];
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
+
+  scheduleSubmission(id: string, reverse: boolean): void {
+    this.submissionService.scheduleSubmission(id, reverse).subscribe(
+      (res: Submission) => {
+        this.submissionsForEditing = reverse
+          ? [
+              res,
+              ...this.submissionsForEditing.filter((value) => value.id !== id),
+            ]
+          : [
+              ...this.submissionsForEditing.filter((value) => value.id !== id),
+              res,
+            ];
       },
       (err: Error) => {
         console.log(err);
@@ -110,19 +129,31 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.authenticationService.user.subscribe((user: User | undefined) => {
       this.user = user;
+
+      if (user) {
+        if (user.role === 'reviewer') {
+          this.submissionService
+            .getSubmissionsForReview()
+            .subscribe((res: Submission[]) => {
+              this.submissionsForReview = res.reverse();
+            });
+        }
+
+        if (user.role === 'editor') {
+          this.submissionService
+            .getSubmissionsForEditing()
+            .subscribe((res: Submission[]) => {
+              this.submissionsForEditing = res;
+            });
+        }
+      }
     });
 
     this.downloadImage();
 
     this.submissionService.getSubmissions().subscribe((res: Submission[]) => {
-      this.submissions = res;
+      this.submissions = res.reverse();
     });
-
-    this.submissionService
-      .getSubmissionsForReview()
-      .subscribe((res: Submission[]) => {
-        this.submissionsForReview = res;
-      });
 
     this.iconRegistry.addSvgIcon(
       'download',
@@ -135,6 +166,10 @@ export class ProfileComponent implements OnInit {
     this.iconRegistry.addSvgIcon(
       'delete',
       this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/delete.svg')
+    );
+    this.iconRegistry.addSvgIcon(
+      'tick',
+      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/tick.svg')
     );
   }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -55,6 +55,18 @@ export class AuthenticationService {
         throw new Error(JSON.stringify(err));
       })
     );
+  }
+
+  getName(id: string): Observable<User> {
+    const params = new HttpParams().set('id', id);
+
+    return this.httpClient
+      .get<User>(`${this.url}/name`, { params })
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
   }
 
   deleteCurrent(): Observable<void> {

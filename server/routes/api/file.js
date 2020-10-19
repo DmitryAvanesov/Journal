@@ -141,13 +141,89 @@ router.get("/reviewer-submissions", auth.required, (req, res, _next) => {
   });
 });
 
+router.get("/editor-submissions", auth.required, (req, res, _next) => {
+  const {
+    payload: { id },
+  } = req;
+
+  User.findById(id, (err, user) => {
+    if (err || user.role !== "editor") {
+      return res.status(404).json();
+    }
+
+    const submissions = [];
+
+    Submission.find(
+      { $or: [{ status: "accepted" }, { status: "scheduled" }] },
+      (err, editorSubmissions) => {
+        if (err) {
+          return res.status(404).json();
+        }
+
+        for (const editorSubmission of editorSubmissions) {
+          submissions.push({
+            id: editorSubmission._id,
+            number: editorSubmission.number,
+            manuscript: editorSubmission.manuscript,
+            about: editorSubmission.about,
+            agreement: editorSubmission.agreement,
+            anonymous: editorSubmission.anonymous,
+            status: editorSubmission.status,
+          });
+
+          if (submissions.length === editorSubmissions.length) {
+            return res.json(submissions);
+          }
+        }
+      }
+    );
+  });
+});
+
+router.get("/publisher-submissions", auth.required, (req, res, _next) => {
+  const {
+    payload: { id },
+  } = req;
+
+  User.findById(id, (err, user) => {
+    if (err || user.role !== "editor") {
+      return res.status(404).json();
+    }
+
+    const submissions = [];
+
+    Submission.find({ status: "scheduled" }, (err, publisherSubmissions) => {
+      if (err) {
+        return res.status(404).json();
+      }
+
+      for (const publisherSubmission of publisherSubmissions) {
+        submissions.push({
+          id: publisherSubmission._id,
+          user: publisherSubmission.user,
+          number: publisherSubmission.number,
+          manuscript: publisherSubmission.manuscript,
+          about: publisherSubmission.about,
+          agreement: publisherSubmission.agreement,
+          anonymous: publisherSubmission.anonymous,
+          status: publisherSubmission.status,
+        });
+
+        if (submissions.length === publisherSubmissions.length) {
+          return res.json(submissions);
+        }
+      }
+    });
+  });
+});
+
 router.get("/download", auth.required, (req, res, _next) => {
   const { submission, name } = req.query;
   const path = `${uploadPath}/${submission}/${name}`;
   return res.download(path, name);
 });
 
-router.patch("/review", (req, res, _next) => {
+router.patch("/review", auth.required, (req, res, _next) => {
   const {
     body: { id, status },
   } = req;
@@ -164,6 +240,33 @@ router.patch("/review", (req, res, _next) => {
       return res.json({
         id: submission._id,
         number: submission.number,
+        anonymous: submission.anonymous,
+        status: submission.status,
+      });
+    }
+  );
+});
+
+router.patch("/schedule", auth.required, (req, res, _next) => {
+  const {
+    body: { id, reverse },
+  } = req;
+
+  Submission.findByIdAndUpdate(
+    id,
+    { status: reverse ? "accepted" : "scheduled" },
+    { new: true },
+    (err, submission) => {
+      if (err) {
+        return res.status(404).json();
+      }
+
+      return res.json({
+        id: submission._id,
+        number: submission.number,
+        manuscript: submission.manuscript,
+        about: submission.about,
+        agreement: submission.agreement,
         anonymous: submission.anonymous,
         status: submission.status,
       });

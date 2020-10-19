@@ -53,6 +53,26 @@ export class SubmissionService {
       );
   }
 
+  getSubmissionsForEditing(): Observable<Submission[]> {
+    return this.httpClient
+      .get<Submission[]>(`${this.url}/editor-submissions`)
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
+  }
+
+  getSubmissionsForPublishing(): Observable<Submission[]> {
+    return this.httpClient
+      .get<Submission[]>(`${this.url}/publisher-submissions`)
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
+  }
+
   downloadFile(subFile: SubFile): Observable<ArrayBuffer> {
     const params = new HttpParams()
       .set('submission', subFile.submission.toString())
@@ -73,6 +93,19 @@ export class SubmissionService {
     return this.httpClient
       .patch<Submission>(`${this.url}/review`, {
         ...review,
+      })
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
+  }
+
+  scheduleSubmission(id: string, reverse: boolean): Observable<Submission> {
+    return this.httpClient
+      .patch<Submission>(`${this.url}/schedule`, {
+        id,
+        reverse,
       })
       .pipe(
         catchError((err) => {

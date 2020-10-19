@@ -1,11 +1,18 @@
+import { User } from './User';
+
 export interface Submission {
   id: string;
+  user: string;
   number: number;
   manuscript?: string;
   about?: string;
   agreement?: string;
   anonymous: string;
   status: string;
+}
+
+export interface SubAuthor {
+  [id: string]: User;
 }
 
 export interface SubFile {
