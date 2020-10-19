@@ -63,10 +63,15 @@ export class ProfileComponent implements OnInit {
   scheduleSubmission(id: string, reverse: boolean): void {
     this.submissionService.scheduleSubmission(id, reverse).subscribe(
       (res: Submission) => {
-        this.submissionsForEditing = [
-          res,
-          ...this.submissionsForEditing.filter((value) => value.id !== id),
-        ];
+        this.submissionsForEditing = reverse
+          ? [
+              res,
+              ...this.submissionsForEditing.filter((value) => value.id !== id),
+            ]
+          : [
+              ...this.submissionsForEditing.filter((value) => value.id !== id),
+              res,
+            ];
       },
       (err: Error) => {
         console.log(err);
@@ -125,6 +130,24 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.authenticationService.user.subscribe((user: User | undefined) => {
       this.user = user;
+
+      if (user) {
+        if (user.role === 'reviewer') {
+          this.submissionService
+            .getSubmissionsForReview()
+            .subscribe((res: Submission[]) => {
+              this.submissionsForReview = res.reverse();
+            });
+        }
+
+        if (user.role === 'editor') {
+          this.submissionService
+            .getSubmissionsForEditing()
+            .subscribe((res: Submission[]) => {
+              this.submissionsForEditing = res;
+            });
+        }
+      }
     });
 
     this.downloadImage();
@@ -132,18 +155,6 @@ export class ProfileComponent implements OnInit {
     this.submissionService.getSubmissions().subscribe((res: Submission[]) => {
       this.submissions = res.reverse();
     });
-
-    this.submissionService
-      .getSubmissionsForReview()
-      .subscribe((res: Submission[]) => {
-        this.submissionsForReview = res.reverse();
-      });
-
-    this.submissionService
-      .getSubmissionsForEditing()
-      .subscribe((res: Submission[]) => {
-        this.submissionsForEditing = res;
-      });
 
     this.iconRegistry.addSvgIcon(
       'download',
