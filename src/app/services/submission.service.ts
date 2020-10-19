@@ -63,6 +63,16 @@ export class SubmissionService {
       );
   }
 
+  getSubmissionsForPublishing(): Observable<Submission[]> {
+    return this.httpClient
+      .get<Submission[]>(`${this.url}/publisher-submissions`)
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
+  }
+
   downloadFile(subFile: SubFile): Observable<ArrayBuffer> {
     const params = new HttpParams()
       .set('submission', subFile.submission.toString())

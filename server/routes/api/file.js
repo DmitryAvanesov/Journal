@@ -147,7 +147,7 @@ router.get("/editor-submissions", auth.required, (req, res, _next) => {
   } = req;
 
   User.findById(id, (err, user) => {
-    if (user.role !== "editor") {
+    if (err || user.role !== "editor") {
       return res.status(404).json();
     }
 
@@ -177,6 +177,43 @@ router.get("/editor-submissions", auth.required, (req, res, _next) => {
         }
       }
     );
+  });
+});
+
+router.get("/publisher-submissions", auth.required, (req, res, _next) => {
+  const {
+    payload: { id },
+  } = req;
+
+  User.findById(id, (err, user) => {
+    if (err || user.role !== "editor") {
+      return res.status(404).json();
+    }
+
+    const submissions = [];
+
+    Submission.find({ status: "scheduled" }, (err, publisherSubmissions) => {
+      if (err) {
+        return res.status(404).json();
+      }
+
+      for (const publisherSubmission of publisherSubmissions) {
+        submissions.push({
+          id: publisherSubmission._id,
+          user: publisherSubmission.user,
+          number: publisherSubmission.number,
+          manuscript: publisherSubmission.manuscript,
+          about: publisherSubmission.about,
+          agreement: publisherSubmission.agreement,
+          anonymous: publisherSubmission.anonymous,
+          status: publisherSubmission.status,
+        });
+
+        if (submissions.length === publisherSubmissions.length) {
+          return res.json(submissions);
+        }
+      }
+    });
   });
 });
 

@@ -10,7 +10,7 @@
 
       <mat-card-content>
 
-        <div class="publish__form-field">
+        <div class="publish__form-field publish__flex-form-field">
           <mat-form-field appearance="outline">
             <mat-label>No</mat-label>
             <input matInput formControlName="numberControl" />
@@ -46,11 +46,25 @@
           <mat-icon class="submission__attach-icon" matSuffix svgIcon="attach" aria-hidden="false"></mat-icon>
         </mat-form-field>
 
+        <div formArrayName="titleControl">
+          <div class="publish__form-field" *ngFor="let submission of submissionsForPublishing; let i = index">
+            <mat-form-field appearance="outline">
+              <mat-label>Title</mat-label>
+              <input matInput [formControlName]="i" />
+            </mat-form-field>
+            <span>by</span>
+            <span class="bold-text">{{authors[submission.id]?.username}}</span>
+            <span>(submission #{{submission.number}})</span>
+          </div>
+        </div>
+
+        <mat-error *ngIf="formGroup.controls.titleControl.touched && formGroup.controls.titleControl.invalid">
+          All titles are required
+        </mat-error>
+
       </mat-card-content>
 
-      <button mat-stroked-button class="publish__submit-button" color="primary" type="submit">
-        Sign up
-      </button>
+      <button mat-stroked-button class="publish__submit-button" color="primary" type="submit">Publish</button>
 
     </form>
 

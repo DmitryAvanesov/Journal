@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
     private imageService: ImageService,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private router: Router,
     private dialog: MatDialog
   ) {}
 
