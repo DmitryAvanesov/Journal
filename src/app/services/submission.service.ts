@@ -90,4 +90,17 @@ export class SubmissionService {
         })
       );
   }
+
+  scheduleSubmission(id: string, reverse: boolean): Observable<Submission> {
+    return this.httpClient
+      .patch<Submission>(`${this.url}/schedule`, {
+        id,
+        reverse,
+      })
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
+  }
 }

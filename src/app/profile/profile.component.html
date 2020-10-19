@@ -171,8 +171,16 @@
       </mat-card-content>
 
       <mat-card-actions class="profile__submission-actions">
-        <button mat-flat-button color="primary" (click)="reviewSubmission(submission.id, 'accepted')">Add to the next
-          issue</button>
+        <button class="{{submission.status === 'scheduled' ? 'profile__scheduled-button' : ''}}" mat-flat-button
+          color="primary" (click)="scheduleSubmission(submission.id, submission.status === 'scheduled' ? true : false)">
+          <span class="profile__scheduled-button-content" *ngIf="submission.status === 'scheduled'">
+            <mat-icon class="profile__scheduled-icon" svgIcon="tick"></mat-icon>
+            <span>Scheduled</span>
+          </span>
+          <span *ngIf="submission.status === 'accepted'">
+            Schedule for the next issue
+          </span>
+        </button>
       </mat-card-actions>
 
     </mat-card>

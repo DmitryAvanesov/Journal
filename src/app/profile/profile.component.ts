@@ -60,6 +60,20 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  scheduleSubmission(id: string, reverse: boolean): void {
+    this.submissionService.scheduleSubmission(id, reverse).subscribe(
+      (res: Submission) => {
+        this.submissionsForEditing = [
+          res,
+          ...this.submissionsForEditing.filter((value) => value.id !== id),
+        ];
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
+
   uploadImage(image: File): void {
     this.imageService.uploadImage(image).subscribe(
       (_res) => {
@@ -142,6 +156,10 @@ export class ProfileComponent implements OnInit {
     this.iconRegistry.addSvgIcon(
       'delete',
       this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/delete.svg')
+    );
+    this.iconRegistry.addSvgIcon(
+      'tick',
+      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/tick.svg')
     );
   }
 }
