@@ -1,1 +1,59 @@
-<p>publish works!</p>
+<div class="publish">
+
+  <mat-card class="publish__container">
+
+    <mat-card-header class="publish__header">
+      <mat-card-title class="publish__title">Publish</mat-card-title>
+    </mat-card-header>
+
+    <form class="publish__form" [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitPublishForm()">
+
+      <mat-card-content>
+
+        <div class="publish__form-field">
+          <mat-form-field appearance="outline">
+            <mat-label>No</mat-label>
+            <input matInput formControlName="numberControl" />
+            <mat-error *ngIf="formGroup.controls.numberControl.hasError('required')">
+              No is required
+            </mat-error>
+            <mat-error *ngIf="formGroup.controls.numberControl.hasError('pattern')">
+              No must be a number
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Year</mat-label>
+            <input matInput formControlName="yearControl" />
+            <mat-error *ngIf="formGroup.controls.yearControl.hasError('required')">
+              Year is required
+            </mat-error>
+            <mat-error *ngIf="formGroup.controls.yearControl.hasError('pattern')">
+              Year must be a number
+            </mat-error>
+            <mat-error *ngIf="formGroup.controls.yearControl.hasError('min')">
+              You can't publish issues dated earlier than 1900
+            </mat-error>
+            <mat-error *ngIf="formGroup.controls.yearControl.hasError('max')">
+              You can't publish future issues
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field class="publish__form-field" appearance="fill">
+          <mat-label>Cover</mat-label>
+          <ngx-mat-file-input [accept]="'.png,.jpg,.jpeg'" formControlName="coverControl"></ngx-mat-file-input>
+          <mat-icon class="submission__attach-icon" matSuffix svgIcon="attach" aria-hidden="false"></mat-icon>
+        </mat-form-field>
+
+      </mat-card-content>
+
+      <button mat-stroked-button class="publish__submit-button" color="primary" type="submit">
+        Sign up
+      </button>
+
+    </form>
+
+  </mat-card>
+
+</div>

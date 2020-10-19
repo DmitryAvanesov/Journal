@@ -108,10 +108,11 @@
 
       </mat-card-content>
 
-      <mat-card-actions class="profile__submission-actions"
-        *ngIf="submission.status !== 'scheduled' && submission.status !== 'published'">
-        <button mat-flat-button color="primary" (click)="reviewSubmission(submission.id, 'accepted')">Accept</button>
-        <button mat-stroked-button color="warn" (click)="reviewSubmission(submission.id, 'rejected')">Reject</button>
+      <mat-card-actions class="profile__submission-actions">
+        <button mat-flat-button color="primary" (click)="reviewSubmission(submission.id, 'accepted')"
+          [disabled]="submission.status === 'scheduled' || submission.status === 'published'">Accept</button>
+        <button mat-stroked-button color="warn" (click)="reviewSubmission(submission.id, 'rejected')"
+          [disabled]="submission.status === 'scheduled' || submission.status === 'published'">Reject</button>
       </mat-card-actions>
 
     </mat-card>
