@@ -20,6 +20,11 @@ export interface SubFile {
   name: string;
 }
 
+export interface SubTitle {
+  id: string;
+  title: string;
+}
+
 export interface Review {
   id: string;
   status: string;

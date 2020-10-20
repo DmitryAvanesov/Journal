@@ -11,6 +11,7 @@ const SubmissionSchema = new Schema({
   anonymous: String,
   reviewer: mongoose.Schema.Types.ObjectId,
   status: String,
+  title: { type: String, required: false },
 });
 
 mongoose.model("Submission", SubmissionSchema);

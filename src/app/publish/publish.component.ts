@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { IssueService } from '../services/issue.service';
 import { SubmissionService } from '../services/submission.service';
@@ -20,7 +21,8 @@ export class PublishComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private submissionService: SubmissionService,
     private authenticationService: AuthenticationService,
-    private issueService: IssueService
+    private issueService: IssueService,
+    private router: Router
   ) {}
 
   formGroup: FormGroup;
@@ -31,12 +33,18 @@ export class PublishComponent implements OnInit {
     const issue = {
       number: this.formGroup.controls.numberControl.value,
       year: this.formGroup.controls.yearControl.value,
-      submissions: this.submissionsForPublishing.map((value) => value.id),
+      submissions: this.submissionsForPublishing.map((value, index) => ({
+        id: value.id,
+        title: this.formGroup.controls.titleControl.value[index],
+      })),
     };
+
+    console.log(this.formGroup.controls.titleControl.value);
 
     this.issueService.publishIssue(issue).subscribe(
       (_res) => {
         console.log('Success');
+        this.router.navigate(['/issues']);
       },
       (err: Error) => {
         console.log(err);

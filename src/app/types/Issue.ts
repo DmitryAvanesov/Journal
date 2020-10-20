@@ -1,9 +1,9 @@
-import { Submission } from './Submission';
+import { Submission, SubTitle } from './Submission';
 
 export interface IssueReq {
   number: number;
   year: number;
-  submissions: string[];
+  submissions: SubTitle[];
 }
 
 export interface IssueRes {
