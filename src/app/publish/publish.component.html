@@ -52,9 +52,11 @@
               <mat-label>Title</mat-label>
               <input matInput [formControlName]="i" />
             </mat-form-field>
-            <span>by</span>
-            <span class="bold-text">{{authors[submission.id]?.username}}</span>
-            <span>(submission #{{submission.number}})</span>
+            <span>
+              <span>by </span>
+              <span class="bold-text">{{authors[submission.id]?.username}} </span>
+              <span>(submission <span class="bold-text">#{{submission.number}}</span>) </span>
+            </span>
           </div>
         </div>
 

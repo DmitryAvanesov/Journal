@@ -3,10 +3,8 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  UrlTree,
   Router,
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../types/User';
 
@@ -20,8 +18,8 @@ export class RepeatAuthGuard implements CanActivate {
   ) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    _route: ActivatedRouteSnapshot,
+    _state: RouterStateSnapshot
   ): Promise<boolean> {
     return new Promise((resolve, _reject) => {
       this.authenticationService.user.subscribe(

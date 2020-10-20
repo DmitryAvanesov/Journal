@@ -37,13 +37,13 @@ router.post("/upload", auth.required, (req, res, _next) => {
 
         req.files.image.mv(`${uploadPath}/${numberOfImages}.${extension}`);
 
-        const userImage = {
+        const image = {
           user: mongoose.Types.ObjectId(id),
           name: `${numberOfImages}.${extension}`,
         };
 
-        const finalUserImage = new Image(userImage);
-        finalUserImage.save();
+        const finalImage = new Image(image);
+        finalImage.save();
 
         return res.json();
       });

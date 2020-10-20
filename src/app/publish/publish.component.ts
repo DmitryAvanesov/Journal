@@ -3,7 +3,9 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from '../services/authentication.service';
+import { IssueService } from '../services/issue.service';
 import { SubmissionService } from '../services/submission.service';
+import { IssueRes } from '../types/Issue';
 import { Submission, SubAuthor } from '../types/Submission';
 import { User } from '../types/User';
 
@@ -17,14 +19,30 @@ export class PublishComponent implements OnInit {
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private submissionService: SubmissionService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private issueService: IssueService
   ) {}
 
   formGroup: FormGroup;
   submissionsForPublishing: Submission[];
   authors: SubAuthor;
 
-  submitPublishForm(): void {}
+  submitPublishForm(): void {
+    const issue = {
+      number: this.formGroup.controls.numberControl.value,
+      year: this.formGroup.controls.yearControl.value,
+      submissions: this.submissionsForPublishing.map((value) => value.id),
+    };
+
+    this.issueService.publishIssue(issue).subscribe(
+      (_res) => {
+        console.log('Success');
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.authors = {};

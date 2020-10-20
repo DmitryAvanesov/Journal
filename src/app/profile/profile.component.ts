@@ -49,8 +49,17 @@ export class ProfileComponent implements OnInit {
     this.submissionService.reviewSubmission({ id, status }).subscribe(
       (res: Submission) => {
         this.submissionsForReview = [
+          ...this.submissionsForReview.filter(
+            (_value, index) =>
+              index <
+              this.submissionsForReview.map((value) => value.id).indexOf(res.id)
+          ),
           res,
-          ...this.submissionsForReview.filter((value) => value.id !== id),
+          ...this.submissionsForReview.filter(
+            (_value, index) =>
+              index >
+              this.submissionsForReview.map((value) => value.id).indexOf(res.id)
+          ),
         ];
       },
       (err: Error) => {
@@ -62,15 +71,23 @@ export class ProfileComponent implements OnInit {
   scheduleSubmission(id: string, reverse: boolean): void {
     this.submissionService.scheduleSubmission(id, reverse).subscribe(
       (res: Submission) => {
-        this.submissionsForEditing = reverse
-          ? [
-              res,
-              ...this.submissionsForEditing.filter((value) => value.id !== id),
-            ]
-          : [
-              ...this.submissionsForEditing.filter((value) => value.id !== id),
-              res,
-            ];
+        this.submissionsForEditing = [
+          ...this.submissionsForEditing.filter(
+            (_value, index) =>
+              index <
+              this.submissionsForEditing
+                .map((value) => value.id)
+                .indexOf(res.id)
+          ),
+          res,
+          ...this.submissionsForEditing.filter(
+            (_value, index) =>
+              index >
+              this.submissionsForEditing
+                .map((value) => value.id)
+                .indexOf(res.id)
+          ),
+        ];
       },
       (err: Error) => {
         console.log(err);

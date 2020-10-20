@@ -1,7 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Text } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Review, SubFile, Submission } from '../types/Submission';
@@ -10,7 +8,7 @@ import { Review, SubFile, Submission } from '../types/Submission';
   providedIn: 'root',
 })
 export class SubmissionService {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient) {}
 
   private url = 'http://localhost:3000/api/file';
 

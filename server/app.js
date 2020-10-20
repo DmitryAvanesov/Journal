@@ -47,6 +47,8 @@ mongoose.set("debug", true);
 require("./models/User");
 require("./models/Submission");
 require("./models/Image");
+require("./models/Issue");
+require("./models/Cover");
 require("./config/password");
 app.use(require("./routes"));
 

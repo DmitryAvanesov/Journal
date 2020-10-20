@@ -20,8 +20,8 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    _route: ActivatedRouteSnapshot,
+    _state: RouterStateSnapshot
   ): Promise<boolean> {
     return new Promise((resolve, _reject) => {
       this.authenticationService.getCurrent().subscribe(
