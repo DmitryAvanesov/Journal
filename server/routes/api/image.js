@@ -56,8 +56,8 @@ router.get("/download", auth.required, (req, res, _next) => {
     payload: { id },
   } = req;
 
-  Image.findOne({ user: id }, (_err, image) => {
-    if (_err || !image) {
+  Image.findOne({ user: id }, (err, image) => {
+    if (err || !image) {
       fs.readFile(`${uploadPath}/0.png`, (_err, data) => {
         return res.json(data);
       });

@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { fn } = require("@angular/compiler/src/output/output_ast");
 const fs = require("fs");
 const mongoose = require("mongoose");
 const auth = require("../auth");
@@ -7,15 +6,14 @@ const auth = require("../auth");
 const Issue = mongoose.model("Issue");
 const User = mongoose.model("User");
 const Submission = mongoose.model("Submission");
-const uploadPath = "./covers";
+const Cover = mongoose.model("Cover");
+const downloadPath = "./covers";
 
 router.post("/publish", auth.required, (req, res, _next) => {
   const {
     payload: { id },
     body: { number, year, submissions },
   } = req;
-
-  console.log(submissions);
 
   User.findById(id, (err, user) => {
     if (err) {
@@ -49,6 +47,73 @@ router.post("/publish", auth.required, (req, res, _next) => {
     finalIssue.save();
 
     return res.json(finalIssue);
+  });
+});
+
+router.get("/issues", (req, res, _next) => {
+  const issuesWithSubmissions = [];
+
+  Issue.find((err, issues) => {
+    if (err) {
+      return res.status(404).json();
+    }
+
+    for (const issue of issues) {
+      const submissions = [];
+
+      for (submissionId of issue.submissions) {
+        Submission.findById(submissionId, (err, submission) => {
+          if (err) {
+            return res.status(404).json();
+          }
+
+          submissions.push({
+            manuscript: submission.manuscript,
+            about: submission.about,
+            title: submission.title,
+          });
+
+          if (submissions.length === issue.submissions.length) {
+            const issueWithSubmissions = {
+              number: issue.number,
+              year: issue.year,
+              submissions: submissions,
+            };
+
+            Cover.find({ issue: issue.id }, (err, cover) => {
+              if (err || !cover) {
+                fs.readFile(`${downloadPath}/0.png`, (err, data) => {
+                  if (err) {
+                    return res.status(404).json();
+                  }
+
+                  issueWithSubmissions.cover = data;
+                  issuesWithSubmissions.push();
+
+                  if (issuesWithSubmissions.length === issues.length) {
+                    return res.json(issuesWithSubmissions);
+                  }
+                });
+              } else {
+                fs.readFile(`${downloadPath}/${cover.name}`, (err, data) => {
+                  if (err) {
+                    console.log(err);
+                    return res.status(404).json();
+                  }
+
+                  issueWithSubmissions.cover = data;
+                  issuesWithSubmissions.push();
+
+                  if (issuesWithSubmissions.length === issues.length) {
+                    return res.json(issuesWithSubmissions);
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    }
   });
 });
 

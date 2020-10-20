@@ -1,1 +1,6 @@
-@import "./styles/issues.scss";
+@import "../constants.scss";
+
+.issues {
+  padding: 0 $padding-side;
+  flex-grow: 1;
+}

@@ -19,4 +19,12 @@ export class IssueService {
       })
     );
   }
+
+  getIssues(): Observable<IssueRes[]> {
+    return this.httpClient.get<IssueRes[]>(`${this.url}/issues`).pipe(
+      catchError((err) => {
+        throw new Error(JSON.stringify(err));
+      })
+    );
+  }
 }

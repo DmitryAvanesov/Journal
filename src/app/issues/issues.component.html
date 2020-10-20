@@ -1,3 +1,15 @@
 <div class="issues">
-  Issues will be here
+
+  <mat-card class="issues__issue-container" *ngFor="let issue of issues">
+
+    <mat-card-header class="issues__issue-header">
+      <mat-card-title class="issues__issue-title">No {{issue.number}} ({{issue.year}})</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="issues__issue-content">
+
+    </mat-card-content>
+
+  </mat-card>
+
 </div>

@@ -1,3 +1,4 @@
+import { Res } from './Res';
 import { Submission, SubTitle } from './Submission';
 
 export interface IssueReq {
@@ -9,5 +10,6 @@ export interface IssueReq {
 export interface IssueRes {
   number: number;
   year: number;
+  cover?: Res;
   submissions: Submission[];
 }
