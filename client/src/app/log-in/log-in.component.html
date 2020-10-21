@@ -1,0 +1,48 @@
+<div class="log-in">
+  <mat-card class="log-in__container">
+    <mat-card-header class="log-in__header">
+      <mat-card-title class="log-in__title">Log in</mat-card-title>
+    </mat-card-header>
+
+    <form class="log-in__form" [formGroup]="formGroup" (ngSubmit)="
+        formGroup.valid && submitLogInForm()
+      ">
+      <mat-card-content>
+        <mat-form-field class="log-in__form-field" appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="usernameControl" name="username" />
+          <mat-error *ngIf="formGroup.controls.usernameControl.hasError('required')">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="log-in__form-field" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="passwordControl" name="password"
+            [type]="passwordIsHidden ? 'password' : 'text'" />
+          <button mat-icon-button matSuffix type="button" (click)="switchPasswordHiding()">
+            <mat-icon>
+              {{ passwordIsHidden ? "visibility_off" : "visibility" }}
+            </mat-icon>
+          </button>
+          <mat-error *ngIf="formGroup.controls.passwordControl.hasError('required')">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <p class="log-in__incorrect-data-message" *ngIf="dataIsIncorrect">
+          Incorrect username and / or password
+        </p>
+      </mat-card-content>
+
+      <button mat-stroked-button class="log-in__submit-button" color="primary" type="submit">
+        Log in
+      </button>
+    </form>
+  </mat-card>
+
+  <div class="log-in__sign-up-container">
+    <span class="log-in__sign-up-message">Not a member?</span>
+    <a class="log-in__sign-up-link" routerLink="/sign-up">Sign up</a>
+  </div>
+</div>
