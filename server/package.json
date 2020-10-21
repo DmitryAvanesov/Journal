@@ -1,22 +1,13 @@
 {
-  "name": "Journal",
-  "version": "0.0.0",
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test --watch=false",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm test",
-      "...": "..."
-    }
-  },
-  "private": true,
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "@angular-material-components/file-input": "^4.0.1",
     "@angular/animations": "^10.1.6",
@@ -67,7 +58,6 @@
     "@types/node": "^12.12.68",
     "angular-rename": "^1.0.7",
     "codelyzer": "^6.0.1",
-    "husky": "^4.3.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
