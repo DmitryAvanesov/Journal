@@ -17,7 +17,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     if (
       request.url !== 'http://localhost:3000/api/file/submission' &&
-      request.url !== 'http://localhost:3000/api/image/upload'
+      request.url !== 'http://localhost:3000/api/image/upload' &&
+      request.url !== 'http://localhost:3000/api/issue/cover'
     ) {
       request = request.clone({
         headers: request.headers.set('Content-Type', 'application/json'),

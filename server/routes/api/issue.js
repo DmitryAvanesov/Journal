@@ -50,6 +50,18 @@ router.post("/publish", auth.required, (req, res, _next) => {
   });
 });
 
+router.patch("/cover", auth.required, (req, res, _next) => {
+  const { id } = req.query;
+
+  console.log("COVER IS", req.files.cover);
+
+  Issue.findByIdAndUpdate(id, {}, { new: true }, (err, issue) => {
+    if (err || !issue) {
+      return res.status(404).json();
+    }
+  });
+});
+
 router.get("/issues", (req, res, _next) => {
   const issuesWithSubmissions = [];
 
@@ -81,14 +93,14 @@ router.get("/issues", (req, res, _next) => {
             };
 
             Cover.find({ issue: issue.id }, (err, cover) => {
-              if (err || !cover) {
+              if (err || !cover.length) {
                 fs.readFile(`${downloadPath}/0.png`, (err, data) => {
                   if (err) {
                     return res.status(404).json();
                   }
 
                   issueWithSubmissions.cover = data;
-                  issuesWithSubmissions.push();
+                  issuesWithSubmissions.push(issueWithSubmissions);
 
                   if (issuesWithSubmissions.length === issues.length) {
                     return res.json(issuesWithSubmissions);
@@ -97,12 +109,11 @@ router.get("/issues", (req, res, _next) => {
               } else {
                 fs.readFile(`${downloadPath}/${cover.name}`, (err, data) => {
                   if (err) {
-                    console.log(err);
                     return res.status(404).json();
                   }
 
                   issueWithSubmissions.cover = data;
-                  issuesWithSubmissions.push();
+                  issuesWithSubmissions.push(issueWithSubmissions);
 
                   if (issuesWithSubmissions.length === issues.length) {
                     return res.json(issuesWithSubmissions);

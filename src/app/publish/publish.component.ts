@@ -4,9 +4,9 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { IssueService } from '../services/issue.service';
+import { IssuesService } from '../services/issues.service';
 import { SubmissionService } from '../services/submission.service';
-import { IssueRes } from '../types/Issue';
+import { IssueReq, IssueRes } from '../types/Issue';
 import { Submission, SubAuthor } from '../types/Submission';
 import { User } from '../types/User';
 
@@ -21,7 +21,7 @@ export class PublishComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private submissionService: SubmissionService,
     private authenticationService: AuthenticationService,
-    private issueService: IssueService,
+    private issueService: IssuesService,
     private router: Router
   ) {}
 
@@ -30,20 +30,18 @@ export class PublishComponent implements OnInit {
   authors: SubAuthor;
 
   submitPublishForm(): void {
-    const issue = {
+    const issue: IssueReq = {
       number: this.formGroup.controls.numberControl.value,
       year: this.formGroup.controls.yearControl.value,
+      cover: this.formGroup.controls.coverControl.value.files[0],
       submissions: this.submissionsForPublishing.map((value, index) => ({
         id: value.id,
         title: this.formGroup.controls.titleControl.value[index],
       })),
     };
 
-    console.log(this.formGroup.controls.titleControl.value);
-
     this.issueService.publishIssue(issue).subscribe(
-      (_res) => {
-        console.log('Success');
+      (_res: IssueRes) => {
         this.router.navigate(['/issues']);
       },
       (err: Error) => {
@@ -53,6 +51,7 @@ export class PublishComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.submissionsForPublishing = [];
     this.authors = {};
 
     this.formGroup = new FormGroup({
@@ -73,6 +72,7 @@ export class PublishComponent implements OnInit {
     this.submissionService
       .getSubmissionsForPublishing()
       .subscribe((submissions: Submission[]) => {
+        console.log(submissions);
         this.submissionsForPublishing = submissions;
 
         for (const submission of submissions) {

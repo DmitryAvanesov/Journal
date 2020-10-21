@@ -9,6 +9,7 @@ export interface Submission {
   agreement?: string;
   anonymous: string;
   status: string;
+  title?: string;
 }
 
 export interface SubAuthor {

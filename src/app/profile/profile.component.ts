@@ -5,10 +5,9 @@ import { SubFile, Submission } from '../types/Submission';
 import { User } from '../types/User';
 import * as FileSaver from 'file-saver';
 import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ImageService } from '../services/image.service';
 import { Res } from '../types/Res';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-user.component';
 
