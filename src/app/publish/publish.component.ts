@@ -72,7 +72,6 @@ export class PublishComponent implements OnInit {
     this.submissionService
       .getSubmissionsForPublishing()
       .subscribe((submissions: Submission[]) => {
-        console.log(submissions);
         this.submissionsForPublishing = submissions;
 
         for (const submission of submissions) {

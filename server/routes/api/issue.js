@@ -7,7 +7,7 @@ const Issue = mongoose.model("Issue");
 const User = mongoose.model("User");
 const Submission = mongoose.model("Submission");
 const Cover = mongoose.model("Cover");
-const downloadPath = "./covers";
+const uploadPath = "./covers";
 
 router.post("/publish", auth.required, (req, res, _next) => {
   const {
@@ -53,12 +53,35 @@ router.post("/publish", auth.required, (req, res, _next) => {
 router.patch("/cover", auth.required, (req, res, _next) => {
   const { id } = req.query;
 
-  console.log("COVER IS", req.files.cover);
-
-  Issue.findByIdAndUpdate(id, {}, { new: true }, (err, issue) => {
-    if (err || !issue) {
+  fs.readdir(uploadPath, (err, covers) => {
+    if (err || !covers) {
       return res.status(404).json();
     }
+
+    const numberOfCovers =
+      covers.reduce(
+        (previousValue, currentValue) =>
+          parseInt(currentValue) > previousValue
+            ? parseInt(currentValue)
+            : previousValue,
+        0
+      ) + 1;
+    const extension = `${req.files.cover.name.split(".").pop()}`;
+
+    req.files.cover
+      .mv(`${uploadPath}/${numberOfCovers}.${extension}`)
+      .then((_value) => {
+        Issue.findByIdAndUpdate(
+          id,
+          { cover: `${numberOfCovers}.${extension}` },
+          { new: true },
+          (err, issue) => {
+            if (err || !issue) {
+              return res.status(404).json();
+            }
+          }
+        );
+      });
   });
 });
 
@@ -92,35 +115,33 @@ router.get("/issues", (req, res, _next) => {
               submissions: submissions,
             };
 
-            Cover.find({ issue: issue.id }, (err, cover) => {
-              if (err || !cover.length) {
-                fs.readFile(`${downloadPath}/0.png`, (err, data) => {
-                  if (err) {
-                    return res.status(404).json();
-                  }
+            if (issue.cover) {
+              fs.readFile(`${uploadPath}/${issue.cover}`, (err, data) => {
+                if (err) {
+                  return res.status(404).json();
+                }
 
-                  issueWithSubmissions.cover = data;
-                  issuesWithSubmissions.push(issueWithSubmissions);
+                issueWithSubmissions.cover = data;
+                issuesWithSubmissions.push(issueWithSubmissions);
 
-                  if (issuesWithSubmissions.length === issues.length) {
-                    return res.json(issuesWithSubmissions);
-                  }
-                });
-              } else {
-                fs.readFile(`${downloadPath}/${cover.name}`, (err, data) => {
-                  if (err) {
-                    return res.status(404).json();
-                  }
+                if (issuesWithSubmissions.length === issues.length) {
+                  return res.json(issuesWithSubmissions);
+                }
+              });
+            } else {
+              fs.readFile(`${uploadPath}/0.png`, (err, data) => {
+                if (err) {
+                  return res.status(404).json();
+                }
 
-                  issueWithSubmissions.cover = data;
-                  issuesWithSubmissions.push(issueWithSubmissions);
+                issueWithSubmissions.cover = data;
+                issuesWithSubmissions.push(issueWithSubmissions);
 
-                  if (issuesWithSubmissions.length === issues.length) {
-                    return res.json(issuesWithSubmissions);
-                  }
-                });
-              }
-            });
+                if (issuesWithSubmissions.length === issues.length) {
+                  return res.json(issuesWithSubmissions);
+                }
+              });
+            }
           }
         });
       }

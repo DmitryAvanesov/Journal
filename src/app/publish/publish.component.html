@@ -64,9 +64,14 @@
           All titles are required
         </mat-error>
 
+        <mat-error *ngIf="!submissionsForPublishing.length">
+          You can't publish an empty issue. Please schedule some submissions for publishing.
+        </mat-error>
+
       </mat-card-content>
 
-      <button mat-stroked-button class="publish__submit-button" color="primary" type="submit">Publish</button>
+      <button mat-stroked-button class="publish__submit-button" color="primary" type="submit"
+        [disabled]="!submissionsForPublishing.length">Publish</button>
 
     </form>
 

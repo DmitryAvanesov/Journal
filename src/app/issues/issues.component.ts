@@ -35,6 +35,7 @@ export class IssuesComponent implements OnInit {
         }
 
         this.issues = res;
+        console.log(this.issues);
       },
       (err: Error) => {
         console.log(err);
