@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ICON_REGISTRY_PROVIDER,
-  MatIconRegistry,
-} from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from '../services/authentication.service';
-import { User, UserReqRes } from '../types/User';
+import { User } from '../types/User';
 
 @Component({
   selector: 'app-header',

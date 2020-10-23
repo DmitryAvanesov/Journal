@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { IssuesService } from '../services/issues.service';
 import { SubmissionService } from '../services/submission.service';
-import { IssueReq, IssueRes } from '../types/Issue';
+import { IssueReq } from '../types/Issue';
 import { Submission, SubAuthor } from '../types/Submission';
 import { User } from '../types/User';
 
@@ -41,7 +41,7 @@ export class PublishComponent implements OnInit {
     };
 
     this.issueService.publishIssue(issue).subscribe(
-      (_res: IssueRes) => {
+      () => {
         this.router.navigate(['/issues']);
       },
       (err: Error) => {

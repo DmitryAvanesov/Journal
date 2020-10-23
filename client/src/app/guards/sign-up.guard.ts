@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router,
-} from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../types/User';
 
@@ -17,11 +12,8 @@ export class SignUpGuard implements CanActivate {
     private authenticationService: AuthenticationService
   ) {}
 
-  canActivate(
-    _route: ActivatedRouteSnapshot,
-    _state: RouterStateSnapshot
-  ): Promise<boolean> {
-    return new Promise((resolve, _reject) => {
+  canActivate(): Promise<boolean> {
+    return new Promise((resolve) => {
       this.authenticationService.user.subscribe(
         (res: User | undefined) => {
           if (res && res.role !== 'admin') {
@@ -31,7 +23,7 @@ export class SignUpGuard implements CanActivate {
 
           return resolve(true);
         },
-        (_err: Error) => {
+        () => {
           return resolve(true);
         }
       );

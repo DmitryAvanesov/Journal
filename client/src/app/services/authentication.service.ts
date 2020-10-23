@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -21,7 +21,9 @@ export class AuthenticationService {
       (res: UserReqRes) => {
         this.user.next(res.user);
       },
-      (_err: Error) => {}
+      (err: Error) => {
+        console.log(err);
+      }
     );
   }
 

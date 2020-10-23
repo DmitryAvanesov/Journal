@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { User, UserReqRes } from '../types/User';
 
 @Component({
   selector: 'app-log-in',
@@ -39,7 +32,7 @@ export class LogInComponent implements OnInit {
         password,
       })
       .subscribe(
-        (res: UserReqRes) => {
+        () => {
           this.dataIsIncorrect = false;
           this.router.navigate(['home']);
         },

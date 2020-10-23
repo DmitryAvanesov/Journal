@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { User, UserReqRes } from '../types/User';
+import { User } from '../types/User';
 
 @Component({
   selector: 'app-sign-up',
@@ -67,7 +67,7 @@ export class SignUpComponent implements OnInit {
         role,
       })
       .subscribe(
-        (_res: UserReqRes) => {
+        () => {
           this.usernameIsUsed = false;
           this.router.navigate(['log-in']);
         },

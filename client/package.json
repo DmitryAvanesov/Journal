@@ -6,14 +6,12 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test --watch=false",
-    "lint": "ng lint",
+    "lint": "npx eslint src",
     "e2e": "ng e2e"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm test",
-      "...": "..."
+      "pre-commit": "npm run test && npm run lint"
     }
   },
   "private": true,
@@ -65,8 +63,11 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.12.68",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
     "angular-rename": "^1.0.7",
     "codelyzer": "^6.0.1",
+    "eslint": "^7.11.0",
     "husky": "^4.3.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",

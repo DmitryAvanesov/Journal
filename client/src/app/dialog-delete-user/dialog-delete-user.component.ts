@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class DialogDeleteUserComponent {
     this.dialogRef.close();
 
     this.authenticationService.deleteCurrent().subscribe(
-      (_res) => {
+      () => {
         this.authenticationService.signOut();
       },
       (err: Error) => {

@@ -96,7 +96,7 @@ export class ProfileComponent implements OnInit {
 
   uploadImage(image: File): void {
     this.imageService.uploadImage(image).subscribe(
-      (_res) => {
+      () => {
         this.downloadImage();
       },
       (err: Error) => {
@@ -129,7 +129,7 @@ export class ProfileComponent implements OnInit {
 
   deleteImage(): void {
     this.imageService.deleteImage().subscribe(
-      (_res) => {
+      () => {
         this.downloadImage();
       },
       (err: Error) => {
