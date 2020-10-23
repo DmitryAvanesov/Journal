@@ -5,10 +5,16 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AngularMaterialModule } from '../angular-material.module';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [SidebarComponent, HeaderComponent, FooterComponent],
-  imports: [CommonModule, AngularMaterialModule, RouterModule],
+  imports: [
+    CommonModule,
+    AngularMaterialModule,
+    RouterModule,
+    BrowserAnimationsModule,
+  ],
   exports: [SidebarComponent, HeaderComponent, FooterComponent],
 })
 export class SharedModule {}
