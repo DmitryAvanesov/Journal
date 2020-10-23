@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LogInComponent } from './log-in.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../../angular-material.module';
+import { LogInRoutingModule } from './log-in-routing.module';
 
 @NgModule({
   declarations: [LogInComponent],
@@ -11,6 +12,7 @@ import { AngularMaterialModule } from '../../angular-material.module';
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
+    LogInRoutingModule,
   ],
   exports: [LogInComponent],
 })
