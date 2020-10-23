@@ -1,0 +1,7 @@
+@import "../../../constants.scss";
+
+.header__toolbar {
+  min-height: $height-header;
+  height: $height-header;
+  background-color: $color-brand;
+}

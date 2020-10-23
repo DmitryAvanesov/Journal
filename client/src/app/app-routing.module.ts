@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LogInComponent } from './log-in/log-in.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { HomeComponent } from './home/home.component';
-import { IssuesComponent } from './issues/issues.component';
-import { SubmissionComponent } from './submission/submission.component';
-import { ProfileComponent } from './profile/profile.component';
-import { RepeatAuthGuard } from './guards/repeat-auth.guard';
-import { AuthGuard } from './guards/auth.guard';
-import { SignUpGuard } from './guards/sign-up.guard';
-import { NewsComponent } from './news/news.component';
-import { PublishComponent } from './publish/publish.component';
-import { PublishGuard } from './guards/publish.guard';
+import { AuthGuard } from './core/guards/auth.guard';
+import { PublishGuard } from './core/guards/publish.guard';
+import { RepeatAuthGuard } from './core/guards/repeat-auth.guard';
+import { SignUpGuard } from './core/guards/sign-up.guard';
+import { HomeComponent } from './features/home/home.component';
+import { IssuesComponent } from './features/issues/issues.component';
+import { LogInComponent } from './features/log-in/log-in.component';
+import { NewsComponent } from './features/news/news.component';
+import { ProfileComponent } from './features/profile/profile.component';
+import { PublishComponent } from './features/publish/publish.component';
+import { SignUpComponent } from './features/sign-up/sign-up.component';
+import { SubmissionComponent } from './features/submission/submission.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
