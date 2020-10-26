@@ -1,0 +1,31 @@
+@import "../../constants.scss";
+@import "../../mixins.scss";
+
+.publish__form-field {
+  @include form-field;
+
+  & > * {
+    margin: 0 5px;
+  }
+
+  :first-child {
+    margin-left: 0;
+  }
+
+  :last-child {
+    margin-right: 0;
+  }
+}
+
+.publish__flex-form-field {
+  display: flex;
+
+  * {
+    flex-grow: 1;
+  }
+}
+
+.publish__submit-button {
+  display: block;
+  margin: 0 auto;
+}

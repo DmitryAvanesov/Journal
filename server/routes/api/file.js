@@ -193,8 +193,12 @@ router.get("/publisher-submissions", auth.required, (req, res, _next) => {
     const submissions = [];
 
     Submission.find({ status: "scheduled" }, (err, publisherSubmissions) => {
-      if (err) {
+      if (err || !publisherSubmissions) {
         return res.status(404).json();
+      }
+
+      if (!publisherSubmissions.length) {
+        return res.json(submissions);
       }
 
       for (const publisherSubmission of publisherSubmissions) {
@@ -208,6 +212,8 @@ router.get("/publisher-submissions", auth.required, (req, res, _next) => {
           anonymous: publisherSubmission.anonymous,
           status: publisherSubmission.status,
         });
+
+        console.log(submissions.length, publisherSubmissions.length);
 
         if (submissions.length === publisherSubmissions.length) {
           return res.json(submissions);

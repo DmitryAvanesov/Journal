@@ -37,13 +37,13 @@ router.post("/upload", auth.required, (req, res, _next) => {
 
         req.files.image.mv(`${uploadPath}/${numberOfImages}.${extension}`);
 
-        const userImage = {
+        const image = {
           user: mongoose.Types.ObjectId(id),
           name: `${numberOfImages}.${extension}`,
         };
 
-        const finalUserImage = new Image(userImage);
-        finalUserImage.save();
+        const finalImage = new Image(image);
+        finalImage.save();
 
         return res.json();
       });
@@ -56,8 +56,8 @@ router.get("/download", auth.required, (req, res, _next) => {
     payload: { id },
   } = req;
 
-  Image.findOne({ user: id }, (_err, image) => {
-    if (_err || !image) {
+  Image.findOne({ user: id }, (err, image) => {
+    if (err || !image) {
       fs.readFile(`${uploadPath}/0.png`, (_err, data) => {
         return res.json(data);
       });

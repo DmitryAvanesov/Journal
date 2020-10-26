@@ -1,0 +1,32 @@
+@import "../../constants.scss";
+@import "../../mixins.scss";
+
+.sign-up__form-field {
+  @include form-field;
+}
+
+.sign-up__form-group {
+  border: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.sign-up__used-username-message {
+  font-size: 14px;
+  color: $color-error;
+}
+
+.sign-up__log-in-container {
+  text-align: center;
+  margin-top: 25px;
+
+  .sign-up__log-in-message {
+    margin-right: 10px;
+  }
+
+  .sign-up__log-in-link {
+    text-decoration: none;
+    color: $color-primary;
+    font-weight: 500;
+  }
+}

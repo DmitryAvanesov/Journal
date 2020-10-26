@@ -1,0 +1,44 @@
+@import "../../constants.scss";
+
+.footer {
+  display: flex;
+  position: relative;
+  background-color: $color-gray;
+  padding: 25px $padding-side;
+  margin-top: 50px;
+
+  * {
+    margin-right: 25px;
+  }
+
+  .footer__header {
+    font-size: 1.25em;
+  }
+
+  .footer__founder-block {
+    display: flex;
+    flex-basis: 60%;
+    align-items: self-start;
+
+    .footer__founder-logo {
+      width: 125px;
+      height: auto;
+    }
+  }
+
+  .footer__editorial-office-block {
+    display: flex;
+    flex-basis: 40%;
+  }
+
+  .footer__age-limit {
+    position: absolute;
+    right: 25px;
+    bottom: 25px;
+    background-color: $color-brand;
+    color: $color-gray;
+    padding: 10px;
+    border-radius: 50%;
+    margin-right: 0;
+  }
+}
