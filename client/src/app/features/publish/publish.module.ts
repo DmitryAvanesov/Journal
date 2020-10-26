@@ -5,6 +5,7 @@ import { AngularMaterialModule } from 'src/app/angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { PublishRoutingModule } from './publish-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [PublishComponent],
@@ -15,6 +16,7 @@ import { PublishRoutingModule } from './publish-routing.module';
     ReactiveFormsModule,
     MaterialFileInputModule,
     PublishRoutingModule,
+    SharedModule,
   ],
   exports: [PublishComponent],
 })

@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../../angular-material.module';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { SubmissionRoutingModule } from './submission-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [SubmissionComponent],
@@ -14,6 +15,7 @@ import { SubmissionRoutingModule } from './submission-routing.module';
     AngularMaterialModule,
     MaterialFileInputModule,
     SubmissionRoutingModule,
+    SharedModule,
   ],
   exports: [SubmissionComponent],
 })

@@ -4,6 +4,7 @@ import { LogInComponent } from './log-in.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../../angular-material.module';
 import { LogInRoutingModule } from './log-in-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [LogInComponent],
@@ -13,6 +14,7 @@ import { LogInRoutingModule } from './log-in-routing.module';
     ReactiveFormsModule,
     AngularMaterialModule,
     LogInRoutingModule,
+    SharedModule,
   ],
   exports: [LogInComponent],
 })

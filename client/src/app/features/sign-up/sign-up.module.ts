@@ -4,6 +4,7 @@ import { SignUpComponent } from './sign-up.component';
 import { AngularMaterialModule } from 'src/app/angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpRoutingModule } from './sign-up-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [SignUpComponent],
@@ -13,6 +14,7 @@ import { SignUpRoutingModule } from './sign-up-routing.module';
     FormsModule,
     ReactiveFormsModule,
     SignUpRoutingModule,
+    SharedModule,
   ],
   exports: [SignUpComponent],
 })

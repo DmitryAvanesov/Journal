@@ -1,19 +1,14 @@
 @import "../../constants.scss";
 
-.issues {
-  padding: 0 $padding-side;
-  flex-grow: 1;
+.issues__container {
+  display: flex;
+  width: fit-content;
 
-  .issues__container {
-    display: flex;
-    width: fit-content;
+  .issues__cover {
+    width: 25%;
+  }
 
-    .issues__cover {
-      width: 25%;
-    }
-
-    .issues__content {
-      margin: 10px 16px;
-    }
+  .issues__content {
+    margin: 10px 16px;
   }
 }
