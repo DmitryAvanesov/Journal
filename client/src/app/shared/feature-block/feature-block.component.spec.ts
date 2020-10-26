@@ -1,9 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FeatureBlockComponent } from './feature-block.component';
 
 describe('FeatureBlockComponent', () => {
-  let component: FeatureBlockComponent;
   let fixture: ComponentFixture<FeatureBlockComponent>;
 
   beforeEach(async () => {
@@ -14,7 +12,6 @@ describe('FeatureBlockComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FeatureBlockComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 });

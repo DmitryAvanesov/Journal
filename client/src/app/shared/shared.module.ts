@@ -10,6 +10,7 @@ import { FeatureBlockComponent } from './feature-block/feature-block.component';
 import { CardComponent } from './card/card.component';
 import { CardHeaderComponent } from './card-header/card-header.component';
 import { CardTitleComponent } from './card-title/card-title.component';
+import { SubmitButtonComponent } from './submit-button/submit-button.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CardTitleComponent } from './card-title/card-title.component';
     CardComponent,
     CardHeaderComponent,
     CardTitleComponent,
+    SubmitButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { CardTitleComponent } from './card-title/card-title.component';
     CardComponent,
     CardHeaderComponent,
     CardTitleComponent,
+    SubmitButtonComponent,
   ],
 })
 export class SharedModule {}

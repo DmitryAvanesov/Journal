@@ -6,9 +6,8 @@
       <app-card-title>Log in</app-card-title>
     </app-card-header>
 
-    <form [formGroup]="formGroup" (ngSubmit)="
-        formGroup.valid && submitLogInForm()
-      ">
+    <form [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitLogInForm()">
+
       <mat-card-content>
         <mat-form-field class="log-in__form-field" appearance="outline">
           <mat-label>Username</mat-label>
@@ -37,9 +36,10 @@
         </p>
       </mat-card-content>
 
-      <button mat-stroked-button class="log-in__submit-button" color="primary" type="submit">
+      <app-submit-button>
         Log in
-      </button>
+      </app-submit-button>
+
     </form>
 
   </app-card>
