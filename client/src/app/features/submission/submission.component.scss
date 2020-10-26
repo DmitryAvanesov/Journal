@@ -1,28 +1,26 @@
-.submission__container {
-  padding: 25px 15px;
-  max-width: 500px;
-  margin: 50px auto 0;
+.submission__order {
+  margin-bottom: 50px;
+}
 
-  .submission__header {
-    justify-content: center;
-    margin: 15px 0 25px;
+.submission__header {
+  justify-content: center;
+  margin: 15px 0 25px;
 
-    .submission__title {
-      font-size: 2em;
-    }
+  .submission__title {
+    font-size: 2em;
   }
+}
 
-  .submission__form-field {
-    width: 100%;
-    margin: 5px 0;
+.submission__form-field {
+  width: 100%;
+  margin: 5px 0;
 
-    .submission__attach-icon {
-      cursor: pointer;
-    }
+  .submission__attach-icon {
+    cursor: pointer;
   }
+}
 
-  .submission__submit-button {
-    display: block;
-    margin: 0 auto;
-  }
+.submission__submit-button {
+  display: block;
+  margin: 0 auto;
 }

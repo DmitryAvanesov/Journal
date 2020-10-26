@@ -7,6 +7,7 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FeatureBlockComponent } from './feature-block/feature-block.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { FeatureBlockComponent } from './feature-block/feature-block.component';
     HeaderComponent,
     FooterComponent,
     FeatureBlockComponent,
+    CardComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +28,7 @@ import { FeatureBlockComponent } from './feature-block/feature-block.component';
     HeaderComponent,
     FooterComponent,
     FeatureBlockComponent,
+    CardComponent,
   ],
 })
 export class SharedModule {}
