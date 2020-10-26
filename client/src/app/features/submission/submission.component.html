@@ -48,9 +48,9 @@
 
   <app-card>
 
-    <mat-card-header class="submission__header">
-      <mat-card-title class="submission__title">Make a submission</mat-card-title>
-    </mat-card-header>
+    <app-card-header>
+      <app-card-title>Make a submission</app-card-title>
+    </app-card-header>
 
     <form [formGroup]="formGroup"
       (ngSubmit)="formGroup.valid && submitSubmissionForm(manuscript.value.files[0], about.value.files[0], agreement.value.files[0], anonymous.value.files[0])">

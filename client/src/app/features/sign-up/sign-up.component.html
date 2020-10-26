@@ -2,9 +2,9 @@
 
   <app-card>
 
-    <mat-card-header class="sign-up__header">
-      <mat-card-title class="sign-up__title">Sign up</mat-card-title>
-    </mat-card-header>
+    <app-card-header>
+      <app-card-title>Sign up</app-card-title>
+    </app-card-header>
 
     <form [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitSignUpForm()">
 

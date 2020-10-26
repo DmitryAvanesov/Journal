@@ -2,9 +2,9 @@
 
   <app-card>
 
-    <mat-card-header class="log-in__header">
-      <mat-card-title class="log-in__title">Log in</mat-card-title>
-    </mat-card-header>
+    <app-card-header>
+      <app-card-title>Log in</app-card-title>
+    </app-card-header>
 
     <form [formGroup]="formGroup" (ngSubmit)="
         formGroup.valid && submitLogInForm()

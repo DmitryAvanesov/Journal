@@ -2,9 +2,9 @@
 
   <app-card>
 
-    <mat-card-header class="publish__header">
-      <mat-card-title class="publish__title">Publish</mat-card-title>
-    </mat-card-header>
+    <app-card-header>
+      <app-card-title>Publish</app-card-title>
+    </app-card-header>
 
     <form [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitPublishForm()">
 
