@@ -1,1 +1,7 @@
-@import "./styles/sidebar.scss";
+@import "../../constants.scss";
+
+.sidebar {
+  padding: 0 $padding-side/2;
+  width: 200px;
+  border-left: 1px solid black;
+}

@@ -1,7 +1,51 @@
-@import "./styles/publish.scss";
-@import "./styles/publish__container.scss";
-@import "./styles/publish__form-field.scss";
-@import "./styles/publish__header.scss";
-@import "./styles/publish__title.scss";
-@import "./styles/publish__submit-button.scss";
-@import "./styles/publish__flex-form-field.scss";
+@import "../../constants.scss";
+
+.publish {
+  padding: 0 $padding-side;
+  margin: 0 auto;
+  flex-grow: 1;
+  width: fit-content;
+
+  .publish__container {
+    padding: 25px 15px;
+
+    .publish__header {
+      justify-content: center;
+      margin-bottom: 25px;
+
+      .publish__title {
+        font-size: 2em;
+      }
+    }
+
+    .publish__form-field {
+      width: 100%;
+      margin: 5px 0;
+
+      & > * {
+        margin: 0 5px;
+      }
+
+      :first-child {
+        margin-left: 0;
+      }
+
+      :last-child {
+        margin-right: 0;
+      }
+    }
+
+    .publish__flex-form-field {
+      display: flex;
+
+      * {
+        flex-grow: 1;
+      }
+    }
+
+    .publish__submit-button {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}

@@ -1,7 +1,33 @@
-@import "./styles/submission.scss";
-@import "./styles/submission__submit-button.scss";
-@import "./styles/submission__form-field.scss";
-@import "./styles/submission__header.scss";
-@import "./styles/submission__title.scss";
-@import "./styles/submission__container.scss";
-@import "./styles/submission__attach-icon.scss";
+.submission {
+  width: fit-content;
+  padding: 0 100px;
+
+  .submission__container {
+    padding: 25px 15px;
+    max-width: 500px;
+    margin: 50px auto 0;
+
+    .submission__header {
+      justify-content: center;
+      margin: 15px 0 25px;
+
+      .submission__title {
+        font-size: 2em;
+      }
+    }
+
+    .submission__form-field {
+      width: 100%;
+      margin: 5px 0;
+
+      .submission__attach-icon {
+        cursor: pointer;
+      }
+    }
+
+    .submission__submit-button {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}

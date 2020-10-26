@@ -6,7 +6,7 @@
       <mat-card-title class="sign-up__title">Sign up</mat-card-title>
     </mat-card-header>
 
-    <form class="sign-up__form" [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitSignUpForm()">
+    <form [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitSignUpForm()">
 
       <mat-card-content>
         <mat-form-field class="sign-up__form-field" appearance="outline">

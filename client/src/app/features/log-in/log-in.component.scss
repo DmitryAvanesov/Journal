@@ -1,10 +1,48 @@
-@import "./styles/log-in.scss";
-@import "./styles/log-in__form-field.scss";
-@import "./styles/log-in__header.scss";
-@import "./styles/log-in__submit-button.scss";
-@import "./styles/log-in__title.scss";
-@import "./styles/log-in__sign-up-container.scss";
-@import "./styles/log-in__sign-up-link.scss";
-@import "./styles/log-in__sign-up-message.scss";
-@import "./styles/log-in__incorrect-data-message.scss";
-@import "./styles/log-in__container.scss";
+@import "../../constants.scss";
+
+.log-in {
+  width: fit-content;
+
+  .log-in__container {
+    padding: 25px 15px;
+
+    .log-in__header {
+      justify-content: center;
+      margin-bottom: 25px;
+
+      .log-in__title {
+        font-size: 2em;
+      }
+    }
+
+    .log-in__form-field {
+      width: 100%;
+      margin: 5px 0;
+    }
+
+    .log-in__incorrect-data-message {
+      font-size: 14px;
+      color: $color-error;
+    }
+
+    .log-in__submit-button {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  .log-in__sign-up-container {
+    text-align: center;
+    margin-top: 25px;
+
+    .log-in__sign-up-message {
+      margin-right: 10px;
+    }
+
+    .log-in__sign-up-link {
+      text-decoration: none;
+      color: $color-primary;
+      font-weight: 500;
+    }
+  }
+}

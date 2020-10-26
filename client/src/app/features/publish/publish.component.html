@@ -6,7 +6,7 @@
       <mat-card-title class="publish__title">Publish</mat-card-title>
     </mat-card-header>
 
-    <form class="publish__form" [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitPublishForm()">
+    <form [formGroup]="formGroup" (ngSubmit)="formGroup.valid && submitPublishForm()">
 
       <mat-card-content>
 
@@ -70,7 +70,7 @@
 
       </mat-card-content>
 
-      <button mat-stroked-button class="publish__submit-button" color="primary" type="submit"
+      <button class="publish__submit-button" mat-stroked-button color="primary" type="submit"
         [disabled]="!submissionsForPublishing.length">Publish</button>
 
     </form>

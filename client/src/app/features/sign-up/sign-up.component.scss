@@ -1,11 +1,54 @@
-@import "./styles/sign-up.scss";
-@import "./styles/sign-up__form-field.scss";
-@import "./styles/sign-up__form-group.scss";
-@import "./styles/sign-up__header.scss";
-@import "./styles/sign-up__submit-button.scss";
-@import "./styles/sign-up__title.scss";
-@import "./styles/sign-up__log-in-container.scss";
-@import "./styles/sign-up__log-in-link.scss";
-@import "./styles/sign-up__log-in-message.scss";
-@import "./styles/sign-up__used-username-message.scss";
-@import "./styles/sign-up__container.scss";
+@import "../../constants.scss";
+
+.sign-up {
+  width: fit-content;
+
+  .sign-up__container {
+    padding: 25px 15px;
+
+    .sign-up__header {
+      justify-content: center;
+      margin-bottom: 25px;
+
+      .sign-up__title {
+        font-size: 2em;
+      }
+    }
+
+    .sign-up__form-field {
+      width: 100%;
+      margin: 5px 0;
+    }
+
+    .sign-up__form-group {
+      border: none;
+      padding: 0;
+      margin-bottom: 15px;
+    }
+
+    .sign-up__used-username-message {
+      font-size: 14px;
+      color: $color-error;
+    }
+
+    .sign-up__submit-button {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  .sign-up__log-in-container {
+    text-align: center;
+    margin-top: 25px;
+
+    .sign-up__log-in-message {
+      margin-right: 10px;
+    }
+
+    .sign-up__log-in-link {
+      text-decoration: none;
+      color: $color-primary;
+      font-weight: 500;
+    }
+  }
+}

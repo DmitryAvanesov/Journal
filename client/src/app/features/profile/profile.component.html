@@ -192,12 +192,15 @@
     </p>
   </div>
 
-  <button class="profile__action-button" mat-flat-button color="primary" routerLink="/submission">Make a
-    submission</button>
-  <button class="profile__action-button" mat-flat-button color="primary" routerLink="/publish"
-    *ngIf="user && user.role === 'editor'">Publish the next issue</button>
-  <button class="profile__action-button" mat-flat-button color="primary" routerLink="/sign-up"
-    *ngIf="user && user.role === 'admin'">Add user</button>
-  <button class="profile__action-button" mat-flat-button color="warn" (click)="openDialog()">Delete my account</button>
+  <div>
+    <button class="profile__action-button" mat-flat-button color="primary" routerLink="/submission">Make a
+      submission</button>
+    <button class="profile__action-button" mat-flat-button color="primary" routerLink="/publish"
+      *ngIf="user && user.role === 'editor'">Publish the next issue</button>
+    <button class="profile__action-button" mat-flat-button color="primary" routerLink="/sign-up"
+      *ngIf="user && user.role === 'admin'">Add user</button>
+    <button class="profile__action-button" mat-flat-button color="warn" (click)="openDialog()">Delete my
+      account</button>
+  </div>
 
 </div>

@@ -4,7 +4,7 @@
       <mat-card-title class="log-in__title">Log in</mat-card-title>
     </mat-card-header>
 
-    <form class="log-in__form" [formGroup]="formGroup" (ngSubmit)="
+    <form [formGroup]="formGroup" (ngSubmit)="
         formGroup.valid && submitLogInForm()
       ">
       <mat-card-content>
