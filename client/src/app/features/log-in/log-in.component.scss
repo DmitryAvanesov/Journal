@@ -1,8 +1,8 @@
 @import "../../constants.scss";
+@import "../../mixins.scss";
 
 .log-in__form-field {
-  width: 100%;
-  margin: 5px 0;
+  @include form-field;
 }
 
 .log-in__incorrect-data-message {

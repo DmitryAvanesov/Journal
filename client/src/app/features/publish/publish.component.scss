@@ -1,8 +1,8 @@
 @import "../../constants.scss";
+@import "../../mixins.scss";
 
 .publish__form-field {
-  width: 100%;
-  margin: 5px 0;
+  @include form-field;
 
   & > * {
     margin: 0 5px;

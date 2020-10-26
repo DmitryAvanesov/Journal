@@ -1,10 +1,11 @@
+@import "../../mixins.scss";
+
 .submission__order {
   margin-bottom: 50px;
 }
 
 .submission__form-field {
-  width: 100%;
-  margin: 5px 0;
+  @include form-field;
 
   .submission__attach-icon {
     cursor: pointer;

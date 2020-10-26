@@ -1,8 +1,8 @@
 @import "../../constants.scss";
+@import "../../mixins.scss";
 
 .sign-up__form-field {
-  width: 100%;
-  margin: 5px 0;
+  @include form-field;
 }
 
 .sign-up__form-group {

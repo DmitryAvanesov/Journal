@@ -55,6 +55,7 @@
     <form [formGroup]="formGroup"
       (ngSubmit)="formGroup.valid && submitSubmissionForm(manuscript.value.files[0], about.value.files[0], agreement.value.files[0], anonymous.value.files[0])">
       <mat-card-content>
+
         <mat-form-field class="submission__form-field" appearance="fill">
           <mat-label>Manuscript</mat-label>
           <ngx-mat-file-input #manuscript [accept]="'.doc'" formControlName="manuscriptControl"></ngx-mat-file-input>
