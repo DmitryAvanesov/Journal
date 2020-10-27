@@ -16,6 +16,8 @@ import { PublishModule } from './features/publish/publish.module';
 import { SignUpModule } from './features/sign-up/sign-up.module';
 import { SubmissionModule } from './features/submission/submission.module';
 import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorModule } from './features/error/error.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,8 +34,10 @@ import { SharedModule } from './shared/shared.module';
     PublishModule,
     SignUpModule,
     SubmissionModule,
+    ErrorModule,
     AppRoutingModule,
     FlexLayoutModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {
