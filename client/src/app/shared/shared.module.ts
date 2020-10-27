@@ -11,6 +11,7 @@ import { CardComponent } from './card/card.component';
 import { CardHeaderComponent } from './card-header/card-header.component';
 import { CardTitleComponent } from './card-title/card-title.component';
 import { SubmitButtonComponent } from './submit-button/submit-button.component';
+import { CenteredContainerComponent } from './centered-container/centered-container.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SubmitButtonComponent } from './submit-button/submit-button.component';
     CardHeaderComponent,
     CardTitleComponent,
     SubmitButtonComponent,
+    CenteredContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +40,7 @@ import { SubmitButtonComponent } from './submit-button/submit-button.component';
     CardHeaderComponent,
     CardTitleComponent,
     SubmitButtonComponent,
+    CenteredContainerComponent,
   ],
 })
 export class SharedModule {}
