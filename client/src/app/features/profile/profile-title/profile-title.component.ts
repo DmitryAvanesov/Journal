@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { ImageService } from 'src/app/core/services/image.service';
 import { Res } from 'src/app/core/types/Res';
-import { User, UserReqRes } from 'src/app/core/types/User';
+import { User } from 'src/app/core/types/User';
 
 @Component({
   selector: 'app-profile-title',

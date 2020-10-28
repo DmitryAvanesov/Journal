@@ -6,9 +6,19 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { DialogDeleteUserComponent } from './dialog-delete-user/dialog-delete-user.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProfileTitleComponent } from './profile-title/profile-title.component';
+import { ProfileMySubmissionsComponent } from './profile-my-submissions/profile-my-submissions.component';
+import { ProfileSubmissionsForReviewComponent } from './profile-submissions-for-review/profile-submissions-for-review.component';
+import { ProfileSubmissionsForEditingComponent } from './profile-submissions-for-editing/profile-submissions-for-editing.component';
 
 @NgModule({
-  declarations: [ProfileComponent, DialogDeleteUserComponent, ProfileTitleComponent],
+  declarations: [
+    ProfileComponent,
+    DialogDeleteUserComponent,
+    ProfileTitleComponent,
+    ProfileMySubmissionsComponent,
+    ProfileSubmissionsForReviewComponent,
+    ProfileSubmissionsForEditingComponent,
+  ],
   imports: [
     CommonModule,
     AngularMaterialModule,

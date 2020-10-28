@@ -13,7 +13,6 @@
     width: fit-content;
     margin-bottom: 15px;
     margin-right: 15px;
-    padding-bottom: 25px;
 
     .profile__submission-header {
       margin-bottom: 10px;
@@ -26,6 +25,14 @@
 
     .profile__submission-content {
       margin: 0 16px;
+
+      p {
+        margin: 10px 0;
+      }
+
+      p:last-of-type {
+        margin-bottom: 0;
+      }
 
       .profile__submission-name {
         margin-right: 10px;
