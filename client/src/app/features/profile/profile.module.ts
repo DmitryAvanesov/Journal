@@ -9,6 +9,7 @@ import { ProfileTitleComponent } from './profile-title/profile-title.component';
 import { ProfileMySubmissionsComponent } from './profile-my-submissions/profile-my-submissions.component';
 import { ProfileSubmissionsForReviewComponent } from './profile-submissions-for-review/profile-submissions-for-review.component';
 import { ProfileSubmissionsForEditingComponent } from './profile-submissions-for-editing/profile-submissions-for-editing.component';
+import { ProfileActionBlockComponent } from './profile-action-block/profile-action-block.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ProfileSubmissionsForEditingComponent } from './profile-submissions-for
     ProfileMySubmissionsComponent,
     ProfileSubmissionsForReviewComponent,
     ProfileSubmissionsForEditingComponent,
+    ProfileActionBlockComponent,
   ],
   imports: [
     CommonModule,
