@@ -3,7 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
-import { User, UserReqRes } from '../types/User';
+import { UserReqRes } from '../types/User';
 
 @Injectable({
   providedIn: 'root',

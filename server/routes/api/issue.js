@@ -85,7 +85,7 @@ router.patch("/cover", auth.required, (req, res, _next) => {
   });
 });
 
-router.get("/issues", (req, res, _next) => {
+router.get("/issues", (_req, res, _next) => {
   const issuesWithSubmissions = [];
 
   Issue.find((err, issues) => {
@@ -102,47 +102,54 @@ router.get("/issues", (req, res, _next) => {
             return res.status(404).json();
           }
 
-          submissions.push({
-            manuscript: submission.manuscript,
-            about: submission.about,
-            title: submission.title,
-          });
-
-          if (submissions.length === issue.submissions.length) {
-            const issueWithSubmissions = {
-              number: issue.number,
-              year: issue.year,
-              submissions: submissions,
-            };
-
-            if (issue.cover) {
-              fs.readFile(`${uploadPath}/${issue.cover}`, (err, data) => {
-                if (err) {
-                  return res.status(404).json();
-                }
-
-                issueWithSubmissions.cover = data;
-                issuesWithSubmissions.push(issueWithSubmissions);
-
-                if (issuesWithSubmissions.length === issues.length) {
-                  return res.json(issuesWithSubmissions);
-                }
-              });
-            } else {
-              fs.readFile(`${uploadPath}/0.png`, (err, data) => {
-                if (err) {
-                  return res.status(404).json();
-                }
-
-                issueWithSubmissions.cover = data;
-                issuesWithSubmissions.push(issueWithSubmissions);
-
-                if (issuesWithSubmissions.length === issues.length) {
-                  return res.json(issuesWithSubmissions);
-                }
-              });
+          User.findById(submission.user, (err, user) => {
+            if (err) {
+              return res.status(404).json();
             }
-          }
+
+            submissions.push({
+              manuscript: submission.manuscript,
+              about: submission.about,
+              title: submission.title,
+              author: user.username,
+            });
+
+            if (submissions.length === issue.submissions.length) {
+              const issueWithSubmissions = {
+                number: issue.number,
+                year: issue.year,
+                submissions: submissions,
+              };
+
+              if (issue.cover) {
+                fs.readFile(`${uploadPath}/${issue.cover}`, (err, data) => {
+                  if (err) {
+                    return res.status(404).json();
+                  }
+
+                  issueWithSubmissions.cover = data;
+                  issuesWithSubmissions.push(issueWithSubmissions);
+
+                  if (issuesWithSubmissions.length === issues.length) {
+                    return res.json(issuesWithSubmissions);
+                  }
+                });
+              } else {
+                fs.readFile(`${uploadPath}/0.png`, (err, data) => {
+                  if (err) {
+                    return res.status(404).json();
+                  }
+
+                  issueWithSubmissions.cover = data;
+                  issuesWithSubmissions.push(issueWithSubmissions);
+
+                  if (issuesWithSubmissions.length === issues.length) {
+                    return res.json(issuesWithSubmissions);
+                  }
+                });
+              }
+            }
+          });
         });
       }
     }

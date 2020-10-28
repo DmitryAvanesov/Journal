@@ -11,7 +11,7 @@
 
       <mat-card-content class="issues__content">
         <p *ngFor="let submission of issue.submissions">
-          {{submission.title}}
+          <span class="bold-text">{{submission.title}}</span> by {{submission.author}}
         </p>
       </mat-card-content>
     </div>
