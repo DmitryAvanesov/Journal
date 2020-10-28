@@ -1,12 +1,10 @@
 import * as FileSaver from 'file-saver';
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
-import { ImageService } from 'src/app/core/services/image.service';
 import { SubmissionService } from 'src/app/core/services/submission.service';
-import { Res } from 'src/app/core/types/Res';
 import { Submission, SubFile } from 'src/app/core/types/Submission';
 import { User, UserReqRes } from 'src/app/core/types/User';
 import { DialogDeleteUserComponent } from './dialog-delete-user/dialog-delete-user.component';
@@ -20,7 +18,6 @@ export class ProfileComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private submissionService: SubmissionService,
-    private imageService: ImageService,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private dialog: MatDialog
@@ -94,50 +91,6 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  uploadImage(image: File): void {
-    this.imageService.uploadImage(image).subscribe(
-      () => {
-        this.downloadImage();
-      },
-      (err: Error) => {
-        console.log(err);
-      }
-    );
-  }
-
-  downloadImage(): void {
-    this.imageService.downloadImage().subscribe(
-      (res: Res) => {
-        const base64String = btoa(
-          new Uint8Array(res.data).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            ''
-          )
-        );
-        this.image = this.sanitizer.sanitize(
-          SecurityContext.RESOURCE_URL,
-          this.sanitizer.bypassSecurityTrustResourceUrl(
-            `data:image/jpeg;base64,${base64String}`
-          )
-        );
-      },
-      (err: Error) => {
-        console.log(err);
-      }
-    );
-  }
-
-  deleteImage(): void {
-    this.imageService.deleteImage().subscribe(
-      () => {
-        this.downloadImage();
-      },
-      (err: Error) => {
-        console.log(err);
-      }
-    );
-  }
-
   openDialog(): void {
     this.dialog.open(DialogDeleteUserComponent);
   }
@@ -165,27 +118,19 @@ export class ProfileComponent implements OnInit {
       }
     });
 
-    this.downloadImage();
-
     this.submissionService.getSubmissions().subscribe((res: Submission[]) => {
       this.submissions = res.reverse();
     });
 
     this.iconRegistry.addSvgIcon(
       'download',
-      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/download.svg')
-    );
-    this.iconRegistry.addSvgIcon(
-      'edit',
-      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/edit.svg')
-    );
-    this.iconRegistry.addSvgIcon(
-      'delete',
-      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/delete.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        '../../../assets/download.svg'
+      )
     );
     this.iconRegistry.addSvgIcon(
       'tick',
-      this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/tick.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl('../../../assets/tick.svg')
     );
   }
 }

@@ -23,8 +23,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticationService.getCurrent().subscribe((res: UserReqRes) => {
-      this.user = res.user;
+    this.authenticationService.user.subscribe((user: User | undefined) => {
+      this.user = user;
     });
 
     this.iconRegistry.addSvgIcon(

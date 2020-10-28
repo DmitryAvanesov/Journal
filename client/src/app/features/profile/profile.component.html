@@ -1,18 +1,6 @@
 <app-feature-block>
 
-  <div class="profile__title">
-
-    <div class="profile__image" [style.background-image]="'url(' + image + ')'">
-      <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" (change)="uploadImage($event.target.files[0])" />
-      <label for="edit">
-        <mat-icon class="profile__image-button" svgIcon="edit"></mat-icon>
-      </label>
-      <mat-icon class="profile__image-button" svgIcon="delete" (click)="deleteImage()"></mat-icon>
-    </div>
-
-    <h1 class="profile__title-name">{{user?.username}}</h1>
-
-  </div>
+  <app-profile-title></app-profile-title>
 
   <h2>My submissions</h2>
 
@@ -78,9 +66,9 @@
     </p>
   </div>
 
-  <h2 *ngIf="user.role === 'reviewer'">Submissions for review</h2>
+  <h2 *ngIf="user?.role === 'reviewer'">Submissions for review</h2>
 
-  <div class="profile__submission-block" *ngIf="user.role === 'reviewer'">
+  <div class="profile__submission-block" *ngIf="user?.role === 'reviewer'">
     <mat-card class="profile__submission-container" *ngFor="let submission of submissionsForReview">
 
       <mat-card-header class="profile__submission-header">
@@ -122,9 +110,9 @@
     </p>
   </div>
 
-  <h2 *ngIf="user.role === 'editor'">Submissions for editing</h2>
+  <h2 *ngIf="user?.role === 'editor'">Submissions for editing</h2>
 
-  <div class="profile__submission-block" *ngIf="user.role === 'editor'">
+  <div class="profile__submission-block" *ngIf="user?.role === 'editor'">
     <mat-card class="profile__submission-container" *ngFor="let submission of submissionsForEditing">
 
       <mat-card-header class="profile__submission-header">
@@ -196,9 +184,9 @@
     <button class="profile__action-button" mat-flat-button color="primary" routerLink="/submission">Make a
       submission</button>
     <button class="profile__action-button" mat-flat-button color="primary" routerLink="/publish"
-      *ngIf="user && user.role === 'editor'">Publish the next issue</button>
+      *ngIf="user?.role === 'editor'">Publish the next issue</button>
     <button class="profile__action-button" mat-flat-button color="primary" routerLink="/sign-up"
-      *ngIf="user && user.role === 'admin'">Add user</button>
+      *ngIf="user?.role === 'admin'">Add user</button>
     <button class="profile__action-button" mat-flat-button color="warn" (click)="openDialog()">Delete my
       account</button>
   </div>
