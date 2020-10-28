@@ -8,7 +8,7 @@ import { ImageService } from 'src/app/core/services/image.service';
 import { SubmissionService } from 'src/app/core/services/submission.service';
 import { Res } from 'src/app/core/types/Res';
 import { Submission, SubFile } from 'src/app/core/types/Submission';
-import { User } from 'src/app/core/types/User';
+import { User, UserReqRes } from 'src/app/core/types/User';
 import { DialogDeleteUserComponent } from './dialog-delete-user/dialog-delete-user.component';
 
 @Component({
@@ -143,11 +143,11 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticationService.user.subscribe((user: User | undefined) => {
-      this.user = user;
+    this.authenticationService.getCurrent().subscribe((res: UserReqRes) => {
+      this.user = res.user;
 
-      if (user) {
-        if (user.role === 'reviewer') {
+      if (res) {
+        if (res.user.role === 'reviewer') {
           this.submissionService
             .getSubmissionsForReview()
             .subscribe((res: Submission[]) => {
@@ -155,7 +155,7 @@ export class ProfileComponent implements OnInit {
             });
         }
 
-        if (user.role === 'editor') {
+        if (res.user.role === 'editor') {
           this.submissionService
             .getSubmissionsForEditing()
             .subscribe((res: Submission[]) => {

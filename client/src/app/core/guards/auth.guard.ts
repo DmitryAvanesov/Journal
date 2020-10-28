@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserReqRes } from '../types/User';
 
@@ -12,22 +14,20 @@ export class AuthGuard implements CanActivate {
     private authenticationService: AuthenticationService
   ) {}
 
-  canActivate(): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.authenticationService.getCurrent().subscribe(
-        (res: UserReqRes | undefined) => {
-          if (res) {
-            return resolve(true);
-          }
-
-          this.router.navigate(['log-in']);
-          return resolve(false);
-        },
-        () => {
-          this.router.navigate(['log-in']);
-          return resolve(false);
+  canActivate(): Observable<boolean> {
+    return this.authenticationService.getCurrent().pipe(
+      switchMap((res) => {
+        if (res) {
+          return of(true);
         }
-      );
-    });
+
+        this.router.navigate(['log-in']);
+        return of(false);
+      }),
+      catchError(() => {
+        this.router.navigate(['log-in']);
+        return of(false);
+      })
+    );
   }
 }

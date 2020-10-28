@@ -9,23 +9,9 @@ import { User, UserReqRes } from '../types/User';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private httpClient: HttpClient, private router: Router) {
-    this.onInit();
-  }
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   private url = 'http://localhost:3000/api/user';
-  user = new BehaviorSubject<User | undefined>(undefined);
-
-  onInit(): void {
-    this.getCurrent().subscribe(
-      (res: UserReqRes) => {
-        this.user.next(res.user);
-      },
-      (err: Error) => {
-        console.log(err);
-      }
-    );
-  }
 
   signUp(user: User): Observable<UserReqRes> {
     return this.httpClient
@@ -46,7 +32,6 @@ export class AuthenticationService {
         }),
         tap((res: UserReqRes) => {
           localStorage.setItem('journal-token', res.user.token);
-          this.user.next(res.user);
         })
       );
   }
@@ -82,6 +67,5 @@ export class AuthenticationService {
   signOut(): void {
     localStorage.removeItem('journal-token');
     this.router.navigate(['/log-in']);
-    this.user.next(undefined);
   }
 }

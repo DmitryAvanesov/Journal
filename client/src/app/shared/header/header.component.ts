@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
-import { User } from 'src/app/core/types/User';
+import { User, UserReqRes } from 'src/app/core/types/User';
 
 @Component({
   selector: 'app-header',
@@ -23,8 +23,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticationService.user.subscribe((user: User | undefined) => {
-      this.user = user;
+    this.authenticationService.getCurrent().subscribe((res: UserReqRes) => {
+      this.user = res.user;
     });
 
     this.iconRegistry.addSvgIcon(
