@@ -1,0 +1,43 @@
+<h2>Submissions for review</h2>
+
+<div class="profile__submission-block">
+  <mat-card class="profile__submission-container" *ngFor="let submission of submissionsForReview">
+
+    <mat-card-header class="profile__submission-header">
+      <mat-card-title class="profile__submission-title">Submission #{{submission.number}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="profile__submission-content">
+
+      <p>
+        <span class="profile__submission-name bold-text">Anonymous file for double-blind peer review</span>
+        <span>
+          {{submission.anonymous}}
+          <mat-icon class="profile__submission-download" svgIcon="download"
+            (click)="downloadSubmissionFile({ submission: submission.number, name: submission.anonymous})">
+          </mat-icon>
+        </span>
+      </p>
+
+      <hr class="profile__submission-divider">
+
+      <p>
+        <span class="profile__submission-name bold-text">Status</span>
+        <span>{{submission.status}}</span>
+      </p>
+
+    </mat-card-content>
+
+    <mat-card-actions class="profile__submission-actions">
+      <button mat-flat-button color="primary" (click)="reviewSubmission(submission.id, 'accepted')"
+        [disabled]="submission.status !== 'under consideration'">Accept</button>
+      <button mat-stroked-button color="warn" (click)="reviewSubmission(submission.id, 'rejected')"
+        [disabled]="submission.status !== 'under consideration'">Reject</button>
+    </mat-card-actions>
+
+  </mat-card>
+
+  <p *ngIf="!submissionsForReview">
+    There's no submissions for now
+  </p>
+</div>

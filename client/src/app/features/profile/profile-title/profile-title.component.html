@@ -1,0 +1,13 @@
+<div class="profile__title">
+
+  <div class="profile__image" [style.background-image]="'url(' + image + ')'">
+    <input hidden id="edit" type="file" accept=".png,.jpg,.jpeg" (change)="uploadImage($event.target.files[0])" />
+    <label for="edit">
+      <mat-icon class="profile__image-button" svgIcon="edit"></mat-icon>
+    </label>
+    <mat-icon class="profile__image-button" svgIcon="delete" (click)="deleteImage()"></mat-icon>
+  </div>
+
+  <h1 class="profile__title-name">{{user?.username}}</h1>
+
+</div>
