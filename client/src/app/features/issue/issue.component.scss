@@ -1,0 +1,10 @@
+.issue__author-block {
+  display: flex;
+  align-items: center;
+
+  .issue__author-image {
+    width: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+}

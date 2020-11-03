@@ -17,7 +17,6 @@ export class IssueComponent implements OnInit {
     private route: ActivatedRoute,
     private submissionService: SubmissionService,
     private imageService: ImageService,
-    private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {}
 
@@ -52,8 +51,8 @@ export class IssueComponent implements OnInit {
         .getSubmissionByNumber(params.issueNumber)
         .subscribe(
           (res: Submission) => {
-            console.log(res);
             this.submission = res;
+            this.downloadImage();
           },
           (err: Error) => {
             console.log(err);
