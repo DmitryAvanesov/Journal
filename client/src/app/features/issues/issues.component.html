@@ -11,8 +11,8 @@
 
       <mat-card-content class="issues__content">
         <p *ngFor="let submission of issue.submissions">
-          <a [routerLink]="['/issue', submission.number]"><span class="bold-text">{{submission.title}}</span></a> by
-          {{submission.author}}
+          <a class="issues__title" [routerLink]="['/issue', submission.number]">{{submission.title}}</a> by
+          {{submission.author.username}}
         </p>
       </mat-card-content>
     </div>

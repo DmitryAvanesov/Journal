@@ -69,6 +69,22 @@ router.get("/download", auth.required, (req, res, _next) => {
   });
 });
 
+router.get("/download-by-id", (req, res, _next) => {
+  const { id } = req.query;
+
+  Image.findOne({ user: id }, (err, image) => {
+    if (err || !image) {
+      fs.readFile(`${uploadPath}/0.png`, (_err, data) => {
+        return res.json(data);
+      });
+    } else {
+      fs.readFile(`${uploadPath}/${image.name}`, (_err, data) => {
+        return res.json(data);
+      });
+    }
+  });
+});
+
 router.delete("/delete", auth.required, (req, res, _next) => {
   const {
     payload: { id },

@@ -92,7 +92,20 @@ router.get("/submission-by-number", (req, res, _next) => {
       return res.status(404).json();
     }
 
-    return res.json(submission);
+    User.findById(submission.user, (err, user) => {
+      if (err) {
+        return res.status(404).json();
+      }
+
+      return res.json({
+        manuscript: submission.manuscript,
+        title: submission.title,
+        author: {
+          id: user._id,
+          username: user.username,
+        },
+      });
+    });
   });
 });
 

@@ -11,5 +11,11 @@
 
   .issues__content {
     margin: 10px 16px;
+
+    .issues__title {
+      font-weight: 600;
+      text-decoration: none;
+      color: $color-primary;
+    }
   }
 }

@@ -112,7 +112,10 @@ router.get("/issues", (_req, res, _next) => {
               manuscript: submission.manuscript,
               about: submission.about,
               title: submission.title,
-              author: user.username,
+              author: {
+                id: user._id,
+                username: user.username,
+              },
             });
 
             if (submissions.length === issue.submissions.length) {
