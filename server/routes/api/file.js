@@ -98,6 +98,7 @@ router.get("/submission-by-number", (req, res, _next) => {
       }
 
       return res.json({
+        number: submission.number,
         manuscript: submission.manuscript,
         title: submission.title,
         author: {

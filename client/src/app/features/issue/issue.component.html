@@ -1,7 +1,8 @@
 <app-feature-block>
   <h1>{{submission?.title}}</h1>
-  <p class="issue__author-block">
-    <img class="issue__author-image" [src]="image" alt="">
+  <div class="issue__author-block">
+    <div class="issue__author-image" [style.background-image]="'url(' + image + ')'"></div>
     <span>{{submission?.author.username}}</span>
-  </p>
+  </div>
+  <div>{{text}}</div>
 </app-feature-block>

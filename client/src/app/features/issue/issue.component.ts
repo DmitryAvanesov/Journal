@@ -1,11 +1,10 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ImageService } from 'src/app/core/services/image.service';
 import { SubmissionService } from 'src/app/core/services/submission.service';
 import { Res } from 'src/app/core/types/Res';
-import { Submission } from 'src/app/core/types/Submission';
+import { SubFile, Submission } from 'src/app/core/types/Submission';
 
 @Component({
   selector: 'app-issue',
@@ -22,6 +21,7 @@ export class IssueComponent implements OnInit {
 
   submission: Submission;
   image: string;
+  text: string;
 
   downloadImage(): void {
     this.imageService.downloadImageById(this.submission.author.id).subscribe(
@@ -45,6 +45,20 @@ export class IssueComponent implements OnInit {
     );
   }
 
+  downloadSubmissionFile(subFile: SubFile): void {
+    this.submissionService.downloadFile(subFile).subscribe(
+      (res: ArrayBuffer) => {
+        const blob = new Blob([res], { type: 'text/plain;charset=utf-8' });
+        blob.text().then((value) => {
+          this.text = value;
+        });
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
+
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.submissionService
@@ -53,6 +67,10 @@ export class IssueComponent implements OnInit {
           (res: Submission) => {
             this.submission = res;
             this.downloadImage();
+            this.downloadSubmissionFile({
+              submission: res.number,
+              name: this.submission.manuscript,
+            });
           },
           (err: Error) => {
             console.log(err);
