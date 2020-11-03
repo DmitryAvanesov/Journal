@@ -108,6 +108,7 @@ router.get("/issues", (_req, res, _next) => {
             }
 
             submissions.push({
+              number: submission.number,
               manuscript: submission.manuscript,
               about: submission.about,
               title: submission.title,

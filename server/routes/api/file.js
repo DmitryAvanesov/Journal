@@ -84,6 +84,18 @@ router.post("/submission", auth.required, (req, res, _next) => {
   }
 });
 
+router.get("/submission-by-number", (req, res, _next) => {
+  const { number } = req.query;
+
+  Submission.findOne({ number }, (err, submission) => {
+    if (err) {
+      return res.status(404).json();
+    }
+
+    return res.json(submission);
+  });
+});
+
 router.get("/user-submissions", auth.required, (req, res, _next) => {
   const {
     payload: { id },
