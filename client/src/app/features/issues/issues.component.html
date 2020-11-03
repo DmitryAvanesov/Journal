@@ -1,0 +1,21 @@
+<app-feature-block>
+
+  <mat-card class="issues__container" *ngFor="let issue of issues">
+
+    <img class="issues__cover" src={{issue.image}} alt="Cover of the issue No {{issue.number}} ({{issue.year}})">
+
+    <div>
+      <mat-card-header class="issues__header">
+        <mat-card-title class="issues__title">No {{issue.number}} ({{issue.year}})</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="issues__content">
+        <p *ngFor="let submission of issue.submissions">
+          <span class="bold-text">{{submission.title}}</span> by {{submission.author}}
+        </p>
+      </mat-card-content>
+    </div>
+
+  </mat-card>
+
+</app-feature-block>

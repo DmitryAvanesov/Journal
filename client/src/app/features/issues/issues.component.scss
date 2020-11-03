@@ -1,0 +1,15 @@
+@import "../../constants.scss";
+
+.issues__container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+
+  .issues__cover {
+    width: 25%;
+  }
+
+  .issues__content {
+    margin: 10px 16px;
+  }
+}
