@@ -6,8 +6,9 @@
     </mat-icon>
   </h1>
   <div class="issue__author-block">
-    <div class="issue__author-image" [style.background-image]="'url(' + image + ')'"></div>
-    <span>{{submission?.author.username}}</span>
+    <div class="issue__author-image" [style.background-image]="'url(' + image + ')'"
+      [routerLink]="['/profile', submission?.author.id]"></div>
+    <span [routerLink]="['/profile', submission?.author.id]">{{submission?.author.username}}</span>
   </div>
   <h2>About author</h2>
   <div>{{text}}</div>

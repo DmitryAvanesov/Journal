@@ -2,8 +2,8 @@
 
   <app-profile-title></app-profile-title>
   <app-profile-my-submissions></app-profile-my-submissions>
-  <app-profile-submissions-for-review *ngIf="user?.role === 'reviewer'"></app-profile-submissions-for-review>
-  <app-profile-submissions-for-editing *ngIf="user?.role === 'editor'"></app-profile-submissions-for-editing>
+  <app-profile-submissions-for-review *ngIf="isOwner && user?.role === 'reviewer'"></app-profile-submissions-for-review>
+  <app-profile-submissions-for-editing *ngIf="isOwner && user?.role === 'editor'"></app-profile-submissions-for-editing>
   <app-profile-action-block></app-profile-action-block>
 
 </app-feature-block>

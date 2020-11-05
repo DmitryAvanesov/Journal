@@ -49,11 +49,11 @@ export class AuthenticationService {
     );
   }
 
-  getName(id: string): Observable<User> {
+  getById(id: string): Observable<User> {
     const params = new HttpParams().set('id', id);
 
     return this.httpClient
-      .get<User>(`${this.url}/name`, { params })
+      .get<User>(`${this.url}/by-id`, { params })
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err));

@@ -79,7 +79,7 @@ export class PublishComponent implements OnInit {
             new FormControl('', Validators.required)
           );
 
-          this.authenticationService.getName(submission.user).subscribe(
+          this.authenticationService.getById(submission.user).subscribe(
             (user: User) => {
               this.authors = {
                 ...this.authors,

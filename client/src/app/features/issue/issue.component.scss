@@ -10,6 +10,11 @@
   align-items: center;
   margin-bottom: 50px;
 
+  * {
+    cursor: pointer;
+    outline: none;
+  }
+
   .issue__author-image {
     width: 25px;
     height: 25px;
