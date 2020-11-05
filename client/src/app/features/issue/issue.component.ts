@@ -51,7 +51,16 @@ export class IssueComponent implements OnInit {
         const blob = new Blob([res], { type: 'text/plain;charset=utf-8' });
 
         blob.text().then((value) => {
-          const text = value.split(' ').slice(0, -66);
+          let text = value.split(' ');
+
+          for (let i = text.length - 1; i >= 0; i--) {
+            if (/^[a-zA-Z]+\./.test(text[i])) {
+              console.log('ohyeah');
+              text = text.slice(0, i + 1);
+              break;
+            }
+          }
+
           text[0] = text[0].slice(
             text[0].lastIndexOf(text[0].match(/[A-Z]/g).pop())
           );
