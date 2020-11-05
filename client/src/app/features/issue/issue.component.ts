@@ -1,3 +1,4 @@
+import * as FileSaver from 'file-saver';
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -5,6 +6,7 @@ import { ImageService } from 'src/app/core/services/image.service';
 import { SubmissionService } from 'src/app/core/services/submission.service';
 import { Res } from 'src/app/core/types/Res';
 import { SubFile, Submission } from 'src/app/core/types/Submission';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-issue',
@@ -16,7 +18,8 @@ export class IssueComponent implements OnInit {
     private route: ActivatedRoute,
     private submissionService: SubmissionService,
     private imageService: ImageService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private iconRegistry: MatIconRegistry
   ) {}
 
   submission: Submission;
@@ -49,13 +52,24 @@ export class IssueComponent implements OnInit {
     this.submissionService.downloadFile(subFile).subscribe(
       (res: ArrayBuffer) => {
         const blob = new Blob([res], { type: 'text/plain;charset=utf-8' });
+        FileSaver.saveAs(blob, subFile.name);
+      },
+      (err: Error) => {
+        console.log(err);
+      }
+    );
+  }
+
+  renderSubmissionFile(subFile: SubFile): void {
+    this.submissionService.downloadFile(subFile).subscribe(
+      (res: ArrayBuffer) => {
+        const blob = new Blob([res], { type: 'text/plain;charset=utf-8' });
 
         blob.text().then((value) => {
           let text = value.split(' ');
 
           for (let i = text.length - 1; i >= 0; i--) {
             if (/^[a-zA-Z]+\./.test(text[i])) {
-              console.log('ohyeah');
               text = text.slice(0, i + 1);
               break;
             }
@@ -86,7 +100,7 @@ export class IssueComponent implements OnInit {
           (res: Submission) => {
             this.submission = res;
             this.downloadImage();
-            this.downloadSubmissionFile({
+            this.renderSubmissionFile({
               submission: res.number,
               name: this.submission.about,
             });
@@ -96,5 +110,12 @@ export class IssueComponent implements OnInit {
           }
         );
     });
+
+    this.iconRegistry.addSvgIcon(
+      'download',
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        '../../../assets/download.svg'
+      )
+    );
   }
 }

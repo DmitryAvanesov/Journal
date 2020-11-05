@@ -13,7 +13,7 @@
         <span class="profile__submission-name bold-text">Manuscript</span>
         <span>
           {{submission.manuscript}}
-          <mat-icon class="profile__submission-download" svgIcon="download"
+          <mat-icon class="profile__submission-download" svgIcon="download" title="Download"
             (click)="downloadSubmissionFile({ submission: submission.number, name: submission.manuscript})">
           </mat-icon>
         </span>
