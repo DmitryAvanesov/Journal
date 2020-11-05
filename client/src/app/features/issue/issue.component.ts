@@ -48,9 +48,10 @@ export class IssueComponent implements OnInit {
   downloadSubmissionFile(subFile: SubFile): void {
     this.submissionService.downloadFile(subFile).subscribe(
       (res: ArrayBuffer) => {
-        const blob = new Blob([res], { type: 'text/plain;charset=utf-8' });
+        const blob = new Blob([res], { type: 'text/plain;charset=UTF-8' });
         blob.text().then((value) => {
           this.text = value;
+          console.log(value);
         });
       },
       (err: Error) => {
@@ -69,7 +70,7 @@ export class IssueComponent implements OnInit {
             this.downloadImage();
             this.downloadSubmissionFile({
               submission: res.number,
-              name: this.submission.manuscript,
+              name: this.submission.about,
             });
           },
           (err: Error) => {
