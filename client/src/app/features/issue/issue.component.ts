@@ -48,10 +48,19 @@ export class IssueComponent implements OnInit {
   downloadSubmissionFile(subFile: SubFile): void {
     this.submissionService.downloadFile(subFile).subscribe(
       (res: ArrayBuffer) => {
-        const blob = new Blob([res], { type: 'text/plain;charset=UTF-8' });
+        const blob = new Blob([res], { type: 'text/plain;charset=utf-8' });
+
         blob.text().then((value) => {
-          this.text = value;
-          console.log(value);
+          const text = value.split(' ').slice(0, -66);
+          text[0] = text[0].slice(
+            text[0].lastIndexOf(text[0].match(/[A-Z]/g).pop())
+          );
+          text[text.length - 1] = text[text.length - 1].slice(
+            0,
+            text[text.length - 1].indexOf('.') + 1
+          );
+
+          this.text = text.join(' ');
         });
       },
       (err: Error) => {
