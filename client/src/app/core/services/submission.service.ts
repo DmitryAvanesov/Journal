@@ -41,6 +41,18 @@ export class SubmissionService {
       );
   }
 
+  getSubmissionByNumber(number: string): Observable<Submission> {
+    const params = new HttpParams().set('number', number);
+
+    return this.httpClient
+      .get<Submission>(`${this.url}/submission-by-number`, { params })
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
+  }
+
   getSubmissionsForReview(): Observable<Submission[]> {
     return this.httpClient
       .get<Submission[]>(`${this.url}/reviewer-submissions`)

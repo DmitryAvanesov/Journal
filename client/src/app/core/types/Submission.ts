@@ -10,6 +10,7 @@ export interface Submission {
   anonymous: string;
   status: string;
   title?: string;
+  author?: User;
 }
 
 export interface SubAuthor {

@@ -8,7 +8,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
-import { User } from 'src/app/core/types/User';
+import { User, UserReqRes } from 'src/app/core/types/User';
 
 @Component({
   selector: 'app-sign-up',
@@ -80,8 +80,8 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticationService.user.subscribe((user: User | undefined) => {
-      this.user = user;
+    this.authenticationService.getCurrent().subscribe((res: UserReqRes) => {
+      this.user = res.user;
     });
 
     this.passwordIsHidden = true;

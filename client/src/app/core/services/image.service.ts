@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -30,6 +30,18 @@ export class ImageService {
         throw new Error(JSON.stringify(err));
       })
     );
+  }
+
+  downloadImageById(id: string): Observable<Res> {
+    const params = new HttpParams().set('id', id);
+
+    return this.httpClient
+      .get<Res>(`${this.url}/download-by-id`, { params })
+      .pipe(
+        catchError((err) => {
+          throw new Error(JSON.stringify(err));
+        })
+      );
   }
 
   deleteImage(): Observable<void> {

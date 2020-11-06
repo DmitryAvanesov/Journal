@@ -9,23 +9,10 @@ import { User, UserReqRes } from '../types/User';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private httpClient: HttpClient, private router: Router) {
-    this.onInit();
-  }
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   private url = 'http://localhost:3000/api/user';
   user = new BehaviorSubject<User | undefined>(undefined);
-
-  onInit(): void {
-    this.getCurrent().subscribe(
-      (res: UserReqRes) => {
-        this.user.next(res.user);
-      },
-      (err: Error) => {
-        console.log(err);
-      }
-    );
-  }
 
   signUp(user: User): Observable<UserReqRes> {
     return this.httpClient
@@ -53,17 +40,20 @@ export class AuthenticationService {
 
   getCurrent(): Observable<UserReqRes> {
     return this.httpClient.get<UserReqRes>(`${this.url}/current`).pipe(
+      tap((res: UserReqRes) => {
+        this.user.next(res.user);
+      }),
       catchError((err) => {
         throw new Error(JSON.stringify(err));
       })
     );
   }
 
-  getName(id: string): Observable<User> {
+  getById(id: string): Observable<User> {
     const params = new HttpParams().set('id', id);
 
     return this.httpClient
-      .get<User>(`${this.url}/name`, { params })
+      .get<User>(`${this.url}/by-id`, { params })
       .pipe(
         catchError((err) => {
           throw new Error(JSON.stringify(err));

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
-import { User } from '../types/User';
+import { UserReqRes } from '../types/User';
 
 @Injectable({
   providedIn: 'root',
@@ -12,21 +14,19 @@ export class SignUpGuard implements CanActivate {
     private authenticationService: AuthenticationService
   ) {}
 
-  canActivate(): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.authenticationService.user.subscribe(
-        (res: User | undefined) => {
-          if (res && res.role !== 'admin') {
-            this.router.navigate(['home']);
-            return resolve(false);
-          }
-
-          return resolve(true);
-        },
-        () => {
-          return resolve(true);
+  canActivate(): Observable<boolean> {
+    return this.authenticationService.getCurrent().pipe(
+      switchMap((res: UserReqRes) => {
+        if (res && res.user.role !== 'admin') {
+          this.router.navigate(['home']);
+          return of(false);
         }
-      );
-    });
+
+        return of(true);
+      }),
+      catchError(() => {
+        return of(true);
+      })
+    );
   }
 }

@@ -1,0 +1,26 @@
+.issue__download {
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  margin-left: 10px;
+}
+
+.issue__author-block {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+
+  * {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .issue__author-image {
+    width: 25px;
+    height: 25px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+}

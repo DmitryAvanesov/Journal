@@ -18,6 +18,7 @@ import { SubmissionModule } from './features/submission/submission.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorModule } from './features/error/error.module';
+import { IssueModule } from './features/issue/issue.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { ErrorModule } from './features/error/error.module';
     SharedModule,
     HomeModule,
     IssuesModule,
+    IssueModule,
     LogInModule,
     NewsModule,
     ProfileModule,

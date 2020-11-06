@@ -34,8 +34,7 @@ export class IssuesComponent implements OnInit {
           );
         }
 
-        this.issues = res;
-        console.log(this.issues);
+        this.issues = res.reverse();
       },
       (err: Error) => {
         console.log(err);

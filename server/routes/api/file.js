@@ -84,6 +84,33 @@ router.post("/submission", auth.required, (req, res, _next) => {
   }
 });
 
+router.get("/submission-by-number", (req, res, _next) => {
+  const { number } = req.query;
+
+  Submission.findOne({ number }, (err, submission) => {
+    if (err) {
+      return res.status(404).json();
+    }
+
+    User.findById(submission.user, (err, user) => {
+      if (err) {
+        return res.status(404).json();
+      }
+
+      return res.json({
+        number: submission.number,
+        manuscript: submission.manuscript,
+        about: submission.about,
+        title: submission.title,
+        author: {
+          id: user._id,
+          username: user.username,
+        },
+      });
+    });
+  });
+});
+
 router.get("/user-submissions", auth.required, (req, res, _next) => {
   const {
     payload: { id },

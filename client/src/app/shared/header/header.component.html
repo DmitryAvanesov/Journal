@@ -65,6 +65,6 @@
 </mat-menu>
 
 <mat-menu class="header__menu-block" #userMenu="matMenu" xPosition="before">
-  <button mat-menu-item routerLink="/profile">Profile</button>
+  <button mat-menu-item [routerLink]="['/profile', user?.id]">Profile</button>
   <button mat-menu-item (click)="signOut()">Sign out</button>
 </mat-menu>

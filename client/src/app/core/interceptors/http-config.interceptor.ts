@@ -41,12 +41,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
       });
     }
 
-    // if (request.url === 'http://localhost:3000/api/image/download') {
-    //   request = request.clone({
-    //     responseType: 'arraybuffer',
-    //   });
-    // }
-
     return next.handle(request);
   }
 }

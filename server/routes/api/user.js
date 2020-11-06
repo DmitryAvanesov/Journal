@@ -115,7 +115,7 @@ router.get("/current", auth.required, async (req, res, _next) => {
   return res.json({ user: user.toAuthJSON() });
 });
 
-router.get("/name", auth.required, (req, res, _next) => {
+router.get("/by-id", (req, res, _next) => {
   const { id } = req.query;
 
   User.findById(id, (err, user) => {
@@ -123,7 +123,7 @@ router.get("/name", auth.required, (req, res, _next) => {
       return res.status(404).json();
     }
 
-    return res.json({ username: user.username });
+    return res.json({ id: user._id, username: user.username });
   });
 });
 

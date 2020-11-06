@@ -1,0 +1,15 @@
+<app-feature-block>
+  <h1 class="issue__title-block">
+    <span>{{submission?.title}}</span>
+    <mat-icon class="issue__download" svgIcon="download" title="Download"
+      (click)="downloadSubmissionFile({ submission: submission.number, name: submission.manuscript})">
+    </mat-icon>
+  </h1>
+  <div class="issue__author-block">
+    <div class="issue__author-image" [style.background-image]="'url(' + image + ')'"
+      [routerLink]="['/profile', submission?.author.id]"></div>
+    <span [routerLink]="['/profile', submission?.author.id]">{{submission?.author.username}}</span>
+  </div>
+  <h2>About author</h2>
+  <div>{{text}}</div>
+</app-feature-block>
